@@ -35,6 +35,16 @@
     lifetime: 1
 
 - type: entity
+  id: CEOverchargeBrightVFX
+  parent: CEOverchargeVFX
+  suffix: Bright
+  components:
+  - type: PointLight
+    radius: 5
+    energy: 5
+    netsync: false
+
+- type: entity
   id: CEOverchargeSmallVFX
   parent: CEOverchargeVFX
   name: smol magic overcharge
@@ -93,6 +103,18 @@
     intensity: 3
   - type: TimedDespawn
     lifetime: 5
+
+
+- type: entity
+  parent: CERadiationSourceVFX
+  id: CEStrongRadiationSourceVFX
+  categories: [ HideSpawnMenu ]
+  suffix: VFX, Strong radiation
+  name: radiation source
+  components:
+  - type: RadiationSource
+    intensity: 15
+    slope: 1
 
 - type: entity
   id: CEDirtEffect

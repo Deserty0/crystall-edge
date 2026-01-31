@@ -11,6 +11,7 @@
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCEChef
@@ -22,6 +23,7 @@
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 # Guard
 
@@ -36,6 +38,7 @@
   - CEGuardShirt
   - CEGuardPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCEInvestigator
@@ -48,6 +51,7 @@
   - CEGuardShirt
   - CEGuardPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCEGuard
@@ -60,6 +64,34 @@
   - CEGuardShirt
   - CEGuardPants
   - CEGeneralShoes
+  - CEGeneralInstruments
+
+# Engineering
+
+- type: roleLoadout
+  id: JobCEBrigadier
+  groups:
+  - CEGeneralBag
+  - CETechnicianHead #
+  - CEGeneralEyes
+  - CEBrigadierCloak #
+  - CEGeneralGloves
+  - CEEngineeringShirt #
+  - CEEngineeringPants #
+  - CEGeneralShoes
+  - CEGeneralInstruments
+
+- type: roleLoadout
+  id: JobCETechnician
+  groups:
+  - CEGeneralBag
+  - CETechnicianHead #
+  - CEGeneralEyes
+  - CEGeneralGloves
+  - CEEngineeringShirt #
+  - CEEngineeringPants #
+  - CEGeneralShoes
+  - CEGeneralInstruments
 
 # Citizens
 
@@ -67,59 +99,64 @@
   id: JobCETailorMerchant
   groups:
   - CEGeneralBag
-  - CETownfolkHead
+  - CETownfolkHead #
   - CEMerchantEyes #
   - CEGeneralCloak
   - CEGeneralGloves
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCEPharmacistMerchant
   groups:
   - CEGeneralBag
-  - CETownfolkHead
+  - CETownfolkHead #
   - CEMerchantEyes #
   - CEGeneralCloak
   - CEGeneralGloves
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCEHomeGoodsMerchant
   groups:
   - CEGeneralBag
-  - CETownfolkHead
-  - CEMerchantEyes
+  - CETownfolkHead #
+  - CEMerchantEyes #
   - CEGeneralCloak
   - CEGeneralGloves
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCETownfolk
   groups:
   - CEGeneralBag
-  - CETownfolkHead
+  - CETownfolkHead #
   - CEGeneralEyes
   - CEGeneralCloak
   - CEGeneralGloves
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
+  - CEGeneralInstruments
 
 - type: roleLoadout
   id: JobCEBard
   groups:
   - CEGeneralBag
-  - CEBardHead
+  - CEBardHead #
   - CEGeneralEyes
   - CEGeneralCloak
   - CEGeneralGloves
-  - CEBardShirt
-  - CEBardPants
-  - CEBardShoes
-  - CEBardTool
+  - CEBardShirt #
+  - CEBardPants #
+  - CEBardShoes #
+  - CEBardTool #
+  - CEGeneralInstruments

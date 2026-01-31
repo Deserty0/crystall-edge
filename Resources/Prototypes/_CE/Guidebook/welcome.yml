@@ -5,6 +5,9 @@
   name: Welcome to CrystallEdge
   text: "/ServerInfo/_CE/Guidebook_EN/Welcome.xml"
   children:
+  - CESpeciesGuideEN
+  - CECookingRecipesEN
+  - CEFarmingGuideEN
   - CEImperialLawsEN
 
 - type: guideEntry
@@ -12,6 +15,9 @@
   locFilter: "ru-RU"
   id: BaselineWelcomeRU
   name: Welcome to CrystallEdge
-  text: "/ServerInfo/_CE/Guidebook_EN/Welcome.xml"
+  text: "/ServerInfo/_CE/Guidebook_RU/Welcome.xml"
   children:
+  - CESpeciesGuideRU
+  - CECookingRecipesRU
+  - CEFarmingGuideRU
   - CEImperialLawsRU
