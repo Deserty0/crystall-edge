@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._CE.LockKey.Components;
 
@@ -13,6 +14,10 @@ public sealed partial class CELockpickComponent : Component
 
     [DataField]
     public TimeSpan HackTime = TimeSpan.FromSeconds(1.0f);
+
+    [DataField]
+    public ResPath MinigameTexture =
+        new ResPath("Textures/_CE/Interface/LockPicking/Lockpicks/Default/lockpick_test.png");
 
     [DataField]
     public SoundSpecifier SuccessSound = new SoundPathSpecifier("/Audio/_CE/Effects/lockpick_use.ogg")
