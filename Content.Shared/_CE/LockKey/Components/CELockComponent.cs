@@ -1,3 +1,4 @@
+using Content.Shared._CE.LockKey.LockPickingMinigame;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -32,6 +33,9 @@ public sealed partial class CELockComponent : Component
     /// </summary>
     [DataField]
     public bool CanEmbedded = false;
+
+    [DataField]
+    public ProtoId<CELockPickingMinigamePrototype> LockPickingMinigameStyle = "Default";
 
     [DataField]
     public SoundSpecifier EmbedSound = new SoundPathSpecifier("/Audio/_CE/Effects/lockpick_use.ogg")

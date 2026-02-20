@@ -25,12 +25,18 @@ public sealed class CELockPickingMinigameBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<CELockPickingMinigameComponent>(Owner, out var minigameComponent))
             return;
 
-        // to tu ru
-        if (!_prototypeManager.Resolve(minigameComponent.Lock.Comp.Shape, out var fishingMinigame))
+        // :3
+        if (!EntMan.TryGetComponent<CELockpickComponent>(minigameComponent.Lockpick, out var lockpickComponent))
+            return;
+
+        if (!EntMan.TryGetComponent<CELockComponent>(minigameComponent.Lock, out var lockComponent))
+            return;
+
+        if (!_prototypeManager.Resolve<CELockPickingMinigamePrototype>(lockComponent.LockPickingMinigameStyle, out var minigamePrototype))
             return;
 
         _lockpickingWindow = this.CreateWindow<CELockPickingMinigameWindow>();
-        _lockpickingWindow.InitVisuals(fishingMinigame);
+        _lockpickingWindow.InitVisuals(minigamePrototype, lockpickComponent.MinigameTexture, lockComponent.Shape.Count);
     }
 
     public override void Update()

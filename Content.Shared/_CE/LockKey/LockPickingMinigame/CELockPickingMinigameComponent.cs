@@ -17,15 +17,9 @@ public sealed partial class CELockPickingMinigameComponent : Component
     [AutoNetworkedField]
     public int Progress = 0;
 
-    /// <summary>
-    /// I know that doesnt gonna work
-    /// </summary>
     [AutoNetworkedField]
-    public Entity<CELockpickComponent> Lockpick;
+    public EntityUid Lockpick;
 
-    /// <summary>
-    /// That too
-    /// </summary>
     [AutoNetworkedField]
-    public Entity<CELockComponent> Lock;
+    public EntityUid Lock;
 }
