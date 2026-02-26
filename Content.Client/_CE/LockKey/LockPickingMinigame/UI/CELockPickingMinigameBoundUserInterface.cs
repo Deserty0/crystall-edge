@@ -12,7 +12,7 @@ public sealed class CELockPickingMinigameBoundUserInterface : BoundUserInterface
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [ViewVariables]
-    private CELockPickingMinigameWindow? _lockpickingWindow;
+    private CELockPickingMinigameWindow? _lockPickingWindow;
 
     public CELockPickingMinigameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -32,17 +32,17 @@ public sealed class CELockPickingMinigameBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<CELockComponent>(minigameComponent.Lock, out var lockComponent))
             return;
 
-        if (!_prototypeManager.Resolve<CELockPickingMinigamePrototype>(lockComponent.LockPickingMinigameStyle, out var minigamePrototype))
+        if (!_prototypeManager.Resolve(lockComponent.LockPickingMinigameStyle, out var minigamePrototype))
             return;
 
-        _lockpickingWindow = this.CreateWindow<CELockPickingMinigameWindow>();
-        _lockpickingWindow.InitVisuals(minigamePrototype, lockpickComponent.MinigameTexture, lockComponent.Shape.Count);
+        _lockPickingWindow = this.CreateWindow<CELockPickingMinigameWindow>();
+        _lockPickingWindow.InitVisuals(minigamePrototype, lockpickComponent.MinigameTexture, lockComponent.Shape.Count);
     }
 
     public override void Update()
     {
         base.Update();
 
-        _lockpickingWindow?.UpdateDraw();
+        _lockPickingWindow?.UpdateDraw();
     }
 }
