@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: Damageable
+  - type: Injurable
     damageContainer: CEBiological
   - type: Destructible
     thresholds:
@@ -87,7 +88,6 @@
   - type: CEEnergyRadiationRegeneration
   - type: CEEnergyOverchargeDamage
   - type: CEEnergyDeficitDamage
-  - type: CEEnergyAlert
 
 - type: entity
   id: CEMobTemperature

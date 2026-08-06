@@ -17,13 +17,13 @@
     - random:
         base1: ""
         base2: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 12
-        reagents:
-        - ReagentId: Flour
-          Quantity: 5
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 12
+      reagents:
+      - ReagentId: Flour
+        Quantity: 5
   - type: SliceableFood
     count: 2
     sliceTime: 1.5
@@ -33,6 +33,10 @@
   - type: CEFoodTag
     tags:
     - CEWheat
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Crop: { min: 0, max: 2 }
 
 - type: entity
   id: CECotton
@@ -54,19 +58,23 @@
         base1: ""
         base2: ""
         base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 12
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 12
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
   - type: SliceableFood
     count: 3
     sliceTime: 1.5
     slice: CESeedCotton
   - type: StaticPrice
     price: 1
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Cloth: { min: 0, max: 1 }
 
 - type: entity
   id: CEFoodCabbage
@@ -91,13 +99,13 @@
           base1: ""
           base2: ""
           base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 12
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 3.5
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 12
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 3.5
   - type: SliceableFood
     count: 4
     sliceTime: 1.5
@@ -110,6 +118,9 @@
     - CECabbage
     - CEVegetable
     - CESalad
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 4 }
 
 - type: entity
   id: CEFoodCabbageSlice
@@ -135,18 +146,21 @@
           slice2: ""
           slice3: ""
           slice4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3 # 1/4 cabbage
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 0.97
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 3 # 1/4 cabbage
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 0.97
   - type: CEFoodTag
     tags:
     - CECabbage
     - CEVegetable
     - CESalad
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodPumpkin
@@ -172,13 +186,13 @@
           base2: ""
           base3: ""
           base4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 12
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 30
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 12
   - type: SliceableFood
     count: 5
     sliceTime: 2
@@ -190,6 +204,10 @@
     tags:
     - CEVegetable
     - CEPumpkin
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 4 }
+      Life: { min: 0, max: 2 }
 
 - type: entity
   id: CEFoodPumpkinSlice
@@ -215,17 +233,20 @@
           slice2: ""
           slice3: ""
           slice4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6 # 1/5 pumpkin
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 1.9
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 6 # 1/5 pumpkin
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 1.9
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CEPumpkin
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodPotato
@@ -251,13 +272,13 @@
           base2: ""
           base3: ""
           base4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 11
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 3.47
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 11
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 3.47
   - type: CESeed
     plantProto: CEPlantPotato #TODO sliceable potato
   - type: Temperature
@@ -273,6 +294,10 @@
     tags:
     - CEVegetable
     - CEPotato
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Earth: { min: 0, max: 2 }
 
 - type: entity
   id: CEFoodCucumber
@@ -299,15 +324,15 @@
           base2: ""
           base3: ""
           base4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 11
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 2.47
-        - ReagentId: Water
-          Quantity: 3
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 11
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 2.47
+      - ReagentId: Water
+        Quantity: 3
   - type: SliceableFood
     count: 2
     sliceTime: 1
@@ -319,6 +344,10 @@
     tags:
     - CEVegetable
     - CECucumber
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Water: { min: 0, max: 2 }
 
 - type: entity
   id: CEFoodCucumberSlice
@@ -337,19 +366,22 @@
     sprite: _CE/Objects/Consumable/Food/cucumber.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 3
-        - ReagentId: Water
-          Quantity: 1.5
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 3
+      - ReagentId: Water
+        Quantity: 1.5
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CECucumber
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodTomatoes
@@ -374,15 +406,15 @@
           base1: ""
           base2: ""
           base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 12
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 2.71
-        - ReagentId: JuiceTomato
-          Quantity: 6
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 12
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 2.71
+      - ReagentId: JuiceTomato
+        Quantity: 6
   - type: SliceableFood
     count: 3
     sliceTime: 1
@@ -410,6 +442,7 @@
       - ReagentId: JuiceTomato
         Quantity: 10
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1
@@ -419,6 +452,10 @@
   - type: CEFoodTag
     tags:
     - CEVegetable
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Water: { min: 0, max: 2 }
 
 - type: entity
   id: CEFoodTomatoesSlice
@@ -441,16 +478,19 @@
     available:
       - random:
           slice1: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3 # 1/3 pumpkin
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 0.9
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 3 # 1/3 pumpkin
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 0.9
   - type: CEFoodTag
     tags:
     - CEVegetable
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodApple
@@ -464,13 +504,13 @@
   - type: FlavorProfile
     flavors:
       - apple
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 5.62
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 15
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 5.62
   - type: Sprite
     sprite: _CE/Objects/Consumable/Food/apple.rsi
     layers:
@@ -496,6 +536,10 @@
     tags:
     - CEFruits
     - CEApple
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Tree: { min: 0, max: 2 }
 
 - type: entity
   parent: CEFoodApple
@@ -527,17 +571,20 @@
       - random:
           slice1: ""
           slice2: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 4
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 1.4
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 4
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 1.4
   - type: CEFoodTag
     tags:
     - CEFruits
     - CEApple
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodPepper
@@ -569,17 +616,21 @@
   - type: CEAdditionalSliceableDrop
     loot:
       CESeedPepper: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 6.1
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 15
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 6.1
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CEPepper
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Fire: { min: 0, max: 1 }
 
 - type: entity
   id: CEFoodGarlic
@@ -608,19 +659,23 @@
     count: 4
     sliceTime: 1.5
     slice: CEFoodGarlicClove
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 12
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 4
-        - ReagentId: Allicin
-          Quantity: 4
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 12
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 4
+      - ReagentId: Allicin
+        Quantity: 4
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CEGarlic
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Poison: { min: 0, max: 1 }
 
 - type: entity
   id: CEFoodGarlicClove
@@ -638,21 +693,25 @@
     sprite: _CE/Objects/Consumable/Food/garlic.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 1
-        - ReagentId: Allicin
-          Quantity: 1
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 3
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 1
+      - ReagentId: Allicin
+        Quantity: 1
   - type: CESeed
     plantProto: CEPlantGarlic
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CEGarlic
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Poison: { min: 0, max: 1 }
 
 - type: entity
   id: CEFoodCorn
@@ -673,13 +732,13 @@
   - type: CEAdditionalSliceableDrop
     loot:
       CESeedCorn: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 20
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 25
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 20
   - type: Sprite
     sprite: _CE/Objects/Consumable/Food/corn.rsi
     layers:
@@ -695,6 +754,10 @@
     tags:
     - CEVegetable
     - CECorn
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Crop: { min: 0, max: 2 }
 
 - type: entity
   id: CEFoodCornKernel
@@ -712,17 +775,20 @@
     sprite: _CE/Objects/Consumable/Food/corn.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 5
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 7
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 5
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CECorn
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodCarrot
@@ -754,17 +820,21 @@
   - type: CEAdditionalSliceableDrop
     loot:
       CESeedCarrot: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 12
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 15
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 12
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CECarrot
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Earth: { min: 0, max: 1 }
 
 - type: entity
   id: CEFoodCarrotSlice
@@ -782,17 +852,20 @@
     sprite: _CE/Objects/Consumable/Food/carrot.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 4
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 6
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 4
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CECarrot
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodPepperSlice
@@ -810,17 +883,20 @@
     sprite: _CE/Objects/Consumable/Food/pepper.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3.5
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 3
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 3.5
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 3
   - type: CEFoodTag
     tags:
     - CEVegetable
     - CEPepper
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodOnion
@@ -845,15 +921,15 @@
           base1: ""
           base2: ""
           base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 17
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 5.29
-        - ReagentId: Allicin
-          Quantity: 3
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 17
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 5.29
+      - ReagentId: Allicin
+        Quantity: 3
   - type: SliceableFood
     count: 4
     sliceTime: 2
@@ -863,6 +939,10 @@
   - type: CEFoodTag
     tags:
     - CEVegetable
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Poison: { min: 0, max: 1 }
 
 - type: entity
   id: CEFoodOnionSlice
@@ -880,18 +960,21 @@
     sprite: _CE/Objects/Consumable/Food/onion.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 3.2
-        - ReagentId: Allicin
-          Quantity: 0.8
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 3.2
+      - ReagentId: Allicin
+        Quantity: 0.8
   - type: CEFoodTag
     tags:
     - CEVegetable
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
 
 - type: entity
   id: CEFoodChanterelle
@@ -915,13 +998,13 @@
           base3: ""
           base4: ""
           base5: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 11
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 3.47
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 11
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 3.47
   - type: CESeed
     plantProto: CEPlantChanterelle
   - type: Temperature
@@ -929,6 +1012,10 @@
   - type: InternalTemperature
     thickness: 0.006
     area: 0.006
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 2 }
+      Life: { min: 0, max: 2 }
 
 - type: entity
   id: CEFoodSunflowerHead
@@ -951,13 +1038,13 @@
       - random:
           base1: ""
           base2: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 6
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 30
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 6
   - type: SliceableFood
     count: 3
     sliceTime: 3
@@ -967,3 +1054,7 @@
   - type: InternalTemperature
     thickness: 0.006
     area: 0.006
+  - type: CEMagicEssenceStructure
+    essences:
+      Plant: { min: 1, max: 3 }
+      Light: { min: 0, max: 2 }

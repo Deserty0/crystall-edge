@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reaction
 {
-    public sealed class ChemicalReactionSystem : EntitySystem
+    public sealed partial class ChemicalReactionSystem : EntitySystem
     {
         /// <summary>
         /// Foam reaction protoId.
@@ -26,12 +26,12 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private const int MaxReactionIterations = 20;
 
-        [Dependency] private readonly INetManager _netMan = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+        [Dependency] private INetManager _netMan = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
         /// <summary>
         /// A cache of all reactions indexed by at most ONE of their required reactants.
@@ -160,6 +160,11 @@ namespace Content.Shared.Chemistry.Reaction
             if (reaction.Quantized)
                 lowestUnitReactions = (int) lowestUnitReactions;
 
+            // CrystallEdge: cap reaction strength so reactions with MaxUnitReactions set progress "one drop at a time" instead of consuming all available reagents at once
+            if (reaction.MaxUnitReactions is { } maxUnitReactions)
+                lowestUnitReactions = FixedPoint2.Min(lowestUnitReactions, maxUnitReactions);
+            // CrystallEdge end
+
             return lowestUnitReactions > 0;
         }
 
@@ -228,6 +233,7 @@ namespace Content.Shared.Chemistry.Reaction
         private bool ProcessReactions(Entity<SolutionComponent> soln, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
             List<string>? products = null;
+            ReactionPrototype? firedReaction = null;
 
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)
@@ -237,9 +243,17 @@ namespace Content.Shared.Chemistry.Reaction
                     continue;
                 }
 
+                firedReaction = reaction;
                 products = PerformReaction(soln, reaction, unitReactions);
                 break;
             }
+
+            // CrystallEdge: MaxUnitReactions reactions are meant to progress "one drop at a time", so drop them from
+            // this pass' candidate set once they've fired instead of letting the loop below re-fire them repeatedly
+            // until the reactants run out.
+            if (firedReaction is { MaxUnitReactions: not null })
+                reactions.Remove(firedReaction);
+            // CrystallEdge end
 
             // did any reaction occur?
             if (products == null)

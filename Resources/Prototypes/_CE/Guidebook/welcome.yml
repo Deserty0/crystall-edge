@@ -8,7 +8,9 @@
   - CESpeciesGuideEN
   - CECookingRecipesEN
   - CEFarmingGuideEN
+  - CEMiningGuideEN
   - CEImperialLawsEN
+  - CEThaumaturgyEN
 
 - type: guideEntry
   hidden: false
@@ -20,4 +22,6 @@
   - CESpeciesGuideRU
   - CECookingRecipesRU
   - CEFarmingGuideRU
+  - CEMiningGuideRU
   - CEImperialLawsRU
+  - CEThaumaturgyRU

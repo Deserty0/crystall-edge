@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Damage.Systems;
 using Content.Shared.EntityTable;
+using Content.Shared.Examine;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared._CE.OreVein;
@@ -8,17 +9,31 @@ namespace Content.Shared._CE.OreVein;
 /// <summary>
 /// System that manages ore veins, spawning resources when specific damage thresholds are met.
 /// </summary>
-public sealed class CEOreVeinSystem : EntitySystem
+public sealed partial class CEOreVeinSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityTableSystem _table = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EntityTableSystem _table = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<CEOreVeinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CEOreVeinComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<CEOreVeinComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnMapInit(Entity<CEOreVeinComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.CurrentAmount = ent.Comp.MaxAmount;
+        Dirty(ent);
+    }
+
+    private void OnExamined(Entity<CEOreVeinComponent> ent, ref ExaminedEvent args)
+    {
+        var percent = (int) MathF.Round((ent.Comp.MaxAmount - ent.Comp.CurrentAmount) / (float) ent.Comp.MaxAmount * 100f);
+        args.PushMarkup(Loc.GetString("ce-ore-vein-examine-depleted", ("percent", percent)));
     }
 
     private void OnDamageChanged(Entity<CEOreVeinComponent> ent, ref DamageChangedEvent args)
@@ -28,7 +43,7 @@ public sealed class CEOreVeinSystem : EntitySystem
 
         var requiredDamage = ent.Comp.Damage;
 
-        var totalDamage = args.Damageable.Damage;
+        var totalDamage = _damageable.GetAllDamage((ent.Owner, args.Damageable));
 
         var allDamageTypesMet = true;
         foreach (var required in requiredDamage.DamageDict)
@@ -54,5 +69,11 @@ public sealed class CEOreVeinSystem : EntitySystem
         }
         _damageable.ChangeDamage(ent.Owner, -requiredDamage);
         _audio.PlayPredicted(ent.Comp.SpawnSound, targetSpawnPosition, args.Origin);
+
+        ent.Comp.CurrentAmount--;
+        Dirty(ent);
+
+        if (ent.Comp.CurrentAmount <= 0)
+            QueueDel(ent.Owner);
     }
 }

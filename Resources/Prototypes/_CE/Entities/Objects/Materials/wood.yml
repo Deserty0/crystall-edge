@@ -36,8 +36,9 @@
     spawnCount: 3
   - type: Appearance
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -52,6 +53,10 @@
   - type: PhysicalComposition
     materialComposition:
       CEWood: 30
+  - type: CEMagicEssenceStructure
+    essences:
+      Tree: { min: 2, max: 6 }
+      Plant: { min: 0, max: 2 }
 
 - type: entity
   id: CEWoodenPlanks1
@@ -94,9 +99,13 @@
   - type: PhysicalComposition
     materialComposition:
       CEWood: 10
+  - type: CEMagicEssenceStructure
+    essences:
+      Tree: { min: 1, max: 4 }
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

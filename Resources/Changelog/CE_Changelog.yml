@@ -391,3 +391,152 @@
   id: 1039
   time: '2026-01-11T09:50:55.0000000+00:00'
   url: https://github.com/crystallpunk-14/crystall-edge/pull/253
+- author: TheShuEd
+  changes:
+  - message: Added idle & walking animations from CE3
+    type: Add
+  id: 1040
+  time: '2026-07-14T12:36:21.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/345
+- author: TheShuEd
+  changes:
+  - message: Added ability to construct thin windows.
+    type: Add
+  - message: Carcat hair & beards support from CE3.
+    type: Add
+  - message: Lower time required to equip or deequip clothingon mannequins.
+    type: Tweak
+  - message: Pipe breakage event no more can broke pipes under carpets or walls.
+    type: Tweak
+  - message: Wider viewport port from CE3.
+    type: Tweak
+  - message: Fixed bug with fast equippin hats in pickets instead heads.
+    type: Fix
+  - message: Fixed bug with melee attacking coupled with gun shots.
+    type: Fix
+  id: 1041
+  time: '2026-07-16T23:07:33.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/351
+- author: TheShuEd
+  changes:
+  - message: Discord auth is back.
+    type: Add
+  id: 1042
+  time: '2026-07-17T05:44:56.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/352
+- author: TheShuEd
+  changes:
+  - message: A system for the collapse of z-levels has been added. If your structure
+      or mine lacks enough supports, it will simply collapse, dropping a pile of junk
+      on your heads.
+    type: Add
+  - message: Air crystals have been added to serve as a support structure for the
+      entire flying island. If they were destroyed, it could wipe out the ENTIRE island.
+      So treat this as if it were a nuclear warhead explosion.
+    type: Add
+  id: 1043
+  time: '2026-07-17T20:19:10.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/353
+- author: TheShuEd
+  changes:
+  - message: The number of iron, coal, and crystal veins has doubled.
+    type: Tweak
+  - message: Ore veins are no longer endless! They are depleted after about half an
+      hour of active drilling.
+    type: Tweak
+  - message: The brass insulation armor now provides 100% protection against magical
+      radiation, rather than 75%.
+    type: Tweak
+  - message: "Walls now provide support for a maximum of 5 tiles in each direction,\
+      \ rather than 10. This makes the chance of ceilings collapsing during excavations\
+      \ significantly higher. It also imposes restrictions on building design\u2014\
+      it\u2019s much more common to have to install supporting columns."
+    type: Tweak
+  id: 1044
+  time: '2026-07-18T08:31:51.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/354
+- author: TheShuEd
+  changes:
+  - message: All merchant roles was deleted
+    type: Remove
+  id: 1045
+  time: '2026-07-21T17:18:22.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/357
+- author: TheShuEd
+  changes:
+  - message: 'Added insulator loop: small structure that can prevent unwated pipe
+      connections.'
+    type: Add
+  id: 1046
+  time: '2026-07-26T13:29:11.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/363
+- author: TheShuEd
+  changes:
+  - message: insulator helmet is not multihanded item anymore.
+    type: Tweak
+  id: 1047
+  time: '2026-07-29T11:59:54.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/368
+- author: TheShuEd
+  changes:
+  - message: Added 3 types of wallpapers, that you can attach to any wall. You can
+      buy it in home decor platform
+    type: Add
+  id: 1048
+  time: '2026-07-29T13:51:13.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/369
+- author: TheShuEd
+  changes:
+  - message: Added the ability to craft order boards.
+    type: Add
+  - message: Added potted plants that can be purchased from the home goods platform.
+    type: Add
+  - message: Alcohol bottles are no longer empty! Barrels, large alcohol barrels,
+      and small alcohol barrels have been added!
+    type: Add
+  - message: Mugs and goblets have been added and can be purchased from the horticulture
+      trade platform.
+    type: Add
+  id: 1049
+  time: '2026-07-29T17:56:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/370
+- author: TheShuEd
+  changes:
+  - message: Removed arrivals shuttle & city.
+    type: Remove
+  - message: Removed elf magic during redesign
+    type: Remove
+  id: 1050
+  time: '2026-07-29T22:44:08.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/371
+- author: gogenych
+  changes:
+  - message: Increase wall grid stability support strength from 5 to 7
+    type: Tweak
+  id: 1051
+  time: '2026-07-30T09:38:35.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/372
+- author: TheShuEd
+  changes:
+  - message: Fixed thin windoors locking interaction area.
+    type: Fix
+  - message: Fixed medium & big pipe naming conventions!
+    type: Fix
+  id: 1052
+  time: '2026-08-02T15:19:53.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/378
+- author: TheShuEd, Dinazzewr
+  changes:
+  - message: Added heels shoes!
+    type: Add
+  id: 1053
+  time: '2026-08-04T16:56:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/386
+- author: TheShuEd
+  changes:
+  - message: hoverboards was removed from guards building. They now have different
+      obtaining methods.
+    type: Tweak
+  id: 1054
+  time: '2026-08-06T09:10:41.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/387

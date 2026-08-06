@@ -3,7 +3,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Storage.Components;
-using Content.Shared.Weather;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 
@@ -12,13 +11,13 @@ namespace Content.Shared._CE.DayCycle;
 /// <summary>
 /// This is an add-on to the LightCycle system that helps you determine what time of day it is on the map
 /// </summary>
-public sealed class CEDayCycleSystem : EntitySystem
+public sealed partial class CEDayCycleSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MetaDataSystem _meta = default!;
-    [Dependency] private readonly SharedGameTicker _ticker = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedWeatherSystem _weather = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private SharedGameTicker _ticker = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedRoofSystem _roof = default!;
 
     private EntityQuery<MapGridComponent> _mapGridQuery;
     private EntityQuery<InsideEntityStorageComponent> _storageQuery;
@@ -30,17 +29,17 @@ public sealed class CEDayCycleSystem : EntitySystem
         _mapGridQuery = GetEntityQuery<MapGridComponent>();
         _storageQuery = GetEntityQuery<InsideEntityStorageComponent>();
 
-        SubscribeLocalEvent<CEZLevelMapComponent, CEStartDayEvent>(OnStartDay);
-        SubscribeLocalEvent<CEZLevelMapComponent, CEStartNightEvent>(OnStartNight);
+        SubscribeLocalEvent<CEZMapComponent, CEStartDayEvent>(OnStartDay);
+        SubscribeLocalEvent<CEZMapComponent, CEStartNightEvent>(OnStartNight);
     }
 
-    private void OnStartDay(Entity<CEZLevelMapComponent> ent, ref CEStartDayEvent args)
+    private void OnStartDay(Entity<CEZMapComponent> ent, ref CEStartDayEvent args)
     {
         if (ent.Comp.Depth == 0)
             RaiseLocalEvent(new CEGlobalStartDayEvent());
     }
 
-    private void OnStartNight(Entity<CEZLevelMapComponent> ent, ref CEStartNightEvent args)
+    private void OnStartNight(Entity<CEZMapComponent> ent, ref CEStartNightEvent args)
     {
         if (ent.Comp.Depth == 0)
             RaiseLocalEvent(new CEGlobalStartNightEvent());
@@ -136,9 +135,12 @@ public sealed class CEDayCycleSystem : EntitySystem
         if (!_mapGridQuery.TryComp(grid, out var gridComp))
             return day;
 
-        if (!_weather.CanWeatherAffect(grid.Value,
-                gridComp,
-                _maps.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates)))
+        if (!TryComp<RoofComponent>(grid.Value, out var roofComp))
+            return day;
+
+        // Check if the tile is illuminated (not under a roof)
+        var tileRef = _maps.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
+        if (_roof.IsRooved((grid.Value, gridComp, roofComp), tileRef.GridIndices))
             return false;
 
         return day;

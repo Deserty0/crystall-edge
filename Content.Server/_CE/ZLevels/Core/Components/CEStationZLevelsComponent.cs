@@ -1,3 +1,8 @@
+/*
+ * This file is sublicensed under MIT License
+ * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
+ */
+
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -15,14 +20,14 @@ public sealed partial class CEStationZLevelsComponent : Component
 
     /// <summary>
     /// CrystallEdge: Additional maps loaded below the main map (at negative depth levels).
-    /// Each map in the list is loaded at depth -N, -N+1, ..., -1, with <see cref="MapPath"/> at depth 0.
+    /// Each map in the list is loaded at depth -N, -N+1, ..., -1, with <see cref="ResPath"/> at depth 0.
     /// </summary>
     [DataField]
     public List<ResPath> MapsBelow = new();
 
     /// <summary>
     /// CrystallEdge: additional maps loaded above the main map (at positive depth levels).
-    /// Each map in the list is loaded at depth 1, 2, ..., N. <see cref="MapPath"/> works as depth 0.
+    /// Each map in the list is loaded at depth 1, 2, ..., N. <see cref="ResPath"/> works as depth 0.
     /// </summary>
     [DataField]
     public List<ResPath> MapsAbove = new();

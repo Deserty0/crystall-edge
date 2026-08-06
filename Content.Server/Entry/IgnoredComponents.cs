@@ -7,6 +7,8 @@ namespace Content.Server.Entry
             //CrystallEdge start
             "CEWaveShader",
             "CEPipeVisualizer",
+            "CETimedDespawnFadeout",
+            "CEInfusionAltarDangerVisuals",
             //CrystallEdge end
             "ConstructionGhost",
             "IconSmooth",
