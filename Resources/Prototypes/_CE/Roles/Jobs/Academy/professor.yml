@@ -10,12 +10,12 @@
   special:
     - !type:CEResearchPointsSpecial
       points:
-        Earth: 10
-        Fire: 10
-        Water: 10
-        Air: 10
-        Order: 10
-        Chaos: 10
+        Earth: 5
+        Fire: 5
+        Water: 5
+        Air: 5
+        Order: 5
+        Chaos: 5
 
 - type: startingGear
   id: CEAcademyProfessorGear
@@ -36,6 +36,45 @@
     - id: CECoinSilver1
     - id: CECoinSilver1
     - id: CECoinCopper10
+
+- type: entity
+  id: CEChestFilledAcademyProfessor
+  parent: CEWoodenChest
+  suffix: Filled, Academy Professor
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: CESyringe
+        - id: CESyringe
+        - id: CEDropper
+        - id: CEVialMediumOrderEssence
+        - id: CEVialMediumChaosEssence
+        - id: CEVialMediumEarthEssence
+        - id: CEVialMediumWaterEssence
+        - id: CEVialMediumFireEssence
+        - id: CEVialMediumAirEssence
+        - id: CEVialMedium
+        - id: CEVialMedium
+        - id: CEClothingEyesThaumaturgyGlasses
+        - id: CEGuidebookThaumaturgy
+        - id: CEThaumaturgicMagnifyingGlass
+
+- type: entity
+  id: CEBedsideTableFilledAcademyProfessor
+  parent: CEBedsideTableWooden
+  suffix: Filled, Academy Professor
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:GroupSelector
+        rolls: !type:RangeNumberSelector
+          range: 2, 3
+        children:
+        - id: CEClothingHeadTriangularLeatherGolden
+        - id: CEClothingCloakMantleThaumaturge
+        - id: CEClothingShirtAcademyRobe
 
 - type: entity
   id: CEKeyRingAcademyProfessor

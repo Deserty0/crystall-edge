@@ -26,6 +26,7 @@ public sealed partial class CEResearchTableWindow : DefaultWindow
     [Dependency] private IPrototypeManager _prototype = default!;
     private readonly ItemSlotsSystem _itemSlots = default!;
     private readonly CEResearchTableSystem _researchTable = default!;
+    private readonly CEClientScienceSystem _science = default!;
 
     private readonly Dictionary<ProtoId<CEScienceAreaPrototype>, CEScienceAreaCardControl> _areaCards = new();
     private readonly Dictionary<ProtoId<CEScienceDiscoveryPrototype>, CEScienceDiscoveryCardControl> _discoveryCards = new();
@@ -48,6 +49,7 @@ public sealed partial class CEResearchTableWindow : DefaultWindow
         IoCManager.InjectDependencies(this);
         _itemSlots = _entityManager.System<ItemSlotsSystem>();
         _researchTable = _entityManager.System<CEResearchTableSystem>();
+        _science = _entityManager.System<CEClientScienceSystem>();
 
         KnowledgeControl.OnMerge += (first, second) => OnMergeAspects?.Invoke(first, second);
         StartResearchButton.OnPressed += _ =>
@@ -116,6 +118,15 @@ public sealed partial class CEResearchTableWindow : DefaultWindow
 
         KnowledgeControl.UpdateKnowledge(points);
 
+        if (_player.LocalEntity is { } localPlayer)
+        {
+            foreach (var (id, card) in _areaCards)
+            {
+                var (known, unlockable) = _science.GetAreaProgress(localPlayer, id);
+                card.SetProgress(known, unlockable);
+            }
+        }
+
         if (!_entityManager.TryGetComponent<CEResearchTableComponent>(_owner, out var table))
             return;
 
@@ -160,7 +171,10 @@ public sealed partial class CEResearchTableWindow : DefaultWindow
                 CostContainer.AddChild(control);
             }
 
-            StartResearchButton.Disabled = !CESharedScienceSystem.CanAfford(points, area.Cost);
+            var exhausted = _player.LocalEntity is { } actor &&
+                             _science.GetAreaProgress(actor, areaId).Unlockable == 0;
+
+            StartResearchButton.Disabled = exhausted || !CESharedScienceSystem.CanAfford(points, area.Cost);
         }
         else
         {
@@ -219,11 +233,8 @@ public sealed partial class CEResearchTableWindow : DefaultWindow
 
     private void UpdateProjectContainer(CEDiscoveryProjectComponent project)
     {
-        // Discovery can still be its default (empty) value here if this update fired before the
-        // project's own networked state (spawned this tick) has arrived - bail out quietly and
-        // wait for the follow-up update once it does, rather than indexing a null/empty ProtoId.
-        if (string.IsNullOrEmpty(project.Discovery.Id) ||
-            !_prototype.TryIndex(project.Discovery, out var discovery) ||
+        if (project.Discovery is not { } discoveryId ||
+            !_prototype.TryIndex(discoveryId, out var discovery) ||
             !_prototype.TryIndex(discovery.Area, out var area) ||
             !_prototype.TryIndex(discovery.Knowledge, out var knowledge))
             return;
@@ -257,18 +268,10 @@ public sealed partial class CEResearchTableWindow : DefaultWindow
         KnowledgeControl.SetMergeSelected(true);
     }
 
-    /// <summary>
-    /// Keeps the parallax background moving with the hex grid's pan and zoom, but at a fraction of
-    /// the rate, for a parallax depth effect.
-    /// </summary>
     private void OnHexGridViewChanged(Vector2 offset, float scale)
     {
         const float lag = 0.25f;
 
         ProjectParallax.Offset = -offset * lag + new Vector2(1000, 1000);
-
-        var parallaxScale = 1f + (scale - 1f) * lag;
-        ProjectParallax.ScaleX = parallaxScale;
-        ProjectParallax.ScaleY = parallaxScale;
     }
 }

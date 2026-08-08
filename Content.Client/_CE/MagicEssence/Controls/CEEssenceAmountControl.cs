@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared._CE.MagicEssence.Prototypes;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -18,7 +19,7 @@ namespace Content.Client._CE.MagicEssence.Controls;
 /// </summary>
 public sealed partial class CEEssenceAmountControl : Control
 {
-    private const float TextScaleMultiplier = 2f;
+    private const float TextScaleMultiplier = 1f;
     private const float OutlineOffset = 1f;
 
     // The icon size TextScaleMultiplier was tuned against - actual text scale is adjusted
@@ -36,8 +37,10 @@ public sealed partial class CEEssenceAmountControl : Control
 
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IEntitySystemManager _entitySystem = default!;
 
     private readonly Font _font;
+    private readonly SpriteSystem _sprite;
 
     private Texture? _texture;
     private int _amount;
@@ -60,6 +63,7 @@ public sealed partial class CEEssenceAmountControl : Control
 
         var fontResource = _resourceCache.GetResource<FontResource>("/Fonts/_CE/Volkorn/VollkornSC-Bold.ttf");
         _font = new VectorFont(fontResource, 12);
+        _sprite = _entitySystem.GetEntitySystem<SpriteSystem>();
     }
 
     /// <summary>
@@ -71,7 +75,7 @@ public sealed partial class CEEssenceAmountControl : Control
 
         if (_prototype.TryIndex(essence, out CEMagicEssenceTypePrototype? proto))
         {
-            _texture = proto.Icon.Frame0();
+            _texture = _sprite.Frame0(proto.Icon);
             ToolTip = $"{proto.Name} x{amount}";
         }
         else
