@@ -167,6 +167,7 @@
   - type: SSDIndicator
   - type: StandingState
   - type: MindContainer
+  - type: MindExaminable
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
@@ -192,10 +193,7 @@
     barkSpeech: Ed
   - type: DamageForceSay
   - type: Vocal
-    sounds:
-      Male: MaleHuman
-      Female: FemaleHuman
-      Unsexed: MaleHuman
+    emoteSounds: MaleHuman
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes
@@ -212,10 +210,8 @@
     weightlessModifier: 0.6
   - type: CEBlinker
   - type: CESkillStorage
-  - type: CESatiations
-    satiations:
-      Hunger: 10
-      Thirst: 10
+  - type: Hunger
+  - type: Thirst
   - type: CEAnimationController
   - type: CEIdleAnimation
     animation:

@@ -30,6 +30,6 @@
   path: "/Textures/_CE/Shaders/shock_wave.swsl"
 
 - type: shader
-  id: CEMagicVision
+  id: CECloudShadow
   kind: source
-  path: "/Textures/_CE/Shaders/magic_vision.swsl"
+  path: "/Textures/_CE/Shaders/cloud_shadow.swsl"

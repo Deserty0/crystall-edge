@@ -60,31 +60,43 @@
   result: CEEnergyCrystalCell
   resultCount: 1
 
+- type: CERecipe
+  id: CENail
+  parent: CEBaseEngineeringTableRecipe
+  category: Materials
+  craftTime: 1.0
+  requirements:
+  - !type:StackResource
+    stack: CEIronBar
+    count: 1
+  result: CENail1
+  resultCount: 10
+
 #MARK: Tools
 
 - type: CERecipe
   id: CEMediumBrassPipe15
   parent: CEBaseEngineeringTableRecipe
   category: Tools
-  craftTime: 2.0
+  craftTime: 0.5
   requirements:
   - !type:StackResource
     stack: CEBrassSheet
-    count: 6
+    count: 2
   result: CEMediumBrassPipe1
-  resultCount: 15
+  resultCount: 5
 
 - type: CERecipe
   id: CEBigBrassPipe15
   parent: CEBaseEngineeringTableRecipe
   category: Tools
-  craftTime: 2.0
+  craftTime: 0.5
   requirements:
   - !type:StackResource
     stack: CEBrassSheet
-    count: 12
+    count: 4
   result: CEBigBrassPipe1
-  resultCount: 15
+  resultCount: 5
 
 - type: CERecipe
   id: CEPipeValve10
@@ -94,9 +106,9 @@
   requirements:
   - !type:StackResource
     stack: CEIronBar
-    count: 2
+    count: 1
   result: CEPipeValve1
-  resultCount: 10
+  resultCount: 5
 
 - type: CERecipe
   id: CEWrench
@@ -248,6 +260,79 @@
     stack: CEMachinePartEnergyLine
     count: 2
   result: CEVehicleHoverboard
+  resultCount: 1
+
+- type: CERecipe
+  id: CEThirdArm
+  parent: CEBaseEngineeringTableRecipe
+  category: Tools
+  craftTime: 2.0
+  requirements:
+  - !type:StackResource
+    stack: CEIronRod
+    count: 1
+  - !type:StackResource
+    stack: CEBrassRod
+    count: 2
+  - !type:StackResource
+    stack: CEMachinePartEnergyLine
+    count: 2
+  result: CEThirdArm
+  resultCount: 1
+
+- type: CERecipe
+  id: CEThirdArmModuleLight
+  parent: CEBaseEngineeringTableRecipe
+  category: Tools
+  craftTime: 1.5
+  requirements:
+  - !type:StackResource
+    stack: CEBrassSheet
+    count: 2
+  - !type:ProtoIdResource
+    protoId: CEEnergyCrystalCell
+    count: 1
+  - !type:StackResource
+    stack: CEGlass
+    count: 2
+  result: CEThirdArmModuleLight
+  resultCount: 1
+
+- type: CERecipe
+  id: CEThirdArmModuleMining
+  requiredKnowledge: KnowledgeThirdArmMiningModule
+  parent: CEBaseEngineeringTableRecipe
+  category: Tools
+  craftTime: 2.0
+  requirements:
+  - !type:StackResource
+    stack: CEBrassSheet
+    count: 4
+  - !type:ProtoIdResource
+    protoId: CEEnergyCrystalCell
+    count: 2
+  - !type:StackResource
+    stack: CEIronRod
+    count: 3
+  result: CEThirdArmModuleMining
+  resultCount: 1
+
+- type: CERecipe
+  id: CEThirdArmModuleManipulation
+  parent: CEBaseEngineeringTableRecipe
+  category: Tools
+  craftTime: 2.0
+  requirements:
+  - !type:StackResource
+    stack: CEIronBar
+    count: 2
+  - !type:StackResource
+    stack: CEBrassSheet
+    count: 3
+  - !type:ProtoIdResource
+    protoId: CEEnergyCrystalCell
+    count: 1
+  result: CEThirdArmModuleManipulation
   resultCount: 1
 
 #MARK: Machine cores
