@@ -3,6 +3,8 @@ using Content.Shared._CE.MagicVision.Events;
 using Content.Shared.Eye;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.StatusEffectNew;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server._CE.MagicVision;
@@ -10,9 +12,9 @@ namespace Content.Server._CE.MagicVision;
 /// <summary>
 /// Grants entities magic vision (the <see cref="CEMagicVisionComponent"/> marker, which drives the
 /// visibility mask and the client-side overlay) based on however many sources currently want them to
-/// have it - clothing (<see cref="CEMagicVisionClothingComponent"/>), innate sources
-/// (<see cref="CEPermanentMagicVisionComponent"/>, e.g. ghosts), and potentially skills or other
-/// sources in the future, all decided fresh each time via <see cref="CECheckMagicVisionEvent"/>. This
+/// have it - clothing (<see cref="CEMagicVisionClothingComponent"/>), status effects
+/// (<see cref="CEMagicVisionStatusEffectComponent"/>), and potentially other sources in the future,
+/// all decided fresh each time via <see cref="CECheckMagicVisionEvent"/>. This
 /// is entirely server-authoritative: the component is networked and drives PVS filtering, so the
 /// client only ever mirrors it from replicated state and never predicts it.
 /// </summary>
@@ -20,61 +22,54 @@ public sealed partial class CEMagicVisionSystem : EntitySystem
 {
     [Dependency] private SharedEyeSystem _eye = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CEMagicVisionComponent, GetVisMaskEvent>(OnGetVisMask);
-
-        SubscribeLocalEvent<CEMagicVisionClothingComponent, InventoryRelayedEvent<CECheckMagicVisionEvent>>(OnClothingCheckVision);
-        SubscribeLocalEvent<CEMagicVisionClothingComponent, GotEquippedEvent>(OnClothingEquipped);
-        SubscribeLocalEvent<CEMagicVisionClothingComponent, GotUnequippedEvent>(OnClothingUnequipped);
-
-        SubscribeLocalEvent<CEPermanentMagicVisionComponent, CECheckMagicVisionEvent>(OnPermanentCheckVision);
-        SubscribeLocalEvent<CEPermanentMagicVisionComponent, ComponentInit>(OnPermanentInit);
-        SubscribeLocalEvent<CEPermanentMagicVisionComponent, ComponentShutdown>(OnPermanentShutdown);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetVisMask(Entity<CEMagicVisionComponent> ent, ref GetVisMaskEvent args)
     {
         args.VisibilityMask |= (int)VisibilityFlags.CEMagicVision;
     }
 
+    [SubscribeLocalEvent]
     private void OnClothingCheckVision(Entity<CEMagicVisionClothingComponent> ent, ref InventoryRelayedEvent<CECheckMagicVisionEvent> args)
     {
         args.Args.GrantVision();
     }
 
+    [SubscribeLocalEvent]
     private void OnClothingEquipped(Entity<CEMagicVisionClothingComponent> ent, ref GotEquippedEvent args)
     {
-        if ((args.SlotFlags & SlotFlags.EYES) == 0)
+        if ((args.SlotFlags & CECheckMagicVisionEvent.Slots) == 0)
             return;
 
         RefreshMagicVision(args.EquipTarget);
     }
 
+    [SubscribeLocalEvent]
     private void OnClothingUnequipped(Entity<CEMagicVisionClothingComponent> ent, ref GotUnequippedEvent args)
     {
-        if ((args.SlotFlags & SlotFlags.EYES) == 0)
+        if ((args.SlotFlags & CECheckMagicVisionEvent.Slots) == 0)
             return;
 
         RefreshMagicVision(args.EquipTarget);
     }
 
-    private void OnPermanentCheckVision(Entity<CEPermanentMagicVisionComponent> ent, ref CECheckMagicVisionEvent args)
+    [SubscribeLocalEvent]
+    private void OnStatusEffectCheckVision(Entity<CEMagicVisionStatusEffectComponent> ent, ref StatusEffectRelayedEvent<CECheckMagicVisionEvent> args)
     {
-        // Innate vision isn't a worn artifact straining the wearer, so no overlay.
-        args.GrantVision(showOverlay: false);
+        args.Args.GrantVision(ent.Comp.ShowOverlay);
     }
 
-    private void OnPermanentInit(Entity<CEPermanentMagicVisionComponent> ent, ref ComponentInit args)
+    [SubscribeLocalEvent]
+    private void OnStatusEffectApplied(Entity<CEMagicVisionStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        RefreshMagicVision(ent.Owner);
+        RefreshMagicVision(args.Target);
     }
 
-    private void OnPermanentShutdown(Entity<CEPermanentMagicVisionComponent> ent, ref ComponentShutdown args)
+    [SubscribeLocalEvent]
+    private void OnStatusEffectRemoved(Entity<CEMagicVisionStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
-        RefreshMagicVision(ent.Owner);
+        // Already out of the status effect container here, so the relayed check no longer sees this effect.
+        if (!TerminatingOrDeleted(args.Target))
+            RefreshMagicVision(args.Target);
     }
 
     /// <summary>

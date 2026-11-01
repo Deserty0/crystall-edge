@@ -216,18 +216,6 @@
   id: ClothingUniformJumpskirtChemistry
   result: ClothingUniformJumpskirtChemistry
 
-## Clown
-
-- type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpsuitClown
-  result: ClothingUniformJumpsuitClown
-
-- type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpskirtClown
-  result: ClothingUniformJumpskirtClown
-
 ## CMO
 
 - type: latheRecipe
@@ -430,18 +418,6 @@
   id: ClothingUniformJumpskirtSeniorPhysician
   result: ClothingUniformJumpskirtSeniorPhysician
 
-## Mime
-
-- type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpsuitMime
-  result: ClothingUniformJumpsuitMime
-
-- type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpskirtMime
-  result: ClothingUniformJumpskirtMime
-
 ## Musician
 
 - type: latheRecipe
@@ -617,6 +593,12 @@
   id: ClothingUniformJumpskirtWarden
   result: ClothingUniformJumpskirtWarden
 
+## Tram Driver
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTramDriver
+  result: ClothingUniformJumpsuitTramDriver
+
 # Command winter coats
 - type: latheRecipe
   parent: BaseCommandCoatRecipe
@@ -668,16 +650,6 @@
   parent: BaseCoatRecipe
   id: ClothingOuterWinterMusician
   result: ClothingOuterWinterMusician
-
-- type: latheRecipe
-  parent: BaseCoatRecipe
-  id: ClothingOuterWinterClown
-  result: ClothingOuterWinterClown
-
-- type: latheRecipe
-  parent: BaseCoatRecipe
-  id: ClothingOuterWinterMime
-  result: ClothingOuterWinterMime
 
 - type: latheRecipe
   parent: BaseCoatRecipe
@@ -922,6 +894,11 @@
   parent: BaseNeckClothingRecipe
   id: ClothingNeckTieSci
   result: ClothingNeckTieSci
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckTieSerious
+  result: ClothingNeckTieSerious
 
 # Scarfs
 - type: latheRecipe

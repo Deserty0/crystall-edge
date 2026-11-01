@@ -3,6 +3,13 @@ ce-energy-deficit-popup = Not enough mana!
 
 ce-magic-manacost = Mana cost
 ce-magic-cooldown = Cooldown
+ce-magic-cooldown-time = { $minutes ->
+    [0] { $seconds }s
+   *[other] { $minutes }min{ $seconds ->
+        [0] {""}
+       *[other] {" "}{ $seconds }s
+    }
+}
 
 ce-magic-spell-not-enough-mana = Not enough mana!
 ce-magic-spell-no-mana-component = You're not using magical energy.
@@ -27,6 +34,7 @@ ce-magic-staminacost = Stamina cost
 ce-magic-weapon-required = Requires a weapon in hand
 ce-magic-spell-pacified = It could hurt someone!
 ce-magic-spell-ssd = Do not touch disconnected players!
+ce-action-require-night = Can only be used at night.
 
 ce-magic-spell-target-not-mob = The target must be a living thing!
 
@@ -37,3 +45,5 @@ ce-magic-spell-target-mob-state-critical = dying
 
 ce-magic-skillpointcost = Resource costs "{$name}": [color=#eba834]{$count}[/color]
 ce-magic-spell-skillpoint-not-enough = There are {$count} resources of "{$name}" missing!
+
+ce-magic-spell-target-no-mind = The target must have a soul!

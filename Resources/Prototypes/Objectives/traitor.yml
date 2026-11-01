@@ -141,29 +141,6 @@
 # social
 
 - type: entity
-  parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
-  id: RandomTraitorAliveObjective
-  description: Identify yourself at your own risk. We just need them alive.
-  components:
-  - type: Objective
-    difficulty: 1.75
-  - type: TargetObjective
-    title: objective-condition-other-traitor-alive-title
-  - type: PickRandomPerson
-    conditions:
-    - !type:RoleCondition
-      whitelist:
-        components:
-        - TraitorRole
-    # Can't have multiple objectives to help/save the same person
-    - !type:ObjectiveTargetCondition
-      inverted: true
-      whitelist:
-        components:
-        - HelpProgressCondition
-        - KeepAliveCondition
-
-- type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
   id: RandomTraitorProgressObjective
   description: Identify yourself at your own risk. We just need them to succeed.
@@ -363,26 +340,6 @@
     stealGroup: NukeDisk
     owner: objective-condition-steal-station
 
-# sabotage
-- type: entity
-  parent: BaseTraitorObjective
-  id: SupercritAnomaliesObjective
-  description: Nanotrasen is very interested in anomalies with potentially catastrophic consequences. Introduce them to the fire they're playing with.
-  components:
-  - type: Objective
-    difficulty: 2
-    icon:
-      sprite: Structures/Specific/anomaly.rsi
-      state: anom1
-  - type: SupercriticalAnomaliesCondition
-  - type: NumberObjective
-    min: 3
-    max: 4
-    title: objective-condition-supercrit-anomalies-title
-  - type: ObjectiveLimit
-    limit: 1
-
-# other
 - type: entity
   parent: BaseTraitorObjective
   id: HijackTradeStationObjective

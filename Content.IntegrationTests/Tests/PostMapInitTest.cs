@@ -12,6 +12,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
+using Content.Shared._CE.RoundPortal;
 using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Content.Shared.Roles;
@@ -49,7 +50,6 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] Grids =
         {
-            "/Maps/centcomm.yml",
             AdminTestArenaSystem.ArenaMapPath
         };
 
@@ -63,12 +63,6 @@ namespace Content.IntegrationTests.Tests
         /// </remarks>
         private static readonly Dictionary<string, HashSet<EntProtoId>> DoNotMapWhitelistSpecific = new()
         {
-            {"/Maps/bagel.yml", ["RubberStampMime"]},
-            {"/Maps/reach.yml", ["HandheldCrewMonitor"]},
-            {"/Maps/Shuttles/ShuttleEvent/honki.yml", ["GoldenBikeHorn", "RubberStampClown"]},
-            {"/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", ["RubberStampSyndicate"]},
-            {"/Maps/Shuttles/ShuttleEvent/cruiser.yml", ["ShuttleGunPerforator"]},
-            {"/Maps/Shuttles/ShuttleEvent/instigator.yml", ["ShuttleGunFriendship"]},
         };
 
         /// <summary>
@@ -76,12 +70,11 @@ namespace Content.IntegrationTests.Tests
         /// </summary>
         /// <remarks>
         /// It is also possible to whitelist entire directories here. For example, adding
-        /// "/Maps/Shuttles/**" will whitelist all shuttle maps.
+        /// "/Maps/_CE/Dev/**" will whitelist all dev maps.
         /// </remarks>
         private static readonly string[] DoNotMapWhitelist =
         {
-            "/Maps/centcomm.yml",
-            "/Maps/Shuttles/AdminSpawn/**" // admin gaming
+            "/Maps/_CE/Dev/**", // CrystallEdge dev maps
         };
 
         /// <summary>
@@ -93,7 +86,6 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] GameMaps = GameDataScrounger.PrototypesOfKind<GameMapPrototype>().Where(x => x != PoolManager.TestMap).ToArray();
         private static readonly ResPath[] AllMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps/_CE", "*.yml");
-        private static readonly ResPath[] ShuttleMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps/Shuttles", "*.yml");
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
 
@@ -127,43 +119,6 @@ namespace Content.IntegrationTests.Tests
                 }
 
                 mapSystem.DeleteMap(mapId);
-            });
-        }
-
-        /// <summary>
-        /// Asserts that shuttles are loadable and have been saved as grids and not maps.
-        /// </summary>
-        [Test]
-        [TestCaseSource(nameof(ShuttleMapFiles))]
-        [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), false)]
-        [Ignore("CrystallEdge")]
-        public async Task ShuttlesLoadableTest(ResPath path)
-        {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var entManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = entManager.System<MapLoaderSystem>();
-            var mapSystem = entManager.System<SharedMapSystem>();
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-
-            await server.WaitPost(() =>
-            {
-                Assert.Multiple(() =>
-                {
-                    mapSystem.CreateMap(out var mapId);
-                    try
-                    {
-                        Assert.That(mapLoader.TryLoadGrid(mapId, path, out _),
-                            $"Failed to load shuttle {path}, was it saved as a map instead of a grid?");
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Failed to load shuttle {path}, was it saved as a map instead of a grid?",
-                            ex);
-                    }
-                    mapSystem.DeleteMap(mapId);
-                });
             });
         }
 
@@ -326,7 +281,6 @@ namespace Content.IntegrationTests.Tests
 
         [Test, TestCaseSource(nameof(GameMaps))]
         [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), false)]
-        [Ignore("CrystallEdge")]
         public async Task GameMapsLoadableTest(string mapProto)
         {
             var pair = Pair;
@@ -380,34 +334,13 @@ namespace Content.IntegrationTests.Tests
                 // Test shuttle can dock.
                 // This is done inside gamemap test because loading the map takes ages and we already have it.
                 var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station;
-                /* //Baseline Disable FTL test
-                if (entManager.TryGetComponent<StationEmergencyShuttleComponent>(station, out var stationEvac))
-                {
-                    var shuttlePath = stationEvac.EmergencyShuttlePath;
-                    Assert.That(mapLoader.TryLoadGrid(shuttleMap, shuttlePath, out var shuttle),
-                        $"Failed to load {shuttlePath}");
 
-                    Assert.That(
-                        shuttleSystem.TryFTLDock(shuttle!.Value.Owner,
-                            entManager.GetComponent<ShuttleComponent>(shuttle!.Value.Owner),
-                            targetGrid.Value),
-                        $"Unable to dock {shuttlePath} to {mapProto}");
-                }
-
-                mapSystem.DeleteMap(shuttleMap);
-                */
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
-                    // Test that the map has valid latejoin spawn points or container spawn points
-                    //if (!NoSpawnMaps.Contains(mapProto)) //CrystallEdge we dont need latejoin
-                    //{
-                    //    var lateSpawns = 0;
-//
-                    //    lateSpawns += GetCountLateSpawn<SpawnPointComponent>(gridUids, entManager);
-                    //    lateSpawns += GetCountLateSpawn<ContainerSpawnPointComponent>(gridUids, entManager);
-//
-                    //    Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
-                    //}
+                    // CrystallEdge: late joiners arrive through a round portal on any z-level of the map
+                    var portals = entManager.AllEntityQueryEnumerator<CERoundPortalComponent>();
+                    Assert.That(portals.MoveNext(out _), $"Found no {nameof(CERoundPortalComponent)} for late joiners on {mapProto}");
+                    // CrystallEdge end
 
                     // Test all availableJobs have spawnPoints
                     // This is done inside gamemap test because loading the map takes ages and we already have it.

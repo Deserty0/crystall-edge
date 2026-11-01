@@ -37,6 +37,20 @@
       prob: 0.5
       rolls: !type:RangeNumberSelector
         range: 4, 5
+    # Large weapons (Ginormous/Huge — too big for the small crate's storage)
+    - !type:NestedSelector
+      tableId: CEStationCrateLootLargeWeapons
+      prob: 0.2
+
+- type: entityTable
+  id: CEStationCrateLootLargeWeapons
+  table: !type:GroupSelector
+    children:
+    - id: CEClothingBeltQuiver
+    - id: CEWeaponSpearIron
+    - id: CEWeaponTwoHandedSwordIron
+    - id: CEWeaponWarAxeIron
+    - id: CEWeaponBowCombat
 
 - type: entityTable
   id: CEStationCrateLootTools
@@ -44,7 +58,19 @@
     children:
     - !type:GroupSelector
       children:
-      - id: CEWeaponDaggerIron
+      - !type:GroupSelector
+        weight: 0.6
+        children:
+        - id: CEWeaponDaggerIron
+        - id: CEWeaponSkimitarIron
+        - id: CEWeaponStaffWooden
+        - id: CEWeaponSwordIron
+        - id: CEWeaponLightCrossbow
+          weight: 0.5
+      - !type:GroupSelector
+        children:
+        - id: CEArrowIron
+        - id: CECrossboltIron
       - !type:GroupSelector
         weight: 2
         children:
@@ -73,32 +99,22 @@
         - id: CEMachinePartDimensionalMatrix1
         - id: CEMachinePartCoalDiffuser1
       - !type:GroupSelector
-        weight: 0.05
-        children:
-        - id: CEEssenceSphereEarth
-        - id: CEEssenceSphereFire
-        - id: CEEssenceSphereWater
-        - id: CEEssenceSphereAir
-        - id: CEEssenceSphereOrder
-        - id: CEEssenceSphereChaos
-      - !type:GroupSelector
         children:
         - id: CEStoneBlock10
         - id: CEDirtBlock10
         - id: CENail10
+      - id: CEManaTransferGlove
+      - id: CESafeFallingAmulet
       - id: CEKeyFile
       - id: CEScissors
-      - id: CEBookAncient
-        weight: 0.3
       - id: CEBaseLockpick
         weight: 0.1
+      - id: CEClothingWristwatch
+        weight: 0.3
+      - id: CEClothingWristwatchGold
+        weight: 0.01
       - id: CELockIron
         weight: 0.3
-      - !type:GroupSelector
-        weight: 0.1
-        children:
-        - id: CERubberStampApproved
-        - id: CERubberStampDenied
       - !type:GroupSelector
         children:
         - id: CEInstrumentFlute
@@ -108,13 +124,28 @@
       - id: CERope
       - id: CEFork
       - id: CESpoon
+      - id: CESmokingPipe
+      - id: CEGroundTobacco
       - id: CEFloorTileGrass30
+      - id: CEFloorTileGrassAutumn30
       - id: CEFloorTileMycelium30
       - id: CEEnergyCrystalShard
       - id: CEd20Dice
       - id: CEd6Dice
-      - id: CECoinCopper5
+      - !type:GroupSelector
         weight: 0.5
+        children:
+        - id: CECoinCopper1
+        - id: CECoinCopper5
+          weight: 0.5
+        - id: CECoinCopper10
+          weight: 0.1
+        - id: CECoinSilver1
+          weight: 0.1
+        - id: CECoinSilver5
+          weight: 0.05
+        - id: CECoinSilver10
+          weight: 0.01
 
 
 - type: entityTable
@@ -144,7 +175,7 @@
     - !type:GroupSelector
       weight: 0.3
       children:
-      - id: CEBookTieflingGambit
+      - id: CEBookInfernalGambit
       - id: CEBookPantheonGodsSileita
       - id: CEBookPantheonGodsSileitaImitators
         weight: 0.1

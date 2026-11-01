@@ -1,13 +1,13 @@
 - type: waypointer
   abstract: true
-  id: CEBaseWaypointer
+  id: BaseWaypointer
   rsiPath: _CE/Markers/Waypointers/waypointer.rsi
   waypointerStates: 5
   color: White
 
 - type: waypointer
-  parent: CEBaseWaypointer
-  id: CEOreCoreWaypointer
+  parent: BaseWaypointer
+  id: OreCoreWaypointer
   color: "#e17d44"
   trackedComponents:
   - type: CEOreVein
@@ -18,4 +18,12 @@
       children:
       - id: CEIronOre1
   maxRange: 10
+  workOnGrid: true
+
+- type: waypointer
+  parent: BaseWaypointer
+  id: AttachmentWaypointer
+  color: "#e05a8a"
+  pvsOverride: true
+  maxRange: 500
   workOnGrid: true

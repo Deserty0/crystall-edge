@@ -12,7 +12,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC.Systems;
-using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -48,18 +47,6 @@ public sealed partial class DragonSystem : EntitySystem
     private const int RiftTileRadius = 2;
 
     private const int RiftsAllowed = 3;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnSpawnRift);
-        SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
-        SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<DragonComponent, EntityZombifiedEvent>(OnZombified);
-    }
 
     public override void Update(float frameTime)
     {
@@ -111,17 +98,20 @@ public sealed partial class DragonSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
         Roar(uid, component);
         _actions.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, DragonComponent component, ComponentShutdown args)
     {
         DeleteRifts(uid, false, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnSpawnRift(EntityUid uid, DragonComponent component, DragonSpawnRiftActionEvent args)
     {
         if (component.Weakened)
@@ -161,8 +151,10 @@ public sealed partial class DragonSystem : EntitySystem
             }
         }
 
+        var position = _transform.GetWorldPosition(xform);
+
         // cant put a rift on solars
-        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(_transform.GetWorldPosition(xform), RiftTileRadius), false))
+        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(position, RiftTileRadius), false))
         {
             if (!_turf.IsSpace(tile))
                 continue;
@@ -171,14 +163,14 @@ public sealed partial class DragonSystem : EntitySystem
             return;
         }
 
-        var carpUid = Spawn(component.RiftPrototype, _transform.GetMapCoordinates(uid, xform: xform));
-        Transform(carpUid).LocalRotation = Angle.Zero;
+        var carpUid = Spawn(component.RiftPrototype, new MapCoordinates(position, xform.MapID), rotation: Transform(xform.GridUid.Value).LocalRotation);
 
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
     }
 
     // TODO: just make this a move speed modifier component???
+    [SubscribeLocalEvent]
     private void OnDragonMove(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (component.Weakened)
@@ -187,6 +179,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMobStateChanged(EntityUid uid, DragonComponent component, MobStateChangedEvent args)
     {
         // Deletes all rifts after dying
@@ -198,12 +191,6 @@ public sealed partial class DragonSystem : EntitySystem
 
         // objective is explicitly not reset so that it will show how many you got before dying in round end text
         DeleteRifts(uid, false, component);
-    }
-
-    private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)
-    {
-        // prevent carp attacking zombie dragon
-        _faction.AddFaction(ent.Owner, ent.Comp.Faction);
     }
 
     private void Roar(EntityUid uid, DragonComponent comp, EntityCoordinates? coords = null)

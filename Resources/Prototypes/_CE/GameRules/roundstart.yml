@@ -1,53 +1,6 @@
 - type: entity
   parent: CEBaseGameRule
-  id: CEGameRule7Days
+  id: CEGameRuleMurkConsuming
   components:
-  - type: CELimitedDaysRule
-    max: 7
-
-- type: entity
-  parent: CEBaseGameRule
-  id: CEGameRuleThieves
-  components:
-  - type: GameRule
-    minPlayers: 3
-  - type: CEThiefRule
-  - type: CEBlueTextRule
-  - type: AntagObjectives
-    objectives:
-    - CEThiefObjectiveBeCool
-    - CEThiefObjectiveBeSafe
-  - type: AntagSelection
-    selectionTime: JobsAssigned
-    agentName: ce-roles-antag-thief-name
-    lateJoinAdditional: true
-    antags:
-    - !type:LinearAntagCount
-      proto: CEThief
-      playerRatio: 3
-      range:
-        min: 1
-        max: 5
-
-- type: entity
-  parent: CEBaseGameRule
-  id: CEGameRuleMagicEssenceNodes
-  components:
-  - type: CEMagicEssenceNodeRule
-    nodeCount: 5
-
-# variation passes
-- type: entity
-  id: CEBasicRoundstartVariation
-  parent: CEBaseGameRule
-  components:
-  - type: RoundstartStationVariationRule
-    rules:
-    # Ore veins
-    - id: CEGameRuleCoalOreDistributionVariationPass
-    - id: CEGameRuleIronOreDistributionVariationPass
-    - id: CEGameRuleWallsDamagedVariationPass
-    # Cores
-    - id: CEStaticIronCoreVariationPass
-    - id: CEStaticCoalCoreVariationPass
-    - id: CEStaticCrystalCoreVariationPass
+  - type: CEMurkConsumingRule
+    crackDelay: 60s

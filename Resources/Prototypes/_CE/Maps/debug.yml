@@ -27,9 +27,6 @@
         - type: StationJobs
           availableJobs:
             CETownfolk: [ -1, -1 ]
-            CEGuardCommander: [ 1, 1 ]
-            CETavernmaster: [ 1, 1 ]
-            CEAcademyRector: [ 1, 1 ]
         - type: CEStationZLevels
           mapsBelow:
           - /Maps/_CE/Dev/Dev-1.yml
@@ -38,29 +35,23 @@
           - /Maps/_CE/Dev/Dev2.yml
           - /Maps/_CE/Dev/Dev3.yml
           zLevelsComponentOverrides:
-            - type: CEGridStability
-            - type: MapAtmosphere
-              space: False
-              mixture:
-                volume: 2500
-                immutable: True
-                temperature: 293.15
-                moles:
-                  Oxygen: 21.824879
-                  Nitrogen: 82.10312
             - type: Parallax
-              parallax: CESky
+              parallax: CEBedrock
+            - type: MapLight #BEFORE Light Cycle
+              ambientLightColor: "#adcfd8"
             - type: LightCycle #BEFORE Sun shadow cycle!
-              offset: 100
-              duration: 300
-              originalColor: "#75e3ff"
+            - type: CELightCycle
+              colors:
+                0: "#1c1c27"
+                0.125: "#2e2f42"
+                0.25: "#465269"
+                0.375: "#d8ffff"
+                0.625: "#d8ffff"
+                0.75: "#334347"
+                0.875: "#323347"
             - type: SunShadowCycle
-              offset: 100
-              duration: 300
             - type: CEZLevelRoof
             - type: SunShadow
-            - type: MapLight
-              ambientLightColor: "#75e3ff"
             - type: CECloudsOverlay
               seed: 490
               frequency: 0.2
@@ -72,6 +63,9 @@
               coverage: 0.6
               shadowStrength: 0.6
               shadowColor: "#000000"
+            - type: CEGridStability
+              supportLowestLevel: True
+            - type: CEMurkedMap
 
 - type: zMap
   id: Empty
@@ -83,15 +77,6 @@
   - /Maps/_CE/Empty.yml
   - /Maps/_CE/Empty.yml
   components:
-    - type: MapAtmosphere
-      space: False
-      mixture:
-        volume: 2500
-        immutable: True
-        temperature: 293.15
-        moles:
-          Oxygen: 21.824879
-          Nitrogen: 82.10312
     - type: Parallax
       parallax: CESky
     - type: SunShadowCycle

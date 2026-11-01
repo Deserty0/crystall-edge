@@ -18,7 +18,8 @@ public sealed partial class DefaultGameScreen : InGameScreen
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorAndMarginPreset(TopLeft, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
-        SetAnchorAndMarginPreset(Inventory, LayoutPreset.BottomLeft, margin: 5);
+        // CrystallEdge: inventory UI removed from the main screen, lives in the character menu instead
+        SetAnchorAndMarginPreset(CharacterMenuButton, LayoutPreset.BottomLeft, margin: 5);
         SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
         SetAnchorAndMarginPreset(Chat, LayoutPreset.TopRight, margin: 10);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.TopRight, margin: 10);
@@ -35,9 +36,18 @@ public sealed partial class DefaultGameScreen : InGameScreen
         SetAnchorAndMarginPreset(ManaBar, LayoutPreset.CenterBottom);
         SetMarginLeft(ManaBar, manaOffset);
 
+        // Time sense clock: right of the mana sphere, bottom-aligned with it
+        SetAnchorAndMarginPreset(Clock, LayoutPreset.CenterBottom);
+        SetMarginLeft(Clock, manaOffset + ManaBar.MinSize.X + 4f);
+        SetMarginTop(Clock, -Clock.MinSize.Y);
+
         SetAnchorAndMarginPreset(StaminaBar, LayoutPreset.CenterBottom, margin: 80);
         SetMarginLeft(StaminaBar, -StaminaBar.MinSize.X / 2f);
         SetMarginRight(StaminaBar, StaminaBar.MinSize.X / 2f);
+
+        SetAnchorAndMarginPreset(RoundProgressBar, LayoutPreset.CenterTop, margin: 10);
+        SetMarginLeft(RoundProgressBar, -RoundProgressBar.MinSize.X / 2f);
+        SetMarginRight(RoundProgressBar, RoundProgressBar.MinSize.X / 2f);
 
         SetAnchorPreset(Actions, LayoutPreset.BottomWide);
         SetMarginLeft(Actions, 0);
@@ -48,7 +58,7 @@ public sealed partial class DefaultGameScreen : InGameScreen
         Chat.OnChatResizeFinish += ChatOnResizeFinish;
 
         MainViewport.OnResized += ResizeActionContainer;
-        Inventory.OnResized += ResizeActionContainer;
+        // Inventory.OnResized += ResizeActionContainer; // CrystallEdge: inventory UI removed from the main screen
         Hotbar.OnResized += ResizeActionContainer;
 
         ResizeActionContainer();

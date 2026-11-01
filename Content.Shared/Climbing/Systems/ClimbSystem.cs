@@ -42,9 +42,10 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private SharedStunSystem _stunSystem = default!;
     [Dependency] private SharedTransformSystem _xformSystem = default!;
 
-    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
-    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
-    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
+    [Dependency] private EntityQuery<BonkableComponent> _bonkQuery;
+    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -284,7 +285,27 @@ public sealed partial class ClimbSystem : VirtualController
 
         var xform = _xformQuery.GetComponent(uid);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
-        var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
+        //CrystallEdge start - climb towards hard collider center instead of entity origin, for offset colliders like fences
+        var climbableTransform = _physics.GetPhysicsTransform(climbable);
+        Box2? climbableBounds = null;
+
+        if (_fixturesQuery.TryGetComponent(climbable, out var climbableFixtures))
+        {
+            foreach (var fixture in climbableFixtures.Fixtures.Values)
+            {
+                if (!fixture.Hard)
+                    continue;
+
+                for (var i = 0; i < fixture.Shape.ChildCount; i++)
+                {
+                    var aabb = fixture.Shape.ComputeAABB(climbableTransform, i);
+                    climbableBounds = climbableBounds?.Union(aabb) ?? aabb;
+                }
+            }
+        }
+
+        var worldDirection = (climbableBounds?.Center ?? climbableTransform.Position) - worldPos;
+        //CrystallEdge end
         var distance = worldDirection.Length();
         var parentRot = worldRot - xform.LocalRotation;
         // Need direction relative to climber's parent.

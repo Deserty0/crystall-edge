@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Shared._CE.Achievements.Prototypes;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
@@ -45,6 +46,7 @@ namespace Content.Server.Database
             return await db.DbContext
                 .Preference
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
+                .Include(p => p.Profiles).ThenInclude(h => h.SecretRoles) // CrystallEdge
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
                 .Include(p => p.Profiles)
@@ -103,6 +105,7 @@ namespace Content.Server.Database
                 .Include(p => p.Preference)
                 .Where(p => p.Preference.UserId == userId.UserId)
                 .Include(p => p.Jobs)
+                .Include(p => p.SecretRoles) // CrystallEdge
                 .Include(p => p.Antags)
                 .Include(p => p.Traits)
                 .Include(p => p.Loadouts)
@@ -249,6 +252,15 @@ namespace Content.Server.Database
                     .Where(j => j.Value != JobPriority.Never)
                     .Select(j => new Job {JobName = j.Key, Priority = (DbJobPriority) j.Value})
             );
+
+            // CrystallEdge: secret role priorities
+            profile.SecretRoles.Clear();
+            profile.SecretRoles.AddRange(
+                humanoid.SecretRolePriorities
+                    .Where(r => r.Value != JobPriority.Never)
+                    .Select(r => new SecretRole {SecretRoleName = r.Key, Priority = (DbJobPriority) r.Value})
+            );
+            // CrystallEdge end
 
             profile.Antags.Clear();
             profile.Antags.AddRange(
@@ -1566,6 +1578,133 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return true;
         }
 
+        #endregion
+
+        #region CrystlallEdge Achievements
+        //CrystallEdge achievements
+
+        public async Task AddPlayerAchievement(Guid player, ProtoId<CEAchievementPrototype> achievement)
+        {
+            await using var db = await GetDb();
+
+            var exists = await db.DbContext.PlayerAchievement
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.ProtoId == achievement.Id)
+                .AnyAsync();
+
+            if (exists)
+                return;
+
+            db.DbContext.PlayerAchievement.Add(new PlayerAchievement
+            {
+                PlayerUserId = player,
+                ProtoId = achievement.Id,
+            });
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> HasPlayerAchievement(Guid player, ProtoId<CEAchievementPrototype> achievement)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.PlayerAchievement
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.ProtoId == achievement.Id)
+                .AnyAsync();
+        }
+
+        public async Task<bool> RemovePlayerAchievement(Guid player, ProtoId<CEAchievementPrototype> achievement)
+        {
+            await using var db = await GetDb();
+
+            var ent = await db.DbContext.PlayerAchievement
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.ProtoId == achievement.Id)
+                .SingleOrDefaultAsync();
+
+            if (ent == null)
+                return false;
+
+            db.DbContext.PlayerAchievement.Remove(ent);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<string>> GetPlayerAchievements(Guid player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.PlayerAchievement
+                .Where(w => w.PlayerUserId == player)
+                .Select(w => w.ProtoId)
+                .ToListAsync();
+        }
+
+        public async Task<Dictionary<string, float>> GetAchievementPercentages()
+        {
+            await using var db = await GetDb();
+
+            var totalPlayers = await db.DbContext.Player.CountAsync();
+            if (totalPlayers == 0)
+                return new Dictionary<string, float>();
+
+            var counts = await db.DbContext.PlayerAchievement
+                .GroupBy(a => a.ProtoId)
+                .Select(g => new { g.Key, Count = g.Count() })
+                .ToListAsync();
+
+            return counts.ToDictionary(
+                x => x.Key,
+                x => (float) x.Count / totalPlayers * 100f);
+        }
+
+        //CrystallEdge achievements end
+        #endregion
+
+        #region CrystallEdge Statistics
+        //CrystallEdge statistics
+
+        public async Task<Dictionary<Guid, Dictionary<string, long>>> AddPlayerStatistics(
+            Dictionary<Guid, Dictionary<string, long>> deltas)
+        {
+            await using var db = await GetDb();
+
+            var players = deltas.Keys.ToList();
+            var rows = await db.DbContext.PlayerStatistic
+                .Where(s => players.Contains(s.PlayerUserId))
+                .ToListAsync();
+
+            var lookup = rows.ToDictionary(r => (r.PlayerUserId, r.Key));
+            var totals = new Dictionary<Guid, Dictionary<string, long>>();
+
+            foreach (var (player, stats) in deltas)
+            {
+                var playerTotals = new Dictionary<string, long>();
+                totals[player] = playerTotals;
+
+                foreach (var (key, delta) in stats)
+                {
+                    if (!lookup.TryGetValue((player, key), out var row))
+                    {
+                        row = new PlayerStatistic
+                        {
+                            PlayerUserId = player,
+                            Key = key,
+                        };
+                        db.DbContext.PlayerStatistic.Add(row);
+                    }
+
+                    row.Value += delta;
+                    playerTotals[key] = row.Value;
+                }
+            }
+
+            await db.DbContext.SaveChangesAsync();
+            return totals;
+        }
+
+        //CrystallEdge statistics end
         #endregion
 
         # region IPIntel

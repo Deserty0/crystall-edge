@@ -1,4 +1,4 @@
-- type: CECookingRecipe
+- type: cookingRecipe
   id: InedibleMeal
   foodType: Meal
   foodData:
@@ -12,9 +12,23 @@
   requirements:
   - !type:AlwaysMet
 
+# Overcooked meal, see CEFoodType burntRecipe. No requirements: never cooked directly.
+- type: cookingRecipe
+  id: BurntMeal
+  foodType: Meal
+  foodData:
+    name: ce-meal-recipe-burned-trash-name
+    desc: ce-meal-recipe-burned-trash-desc
+    visuals:
+    - sprite: _CE/Objects/Consumable/Food/Meals/food.rsi
+      state: trash
+      color: "#4a4a4a"
+    statusEffects:
+      CEStatusEffectBadFoodVomit: 10
+
 # 1 req
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: BakedApples
   foodType: Meal
   foodData:
@@ -26,9 +40,9 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEApple
+    - Apple
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: ScrambledEggs
   foodType: Meal
   foodData:
@@ -40,9 +54,9 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEEgg
+    - Egg
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: GreenSalad
   foodType: Meal
   foodData:
@@ -54,10 +68,10 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CESalad
-    - CEVegetable
+    - Salad
+    - Vegetable
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: MeatPlate
   foodType: Meal
   foodData:
@@ -69,10 +83,10 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEMeat
-    - CEMeatSlice
+    - Meat
+    - MeatSlice
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: BreadPlate
   foodType: Meal
   foodData:
@@ -84,9 +98,9 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEDough
+    - Dough
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: MashedPotato
   foodType: Meal
   foodData:
@@ -98,11 +112,11 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEPotato
+    - Potato
 
 # 2 req
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: GreenOmelette
   foodType: Meal
   foodData:
@@ -114,13 +128,13 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CESalad
-    - CEVegetable
+    - Salad
+    - Vegetable
   - !type:TagRequired
     tags:
-    - CEEgg
+    - Egg
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: GarlicBread
   foodType: Meal
   foodData:
@@ -132,12 +146,29 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEDough
+    - Dough
   - !type:TagRequired
     tags:
-    - CEGarlic
+    - Garlic
 
-- type: CECookingRecipe
+- type: cookingRecipe
+  id: CarrotSalad
+  foodType: Meal
+  foodData:
+    name: ce-meal-recipe-carrot-salad-name
+    desc: ce-meal-recipe-carrot-salad-desc
+    visuals:
+    - sprite: _CE/Objects/Consumable/Food/Meals/food.rsi
+      state: carrot_salad
+  requirements:
+  - !type:TagRequired
+    tags:
+    - Carrot
+  - !type:TagRequired
+    tags:
+    - Garlic
+
+- type: cookingRecipe
   id: GreenSaladMeat
   foodType: Meal
   foodData:
@@ -149,13 +180,13 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CESalad
-    - CEVegetable
+    - Salad
+    - Vegetable
   - !type:TagRequired
     tags:
-    - CEMeatSlice
+    - MeatSlice
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: MonsterEgg
   foodType: Meal
   foodData:
@@ -167,12 +198,12 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEEgg
+    - Egg
   - !type:TagRequired
     tags:
-    - CEMeatMonster
+    - MeatMonster
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: MashedPotatoMeat
   foodType: Meal
   foodData:
@@ -184,12 +215,12 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEPotato
+    - Potato
   - !type:TagRequired
     tags:
-    - CEMeat
+    - Meat
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: MashedPotatoSalad
   foodType: Meal
   foodData:
@@ -201,13 +232,12 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEPotato
+    - Potato
   - !type:TagRequired
     tags:
-    - CESalad
-    - CEVegetable
+    - Salad
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: CheeseBread
   foodType: Meal
   foodData:
@@ -219,12 +249,12 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEDough
+    - Dough
   - !type:TagRequired
     tags:
-    - CECheese
+    - Cheese
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: StirFry
   foodType: Meal
   foodData:
@@ -236,14 +266,14 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEMeat
+    - Meat
   - !type:TagRequired
     tags:
-    - CEVegetable
+    - Vegetable
 
 # 3 req
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: ZellasianBreakfast
   foodType: Meal
   foodData:
@@ -255,15 +285,15 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEEgg
+    - Egg
   - !type:TagRequired
     tags:
-    - CEDough
+    - Dough
   - !type:TagRequired
     tags:
-    - CEMeat
+    - Meat
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: CornPepperMeat
   foodType: Meal
   foodData:
@@ -275,16 +305,16 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CECorn
+    - Corn
   - !type:TagRequired
     tags:
-    - CEPepper
+    - Pepper
   - !type:TagRequired
     tags:
-    - CEMeat
-    - CEMeatSlice
+    - Meat
+    - MeatSlice
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: StuffedPotato
   foodType: Meal
   foodData:
@@ -296,15 +326,15 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEMeatSlice
+    - MeatSlice
   - !type:TagRequired
     tags:
-    - CECheese
+    - Cheese
   - !type:TagRequired
     tags:
-    - CEPotato
+    - Potato
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: PorkRoulade
   foodType: Meal
   foodData:
@@ -316,12 +346,12 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEMeatPig
+    - MeatPig
   - !type:TagRequired
     tags:
-    - CEVegetable
+    - Vegetable
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: StuffedBellPepper
   foodType: Meal
   foodData:
@@ -333,17 +363,17 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEPepper
+    - Pepper
   - !type:TagRequired
     tags:
-    - CEMeat
+    - Meat
   - !type:TagRequired
     tags:
-    - CECheese
+    - Cheese
 
 # 4 req
 
-- type: CECookingRecipe
+- type: cookingRecipe
   id: HamInCheese
   foodType: Meal
   foodData:
@@ -355,16 +385,39 @@
   requirements:
   - !type:TagRequired
     tags:
-    - CEMeatPig
+    - MeatPig
   - !type:TagRequired
     tags:
-    - CEMeatLeg
+    - MeatLeg
   - !type:TagRequired
     tags:
-    - CECheese
+    - Cheese
   - !type:TagRequired
     tags:
-    - CESalad
+    - Salad
+
+- type: cookingRecipe
+  id: CarrotPatties
+  foodType: Meal
+  foodData:
+    name: ce-meal-recipe-carrot-patties-name
+    desc: ce-meal-recipe-carrot-patties-desc
+    visuals:
+    - sprite: _CE/Objects/Consumable/Food/Meals/food.rsi
+      state: carrot_patties
+  requirements:
+  - !type:TagRequired
+    tags:
+    - Egg
+  - !type:TagRequired
+    tags:
+    - Wheat
+  - !type:TagRequired
+    tags:
+    - Carrot
+  - !type:TagRequired
+    tags:
+    - Cheese
 
 # Unused meal sprites lacking ingredients/tags:
 # - beef_rice

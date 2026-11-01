@@ -167,7 +167,9 @@
   - type: VentriloquistPuppet
   - type: Item
     size: Normal
-  - type: Muted
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectVentriloquistPuppetMuted
   - type: TypingIndicator
     proto: robot
   - type: Actions
@@ -257,6 +259,7 @@
         enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
   - type: ProximityBeeper
   - type: ProximityDetector
@@ -282,13 +285,3 @@
     drawRate: 1
     useCharge: 0
   - type: ToggleCellDraw
-
-- type: entity
-  parent: SpectralLocator
-  id: SpectralLocatorEmpty
-  suffix: Empty
-  components:
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default

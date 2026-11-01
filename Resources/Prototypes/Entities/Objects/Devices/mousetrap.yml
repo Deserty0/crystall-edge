@@ -14,6 +14,9 @@
       intersectRatio: 0.2
       requiredTriggeredSpeed: 2
     - type: Mousetrap
+    - type: ItemToggleExaminableStatus
+      onText: item-toggle-examined-active
+      offText: item-toggle-examined-not-active
     - type: ItemToggle
       soundActivate: "/Audio/Items/Handcuffs/cuff_end.ogg"
       soundDeactivate: "/Audio/Items/snap.ogg"
@@ -60,17 +63,3 @@
           density: 30
           mask:
             - ItemMask
-
-- type: entity
-  name: mousetrap
-  suffix: Armed
-  parent: Mousetrap
-  id: MousetrapArmed
-  description: Useful for catching rodents sneaking into your kitchen.
-  components:
-  - type: Sprite
-    layers:
-    - state: mousetraparmed
-      map: ["enum.ToggleableVisuals.Layer"]
-  - type: ItemToggle
-    activated: true

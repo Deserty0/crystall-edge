@@ -29,19 +29,3 @@
     cost: 75
   - type: GameRule
     cancelPresetOnTooFewPlayers: false
-
-# Needs testing
-- type: entity
-  parent: BaseWizardRule
-  id: SubWizard
-  components:
-  - type: GameRule
-    cancelPresetOnTooFewPlayers: false
-
-- type: entity
-  parent: BaseXenoborgsRule
-  id: SubXenoborgs
-  components:
-  - type: GameRule
-    minPlayers: 30
-    cancelPresetOnTooFewPlayers: false

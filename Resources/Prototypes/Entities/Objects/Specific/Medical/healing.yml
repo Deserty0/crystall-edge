@@ -104,15 +104,6 @@
     price: 20
 
 - type: entity
-  id: OintmentAdvanced1
-  parent: RegenerativeMesh
-  suffix: Single
-  components:
-  - type: Stack
-    stackType: RegenerativeMesh
-    count: 1
-
-- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -200,15 +191,6 @@
     price: 20
 
 - type: entity
-  id: BrutepackAdvanced1
-  parent: MedicatedSuture
-  suffix: Single
-  components:
-  - type: Stack
-    stackType: MedicatedSuture
-    count: 1
-
-- type: entity
   name: blood pack
   description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
   parent: BaseHealingItem
@@ -244,15 +226,6 @@
     count: 10
   - type: StackPrice
     price: 10
-
-- type: entity
-  parent: Bloodpack
-  id: Bloodpack1
-  suffix: Single
-  components:
-  - type: Stack
-    stackType: Bloodpack
-    count: 1
 
 - type: entity
   parent: BaseHealingItem
@@ -337,61 +310,6 @@
   components:
   - type: Stack
     count: 1
-
-- type: entity
-  name: aloe cream
-  description: A topical cream for burns.
-  parent: Ointment ##Yes it's a direct reskin
-  id: AloeCream
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/aloe.rsi
-    state: cream
-  - type: Stack
-    stackType: AloeCream
-    count: 10
-  - type: Item
-    storedRotation: 90
-    storedOffset: 4, 0
-    storedSprite:
-      state: cream
-      sprite: Objects/Specific/Hydroponics/aloe.rsi
-
-- type: entity
-  parent: BaseHealingItem
-  id: HealingToolbox
-  name: healing toolbox
-  description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
-  categories: [ DoNotMap ]
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Medical/healing_toolbox.rsi
-    state: icon
-  - type: Healing
-    damageContainers:
-    - Biological
-    damage:
-      types: # these are all split across multiple types
-        Blunt: -50
-        Piercing: -50
-        Slash: -50
-        Heat: -50
-        Cold: -50
-        Shock: -50
-        Poison: -150
-    bloodlossModifier: -20
-    delay: 1
-    selfHealPenaltyMultiplier: 0
-    healingBeginSound:
-      path: "/Audio/Items/Medical/ointment_begin.ogg"
-      params:
-        volume: 1.0
-        variation: 0.125
-    healingEndSound:
-      path: "/Audio/Items/Medical/ointment_end.ogg"
-      params:
-        volume: 1.0
-        variation: 0.125
 
 # Pills
 - type: entity
@@ -695,38 +613,6 @@
 
 - type: entity
   name: pill
-  suffix: Bicaridine 20u
-  parent: Pill
-  id: PillBicaridine
-  components:
-  - type: Pill
-    pillType: 4
-  - type: Sprite
-    state: pill5
-  - type: Label
-    localizedLabel: pill-label-bicaridine-20u
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Bicaridine
-        Quantity: 20
-
-- type: entity
-  name: pill canister
-  parent: PillCanister
-  id: PillCanisterBicaridine
-  suffix: Bicaridine 20u, 5
-  components:
-  - type: Label
-    localizedLabel: pill-label-bicaridine-20u
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: PillBicaridine
-        amount: 5
-
-- type: entity
-  name: pill
   suffix: Charcoal 20u
   parent: Pill
   id: PillCharcoal
@@ -756,81 +642,6 @@
       storagebase:
         id: PillCharcoal
         amount: 3
-
-- type: entity
-  name: romerol pill
-  parent: Pill
-  id: PillRomerol
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Romerol
-        Quantity: 20
-
-- type: entity
-  name: ambuzol pill
-  parent: Pill
-  id: PillAmbuzol
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Ambuzol
-        Quantity: 10
-
-- type: entity
-  name: ambuzol plus pill
-  parent: Pill
-  id: PillAmbuzolPlus
-  components:
-  - type: Pill
-    pillType: 2
-  - type: Sprite
-    state: pill3
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: AmbuzolPlus
-        Quantity: 5
-
-- type: entity
-  parent: PillCanister
-  id: PillCanisterRandom
-  suffix: Random
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:GroupSelector
-        children:
-        - id: PillDexalin
-          amount: 1, 6
-        - id: PillDylovene
-          amount: 1, 6
-        - id: PillHyronalin
-          amount: 1, 6
-        - id: PillPotassiumIodide
-          amount: 1, 6
-        - id: PillIron
-          amount: 1, 6
-        - id: PillCopper
-          amount: 1, 6
-        - id: PillKelotane
-          amount: 1, 6
-        - id: PillDermaline
-          amount: 1, 6
-        - id: PillTricordrazine
-          amount: 1, 6
-        - id: PillBicaridine
-          amount: 1, 6
-        - id: PillCharcoal
-          amount: 1, 6
-        - id: PillSpaceDrugs
-          weight: 0.75
-          amount: 1, 6
-        - id: StrangePill
-          weight: 0.75
-          amount: 1, 6
 
 # Syringes
 - type: entity
@@ -925,32 +736,6 @@
         Quantity: 15
 
 - type: entity
-  suffix: ambuzol
-  parent: PrefilledSyringe
-  id: SyringeAmbuzol
-  components:
-  - type: Label
-    localizedLabel: reagent-name-ambuzol
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Ambuzol
-        Quantity: 15
-
-- type: entity
-  suffix: sigynate
-  parent: PrefilledSyringe
-  id: SyringeSigynate
-  components:
-  - type: Label
-    localizedLabel: reagent-name-sigynate
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Sigynate
-        Quantity: 15
-
-- type: entity
   suffix: ethylredoxrazine
   parent: PrefilledSyringe
   id: SyringeEthylredoxrazine
@@ -988,64 +773,3 @@
       reagents:
       - ReagentId: Saline
         Quantity: 15
-
-#this is where all the syringes are so i didn't know where to put it
-- type: entity
-  suffix: romerol
-  parent: PrefilledSyringe
-  id: SyringeRomerol
-  components:
-  - type: Label
-    localizedLabel: reagent-name-romerol
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Romerol
-        Quantity: 15
-
-- type: entity
-  suffix: hyperzine
-  parent: PrefilledSyringe
-  id: SyringeStimulants
-  components:
-  - type: Label
-    localizedLabel: reagent-name-stimulants
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Stimulants
-        Quantity: 15
-
-# Entity Tables
-- type: entityTable
-  id: RandomSafePillTable
-  table: !type:GroupSelector
-    children:
-    - id: PillBicaridine
-    - id: PillCharcoal
-    - id: PillCopper
-    - id: PillDermaline
-    - id: PillDexalin
-    - id: PillDylovene
-    - id: PillHyronalin
-    - id: PillIron
-    - id: PillKelotane
-    - id: PillPotassiumIodide
-    - id: PillTricordrazine
-    - id: StrangePill
-
-- type: entityTable
-  id: RandomSafeSyringeTable
-  table: !type:GroupSelector
-    children:
-    - id: SyringeBicaridine
-    - id: SyringeDermaline
-    - id: SyringeEphedrine
-    - id: SyringeEthylredoxrazine
-    - id: SyringeHyronalin
-    - id: SyringeInaprovaline
-    - id: SyringeIpecac
-    - id: SyringePhalanximine
-    - id: SyringeSaline
-    - id: SyringeSigynate
-    - id: SyringeTranexamicAcid

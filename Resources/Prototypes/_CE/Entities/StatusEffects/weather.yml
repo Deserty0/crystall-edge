@@ -4,13 +4,18 @@
   components:
   - type: WeatherStatusEffect
     sprite:
-      sprite: /Textures/_CE/Effects/weather.rsi
-      state: rain
+      sprite: /Textures/_CE/Effects/Weather/rain.rsi
+      state: base
     sound:
       collection: Rain
       params:
         loop: true
         volume: -6
+  - type: CEWeatherSolutionFill
+    frequency: 10s
+    reagents:
+    - ReagentId: Water
+      Quantity: 5
 
 - type: entity
   parent: WeatherBase
@@ -18,16 +23,21 @@
   components:
   - type: WeatherStatusEffect
     sprite:
-      sprite: /Textures/_CE/Effects/weather.rsi
-      state: storm
+      sprite: /Textures/_CE/Effects/Weather/storm.rsi
+      state: base
     sound:
       path: /Audio/Effects/Weather/rain.ogg
       params:
         loop: true
         volume: -6
+  - type: CEWeatherSolutionFill
+    frequency: 10s
+    reagents:
+    - ReagentId: Water
+      Quantity: 5
   - type: CEWeatherTileEffects
-    minEffectFrequency: 35s
-    maxEffectFrequency: 120s
+    minEffectFrequency: 60s
+    maxEffectFrequency: 180s
   - type: CEWeatherTileEntityEffect
     effects:
     - !type:SpawnEntity
@@ -40,8 +50,8 @@
   components:
   - type: WeatherStatusEffect
     sprite:
-      sprite: /Textures/_CE/Effects/weather.rsi
-      state: snowfall_light
+      sprite: /Textures/_CE/Effects/Weather/snow.rsi
+      state: base
 
 - type: entity
   parent: WeatherBase

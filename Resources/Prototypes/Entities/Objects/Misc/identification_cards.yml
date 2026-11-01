@@ -501,22 +501,6 @@
     job: Detective
 
 - type: entity
-  parent: IDCardStandard
-  id: BrigmedicIDCard
-  name: brigmedic ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: *color-security-top
-    - state: stripe_bottom
-      color: *color-security-bottom
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Brigmedic
-
-- type: entity
   parent: SecurityIDCard
   id: SeniorOfficerIDCard
   name: senior officer ID card
@@ -551,39 +535,6 @@
       state: ServiceWorker
   - type: PresetIdCard
     job: ServiceWorker
-
-- type: entity
-  parent: IDCardStandard
-  id: ClownIDCard
-  name: clown ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_clown
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Clown
-  - type: PresetIdCard
-    job: Clown
-
-- type: entity
-  parent: IDCardStandard
-  id: MimeIDCard
-  name: mime ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: "#2d2d2d"
-    - state: stripe_bottom
-      color: "#1d1d1d"
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Mime
-  - type: PresetIdCard
-    job: Mime
 
 - type: entity
   parent: IDCardStandard
@@ -656,28 +607,6 @@
       state: Bartender
   - type: PresetIdCard
     job: Bartender
-
-- type: entity
-  parent: IDCardStandard
-  id: PunPunIDCard
-  name: pun pun ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: *color-service-top
-    - state: stripe_bottom
-      color: *color-service-bottom
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Bartender
-  - type: PresetIdCard
-    job: Bartender
-    name: Pun Pun
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
 
 - type: entity
   parent: IDCardStandard
@@ -771,35 +700,21 @@
 
 - type: entity
   parent: IDCardStandard
-  id: BoxerIDCard
-  name: boxer ID card
+  id: TramDriverIDCard
+  name: tram driver ID card
   components:
   - type: Sprite
     layers:
     - state: default
     - state: stripe_top
-      color: *color-service-top
+      color: "#ffc500"
     - state: stripe_bottom
-      color: *color-service-bottom
+      color: "#454a50"
     - sprite: *icon-rsi
       offset: *icon-offset
-      state: Boxer
-
-- type: entity
-  parent: IDCardStandard
-  id: ZookeeperIDCard
-  name: zookeeper ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: *color-service-top
-    - state: stripe_bottom
-      color: *color-service-bottom
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Zookeeper
+      state: TramDriver
+  - type: PresetIdCard
+    job: TramDriver
 
 #Supply
 
@@ -895,50 +810,17 @@
     price: 0
 
 - type: entity
-  parent: IDCardStandard
-  id: CluwneIDCard
-  name: cluwne ID card
-  suffix: Unremoveable
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: "#5dc574"
-    - state: stripe_bottom
-      color: "#3f9b53"
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Cluwne
-  - type: IdCard
-    jobTitle: job-title-cluwne
-    jobIcon: JobIconCluwne
-  - type: Unremoveable
-
-- type: entity
-  parent: IDCardStandard
-  id: VisitorIDCard
-  name: visitor ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Visitor
-  - type: IdCard
-    jobTitle: job-title-visitor
-    jobIcon: JobIconVisitor
-  - type: PresetIdCard
-    job: Visitor
-
-#Antags
-
-- type: entity
-  parent: [PassengerIDCard, BaseChameleon]
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
+  name: passenger ID card
   suffix: Agent
   components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Passenger
   - type: Access
     tags:
     - Maintenance
@@ -975,17 +857,6 @@
         type: AgentIDCardBoundUserInterface
       enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
-
-- type: entity
-  parent: AgentIDCard
-  id: NukieAgentIDCard
-  suffix: Nukie
-  components:
-  - type: Access
-    tags:
-    - Maintenance
-    - SyndicateAgent
-    - NuclearOperative
 
 - type: entity
   parent: [ IDCardStandard, BaseSyndicateContraband ]
@@ -1106,18 +977,6 @@
     heldPrefix: orange #this is close enough to the weird puce color pirate IDs have going on
   - type: IdCard
     jobIcon: JobIconPirate
-
-- type: entity
-  parent: IDCardStandard
-  id: XenoborgIDCard
-  name: xenoborg ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-  - type: Access
-    tags:
-    - Xenoborg
 
 - type: entity
   parent: [ IDCardStandard, BaseMagicalContraband ]
@@ -1351,7 +1210,6 @@
     - NuclearOperative
     - SyndicateAgent
     - Wizard
-    - Xenoborg
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener

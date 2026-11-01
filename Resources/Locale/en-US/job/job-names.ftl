@@ -12,8 +12,6 @@ job-name-centcommoff = CentComm Official
 job-name-chef = Chef
 job-name-chaplain = Chaplain
 job-name-chemist = Chemist
-job-name-clown = Clown
-job-name-cluwne = Cluwne
 job-name-cmo = Chief Medical Officer
 job-name-deathsquad = Death Squad
 job-name-detective = Detective
@@ -31,7 +29,6 @@ job-name-intern = Medical Intern
 job-name-janitor = Janitor
 job-name-lawyer = Lawyer
 job-name-librarian = Librarian
-job-name-mime = Mime
 job-name-musician = Musician
 job-name-paramedic = Paramedic
 job-name-passenger = Passenger
@@ -46,6 +43,7 @@ job-name-security = Security Officer
 job-name-serviceworker = Service Worker
 job-name-station-ai = Station AI
 job-name-technical-assistant = Technical Assistant
+job-name-tram-driver = Tram Driver
 job-name-visitor = Visitor
 job-name-warden = Warden
 
@@ -58,6 +56,7 @@ job-name-no-id = No ID
 job-name-prisoner = Prisoner
 job-name-roboticist = Roboticist
 job-name-unknown = Unknown
+job-name-sus = Sus
 job-name-virologist = Virologist
 job-name-zookeeper = Zookeeper
 
@@ -72,7 +71,6 @@ job-name-wizard = Wizard
 job-name-zombie = Zombie
 
 # Job titles
-job-title-cluwne = Cluwne
 job-title-universal = Universal
 job-title-visitor = Visitor
 
@@ -89,7 +87,6 @@ JobChef = Chef
 JobChemist = Chemist
 JobChiefEngineer = Chief Engineer
 JobChiefMedicalOfficer = Chief Medical Officer
-JobClown = Clown
 JobDetective = Detective
 JobBrigmedic = Brigmedic
 JobERTChaplain = ERT Chaplain
@@ -105,7 +102,6 @@ JobLawyer = Lawyer
 JobLibrarian = Librarian
 JobMedicalDoctor = Medical doctor
 JobMedicalIntern = Medical intern
-JobMime = Mime
 JobMusician = Musician
 JobParamedic = Paramedic
 JobPassenger = Passenger

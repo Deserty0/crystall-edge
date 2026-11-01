@@ -20,7 +20,6 @@
   heatCapacity: 10000
   friction: 0.05
   mobAcceleration: 0.1
-  weather: true
 
 - type: tile
   editorHidden: false
@@ -62,7 +61,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   editorHidden: false
@@ -93,7 +91,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: CEMycelium
@@ -126,7 +123,6 @@
   footstepSounds:
     collection: FootstepGrass
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: CEMyceliumLight
@@ -159,7 +155,6 @@
   footstepSounds:
     collection: FootstepGrass
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   editorHidden: false
@@ -189,7 +184,6 @@
   footstepSounds:
     collection: FootstepSnow #TODO
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: CESnowDeepDeep
@@ -221,7 +215,6 @@
   footstepSounds:
     collection: FootstepSnow
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: CESnowDeep
@@ -253,7 +246,6 @@
   footstepSounds:
     collection: FootstepSnow
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: CESnow
@@ -285,4 +277,24 @@
   footstepSounds:
     collection: FootstepSnow
   heatCapacity: 10000
-  weather: true
+
+- type: tile
+  editorHidden: false
+  id: CESandstone
+  name: ce-tiles-sandstone
+  sprite: /Textures/_CE/Tiles/sandstone.png
+  variants: 6
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: CEStone
+  deconstructTools: [ CEPickaxe ]
+  itemDrop: CEStoneBlock1
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000

@@ -6,14 +6,6 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: MopBucket
-  result: MopBucket
-  completetime: 2
-  materials:
-    Steel: 100
-    Plastic: 100
-
-- type: latheRecipe
   id: Bucket
   result: Bucket
   completetime: 2
@@ -60,19 +52,11 @@
 
 - type: latheRecipe
   id: LightReplacer
-  result: LightReplacerEmpty
+  result: LightReplacer
   completetime: 2.4
   materials:
     Steel: 100
     Glass: 500
-
-- type: latheRecipe
-  id: Mousetrap
-  result: Mousetrap
-  completetime: 1
-  materials:
-    Wood: 100
-    Steel: 50
 
 - type: latheRecipe
   id: Holoprojector

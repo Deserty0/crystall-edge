@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._CE.EntityEffect;
 
@@ -22,13 +23,7 @@ public abstract partial class CEEntityCondition
     /// </summary>
     public bool Passes(CEEntityEffectArgs args)
     {
-        var entity = ConditionTarget switch
-        {
-            CEEffectTarget.User => args.Source,
-            CEEffectTarget.Used => args.Used,
-            _ => args.Target,
-        };
-
+        var entity = args.Resolve(ConditionTarget);
         if (entity is null)
             return Inverted;
 
@@ -37,6 +32,11 @@ public abstract partial class CEEntityCondition
     }
 
     protected abstract bool Check(EntityUid entity, CEEntityEffectArgs args);
+
+    /// <summary>
+    /// Human-readable explanation of what this condition requires, for UI.
+    /// </summary>
+    public virtual string GetDescription(IEntityManager entityManager, IPrototypeManager prototype) => string.Empty;
 }
 
 /// <summary>

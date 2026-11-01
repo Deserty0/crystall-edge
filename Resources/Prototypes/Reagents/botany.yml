@@ -12,7 +12,8 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         conditions:
         - !type:MetabolizerTypeCondition
           type: [Plant]
@@ -36,7 +37,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         conditions:
         - !type:MetabolizerTypeCondition
           type: [Plant]
@@ -89,7 +91,9 @@
       amount: -20
     - !type:PlantAdjustMutationMod
       amount: 0.1
-    - !type:PlantRemoveKudzu
+    - !type:PlantChangeTraits
+      trait: PlantTraitKudzu
+      remove: true
   metabolisms:
     Bloodstream:
       effects:
@@ -155,22 +159,6 @@
           - !type:ReagentCondition
             reagent: RobustHarvest
             min: 80
-
-- type: reagent
-  id: Sedin
-  name: reagent-name-sedin
-  group: Botanical
-  desc: reagent-desc-sedin
-  flavor: bitter
-  color: "#3CB371"
-  physicalDesc: reagent-physical-desc-sickly
-  plantMetabolism:
-    - !type:PlantAdjustHealth
-      amount: -2
-    - !type:PlantRestoreSeeds
-      probability: 0.20
-    - !type:PlantAdjustPotency
-      amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller
@@ -276,7 +264,6 @@
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
         factor: -4
-
 
 - type: reagent
   id: Diethylamine

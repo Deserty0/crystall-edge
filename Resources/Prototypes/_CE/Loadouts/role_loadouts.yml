@@ -4,12 +4,11 @@
   id: JobCETavernmaster
   groups:
   - CEGeneralBag
-  - CETavernmasterHead #
-  - CEGeneralEyes
-  - CETavernmasterCloak #
-  - CEGeneralGloves
-  - CEGeneralShirt
-  - CEGeneralPants
+  - CETavernEyes
+  - CETavernmasterHead
+  - CETavernmasterCloak
+  - CETavernShirt
+  - CETavernPants
   - CEGeneralShoes
   - CEGeneralInstruments
 
@@ -18,52 +17,55 @@
   groups:
   - CEGeneralBag
   - CEChefHead
+  - CETavernEyes
+  - CETavernCloak
+  - CETavernShirt
+  - CETavernPants
+  - CEGeneralShoes
+  - CEGeneralInstruments
+
+# Sheriff
+
+- type: roleLoadout
+  id: JobCESheriff
+  groups:
+  - CEGeneralBag
+  - CESheriffHead
   - CEGeneralEyes
+  - CESheriffCloak #
+  - CEGeneralGloves
+  - CESheriffShirt
+  - CESheriffPants
+  - CEGeneralShoes
+  - CEGeneralInstruments
+
+# Guild
+
+- type: roleLoadout
+  id: JobCEGuildmaster
+  groups:
+  - CEGeneralBag
+  - CEGuildmasterHead #
+  - CEGeneralEyes
+  - CEGuildmasterCloak #
   - CEGeneralGloves
   - CEGeneralShirt
   - CEGeneralPants
   - CEGeneralShoes
   - CEGeneralInstruments
 
-# Guard
-
 - type: roleLoadout
-  id: JobCEGuardCommander
+  id: JobCEAdventurer
   groups:
   - CEGeneralBag
-  - CEGuardHead
+  - CETownfolkHead
   - CEGeneralEyes
-  - CEGuardCommanderCloak #
+  - CEAdventurerCloak #
   - CEGeneralGloves
-  - CEGuardShirt
-  - CEGuardPants
+  - CEGeneralShirt
+  - CEGeneralPants
   - CEGeneralShoes
-  - CEGeneralInstruments
-
-- type: roleLoadout
-  id: JobCEInvestigator
-  groups:
-  - CEGeneralBag
-  - CEInvestigatorHead
-  - CEGeneralEyes
-  - CEInvestigatorCloak #
-  - CEGeneralGloves
-  - CEGuardShirt
-  - CEGuardPants
-  - CEGeneralShoes
-  - CEGeneralInstruments
-
-- type: roleLoadout
-  id: JobCEGuard
-  groups:
-  - CEGeneralBag
-  - CEGuardHead
-  - CEGeneralEyes
-  - CEGuardCloak
-  - CEGeneralGloves
-  - CEGuardShirt
-  - CEGuardPants
-  - CEGeneralShoes
+  - CEAdventurerWeapon #
   - CEGeneralInstruments
 
 # Engineering
@@ -101,7 +103,6 @@
   - CEGeneralBag
   - CETownfolkHead #
   - CEGeneralEyes
-  - CEGeneralCloak
   - CEGeneralGloves
   - CEGeneralShirt
   - CEGeneralPants
@@ -114,7 +115,6 @@
   - CEGeneralBag
   - CEBardHead #
   - CEGeneralEyes
-  - CEGeneralCloak
   - CEGeneralGloves
   - CEBardShirt #
   - CEBardPants #
@@ -122,43 +122,14 @@
   - CEBardTool #
   - CEGeneralInstruments
 
-# Academy
-
 - type: roleLoadout
-  id: JobCEAcademyStudent
+  id: JobCEKeyKeeper
   groups:
   - CEGeneralBag
-  - CEAcademyStudentHead #
+  - CEKeyKeeperHead #
   - CEGeneralEyes
-  - CEGeneralCloak
   - CEGeneralGloves
-  - CEAcademyShirt #
-  - CEGeneralPants
-  - CEGeneralShoes
-  - CEGeneralInstruments
-
-- type: roleLoadout
-  id: JobCEAcademyProfessor
-  groups:
-  - CEGeneralBag
-  - CEAcademyHead #
-  - CEGeneralEyes
-  - CEAcademyThaumaturgeCloak #
-  - CEGeneralGloves
-  - CEAcademyShirt #
-  - CEGeneralPants
-  - CEGeneralShoes
-  - CEGeneralInstruments
-
-- type: roleLoadout
-  id: JobCEAcademyRector
-  groups:
-  - CEGeneralBag
-  - CEAcademyHead #
-  - CEGeneralEyes
-  - CEAcademyThaumaturgeCloak #
-  - CEGeneralGloves
-  - CEAcademyShirt #
-  - CEGeneralPants
+  - CEKeyKeeperShirt #
+  - CEKeyKeeperPants #
   - CEGeneralShoes
   - CEGeneralInstruments

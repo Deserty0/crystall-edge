@@ -19,7 +19,6 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 2.5h
-  weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
@@ -71,15 +70,3 @@
   storage:
     back:
     - Flash
-
-- type: chameleonOutfit
-  id: HeadOfPersonnelChameleonOutfit
-  job: HeadOfPersonnel
-  hasMindShield: true
-  equipment:
-    head: ClothingHeadHatHopcap
-    eyes: ClothingEyesHudCommand
-    mask: ClothingMaskNeckGaiterRed
-    neck: ClothingNeckCloakHop
-    outerClothing: ClothingOuterWinterHoP
-

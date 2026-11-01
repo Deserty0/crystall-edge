@@ -9,8 +9,9 @@
     layers:
     - state: stunbaton_off
       map: [ "enum.ToggleableVisuals.Layer" ]
-  - type: Stunbaton
-    energyPerUse: 50
+  - type: ItemToggleExaminableStatus
+  - type: ItemToggleRequiresCharge
+    requiredCharge: 50
   - type: ItemToggle
     onActivate: false
     soundActivate:
@@ -40,6 +41,11 @@
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcThrust
+    undamagedAlertThreshold: 0
+  - type: MeleeBatteryHitsLeft
+  - type: StaminaDamageOnHitRequiresToggle
+  - type: StaminaDamageOnHitRequiresCharge
+    requiredCharge: 50
   - type: StaminaDamageOnHit
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
@@ -86,10 +92,9 @@
     materialComposition:
       Steel: 100
       Plastic: 100
-  - type: GuideHelp
-    guides:
-    - Security
-    - Antagonists
+  - type: Tag
+    tags:
+    - Stunbaton
 
 - type: entity
   name: truncheon
@@ -123,10 +128,6 @@
   - type: Appearance
   - type: StaticPrice
     price: 80
-  - type: GuideHelp
-    guides:
-    - Security
-    - Antagonists
 
 - type: entity
   name: flash
@@ -144,7 +145,6 @@
         visible: false
         shader: unshaded
     - type: Flash
-    - type: RevolutionaryConverter
     - type: LimitedCharges
       maxCharges: 5
     - type: MeleeWeapon
@@ -171,10 +171,6 @@
           enum.FlashVisualLayers.LightLayer:
             True: {visible: true}
             False: {visible: false}
-    - type: GuideHelp
-      guides:
-      - Security
-      - Antagonists
 
 - type: entity
   name: flash
@@ -184,50 +180,3 @@
   components:
     - type: LimitedCharges
       maxCharges: 2
-
-- type: entity
-  name: portable flasher
-  parent: [BaseMachine, BaseSecurityContraband]
-  id: PortableFlasher
-  description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
-  components:
-    - type: EmitSoundOnTrigger
-      predicted: true
-      sound:
-        path: /Audio/Weapons/flash.ogg
-    - type: FlashOnTrigger
-      range: 3
-    - type: TriggerOnProximity
-      enabled: true
-      cooldown: 5
-      shape:
-        !type:PhysShapeCircle
-          radius: 2
-      repeating: true
-    - type: Sprite
-      sprite: Objects/Weapons/pflash.rsi
-      layers:
-        - state: "off"
-          map: ["enum.ProximityTriggerVisualLayers.Base"]
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.15,-0.3,0.15,0.3"
-          mask:
-          - MachineMask
-          layer:
-          - MachineLayer
-          density: 380
-    - type: Appearance
-    - type: AnimationPlayer
-    - type: PointLight
-      energy: 2.0
-      radius: 0
-      softness: 0
-      enabled: true
-    - type: GuideHelp
-      guides:
-      - Security
-      - Antagonists

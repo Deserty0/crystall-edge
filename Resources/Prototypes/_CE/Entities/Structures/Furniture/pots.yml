@@ -1,0 +1,67 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: CEPot
+  categories: [ ForkFiltered ]
+  name: clay pot
+  description: A fragile clay pot. Who knows what is hidden inside?
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    offset: 0,0.45
+    drawdepth: Mobs
+    noRot: true
+    sprite: _CE/Structures/Furniture/clay_pot.rsi
+    layers:
+    - state: pot1
+      map: [ "random" ]
+  - type: Appearance
+  - type: RandomSprite
+    available:
+    - random:
+        pot1: ""
+        pot2: ""
+        pot3: ""
+        pot4: ""
+        carved_pot1: ""
+        carved_pot2: ""
+        carved_pot3: ""
+        carved_pot4: ""
+        cracked_pot1: ""
+        cracked_pot2: ""
+        cracked_pot3: ""
+        cracked_pot4: ""
+        patterned_pot1: ""
+        patterned_pot2: ""
+        patterned_pot3: ""
+        patterned_pot4: ""
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: CEPotBreak
+      - !type:CEEntityTableSpawnBehavior
+        table: !type:NestedSelector
+          tableId: CEPotLoot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - MachineLayer

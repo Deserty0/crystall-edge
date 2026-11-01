@@ -87,3 +87,6 @@ reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from disc
 
 reagent-name-hemorrhinol = hemorrhinol
 reagent-desc-hemorrhinol = A toxin that causes severe damage to blood vessels, causing rapid bleeding.
+
+reagent-name-phosphoric-acid = phosphoric acid
+reagent-desc-phosphoric-acid = An acidic chemical often used in agriculture. Keep away from your eyes.

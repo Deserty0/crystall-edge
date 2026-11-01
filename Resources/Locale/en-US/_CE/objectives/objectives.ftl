@@ -1,0 +1,31 @@
+ce-helper-assist-objective-title = Help {$targetName}, {CAPITALIZE($job)} complete their objectives
+ce-bodyguard-protect-objective-title = Keep {$targetName}, {CAPITALIZE($job)} alive
+ce-priest-protect-objective-title = Keep {$targetName}, {CAPITALIZE($job)} alive
+ce-brotherhood-patronage-objective-title = Help {$targetName}, {CAPITALIZE($job)} complete all their objectives
+ce-brotherhood-debt-objective-title = Put {$targetName}, {CAPITALIZE($job)} in critical condition 3 times without killing them
+ce-assassin-kill-objective-title = Kill {$targetName}, {CAPITALIZE($job)}
+ce-recruiter-recruit-objective-title = Recruit {$count} {$count ->
+    [one] person
+    *[other] people
+}
+
+ce-objective-summary-fmt = {$name}: {$success ->
+    [true] [color=limegreen]Success[/color]
+    *[false] [color=red]Failed[/color]
+} {$percent ->
+    [0] {""}
+    [100] {""}
+    *[other] ([color=gray]{$percent}%[/color])
+}
+
+ce-objective-city-restore-desc = Buy from the Shadow Caravan everything the Restoration Ritual needs, then perform it at the Lucson Sphere before the murk consumes the city. The shadows' prices:
+ce-objective-city-restore-desc-unknown = The shadows haven't named their price yet.
+ce-objective-city-restore-price = - {$reward}: {$cost}
+ce-objective-city-restore-reward-shard = {$index ->
+    [1] First lightheart shard
+    [2] Second lightheart shard
+    [3] Third lightheart shard
+    [4] Fourth lightheart shard
+    *[other] Lightheart shard #{$index}
+}
+ce-objective-city-restore-reward-book = Restoration of the sphere book

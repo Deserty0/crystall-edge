@@ -27,3 +27,13 @@
   license: "CC-BY-4.0"
   copyright: 'by SpaceLife on Freesound.org'
   source: "https://freesound.org/people/SpaceLife/sounds/545938/"
+
+- files: ["murk.ogg"]
+  license: "CC0-1.0"
+  copyright: 'by fons on Freesound.org'
+  source: "https://freesound.org/people/fons/sounds/108952/"
+
+- files: ["clock.ogg"]
+  license: "CC0-1.0"
+  copyright: 'by unfa on Freesound.org'
+  source: "https://freesound.org/people/unfa/sounds/154906/"

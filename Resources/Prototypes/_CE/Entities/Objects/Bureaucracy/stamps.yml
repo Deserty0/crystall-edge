@@ -19,9 +19,6 @@
     sprite: _CE/Objects/Bureaucracy/stamp.rsi
   - type: Item
     size: Tiny
-  - type: CEMagicEssenceStructure
-    essences:
-      Order: { min: 3, max: 6 }
 
 - type: entity
   name: "\"APPROVED\" stamp"
@@ -61,23 +58,10 @@
     state: bank
 
 - type: entity
-  name: guard commander's stamp
-  parent: CERubberStampBase
-  id: CERubberStampGuard
-  description: A rubber stamp bearing the seal of the guard commander.
-  components:
-  - type: Stamp
-    stampedName: ce-stamp-component-stamped-name-guard
-    stampedColor: "#576384"
-    stampState: "guard_on_paper"
-  - type: Sprite
-    state: guard
-
-- type: entity
   name: guildmaster's stamp
   parent: CERubberStampBase
   id: CERubberStampGuildmaster
-  description: A rubber stamp bearing the seal of the tavern guildmaster.
+  description: A rubber stamp bearing the seal of the adventurers' guildmaster.
   components:
   - type: Stamp
     stampedName: ce-stamp-component-stamped-name-guildmaster

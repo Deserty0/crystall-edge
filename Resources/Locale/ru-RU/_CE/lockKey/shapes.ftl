@@ -1,3 +1,10 @@
+# Guild
+
+ce-lock-shape-guild-lobby = лобби гильдии
+ce-lock-shape-guild-inner = внутренние помещения гильдии
+ce-lock-shape-guild-storage = склад гильдии
+ce-lock-shape-guildmaster-room = кабинет гильдмастера
+
 # Tavern
 
 ce-lock-shape-tavern-hall = холл таверны
@@ -15,18 +22,10 @@ ce-lock-shape-tavern-dorm-8 = комната таверны 8
 ce-lock-shape-tavern-dorm-9 = комната таверны 9
 ce-lock-shape-tavern-dorm-10 = комната таверны 10
 
-# Guard
+# Sheriff
 
-ce-lock-shape-guard-hall = прихожая кампуса стражи
-ce-lock-shape-guard-staff = внутренние помещения кампуса стражи
-ce-lock-shape-guard-armory = оружейная стражи
-ce-lock-shape-guard-head-room = кабинет командира стражи
-
-ce-lock-shape-guard-cage-1 = тюремная клетка 1
-ce-lock-shape-guard-cage-2 = тюремная клетка 2
-ce-lock-shape-guard-cage-3 = тюремная клетка 3
-ce-lock-shape-guard-cage-4 = тюремная клетка 4
-ce-lock-shape-guard-cage-5 = тюремная клетка 5
+ce-lock-shape-sheriff-hall = прихожая участка шерифа
+ce-lock-shape-sheriff-staff = внутренние помещения участка шерифа
 
 # Engineering
 
@@ -37,13 +36,6 @@ ce-lock-shape-engineering-tunnels = инженерные туннели
 ce-lock-shape-engineering-brigadier = кабинет бригадира
 ce-lock-shape-engineering-storage = инженерный склад
 
-# Academy
-
-ce-lock-shape-academy-hall = холл академии
-ce-lock-shape-academy-technical = технические помещения академии
-ce-lock-shape-academy-lab = лаборатория академии
-ce-lock-shape-academy-rector-room = кабинет ректора
-
 # Citizens
 
 ce-lock-shape-tailor-shop = магазин одежды
@@ -52,3 +44,6 @@ ce-lock-shape-pharmacy-shop = аптека
 ce-lock-shape-pharmacy-home = дом хозяина аптеки
 ce-lock-shape-homegoods-shop = магазин товаров для дома
 ce-lock-shape-homegoods-home = дом хозяина магазина товаров для дома
+ce-lock-shape-key-keeper-hall = холл хранилища ключей
+ce-lock-shape-key-keeper-storage = склад хранилища ключей
+ce-lock-shape-key-keeper-technical = технические помещения хранилища ключей

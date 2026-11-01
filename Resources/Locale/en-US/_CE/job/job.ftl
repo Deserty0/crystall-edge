@@ -1,13 +1,7 @@
-# Guards
+# Sheriff
 
-ce-job-name-guard-commander = Guard Commander
-ce-job-desc-guard-commander = The most dangerous person in the area. Manage a squad of soldiers to ensure the safety of all command members.
-
-ce-job-name-guard = Guard
-ce-job-desc-guard = A fighting unit of the empire, sworn to protect its people. Watch for safety, and defend others from possible dangers.
-
-ce-job-name-investigator = Investigator
-ce-job-desc-investigator = Specialist in catching and neutralizing especially dangerous criminals.
+ce-job-name-sheriff = Sheriff
+ce-job-desc-sheriff = The most dangerous resident of the city, armed with heavy military weaponry, tasked with defending the city from dark creatures, and with absolutely no secret hidden identities behind their back. Die if you must, but protect this city.
 
 # Tavern
 
@@ -15,13 +9,21 @@ ce-job-name-tavernmaster = Tavernmaster
 ce-job-desc-tavernmaster = Organize your workers to maximize profits... Or not.
 
 ce-job-name-bartender = Bartender
-ce-job-desc-bartender = Not implemented.
+ce-job-desc-bartender = TODO
 
 ce-job-name-chef = Chef
-ce-job-desc-chef = Not implemented.
+ce-job-desc-chef = Run the kitchen, preparing a variety of dishes for your guests.
 
 ce-job-name-farmer = Farmer
 ce-job-desc-farmer = Your garden is your fortress. Grow anything and experiment with irradiating plants to get previously unknown products.
+
+# Guild
+
+ce-job-name-guildmaster = Guildmaster
+ce-job-desc-guildmaster = The head of the Adventurers' Guild. I honestly don't know what he's supposed to do yet, but let's leave it at that for now. I'll figure it out later.
+
+ce-job-name-adventurer = Adventurer
+ce-job-desc-adventurer = Embark on expeditions into the murk in search of valuable resources to save the city.
 
 # Engineering
 
@@ -36,16 +38,9 @@ ce-job-desc-technician = Perform technical repairs and maintenance work. Assist 
 ce-job-name-bard = Bard
 ce-job-desc-bard = Music, fun, and jokes are your job and bread. Make this city's life more enjoyable, and try not to die in poverty.
 
-ce-job-name-townfolk = Townfolk
+ce-job-name-key-keeper = Key Keeper
+ce-job-desc-key-keeper = Every door in the city answers to you. Cut keys, change locks, and decide who gets to go where.
+
+ce-job-name-townfolk = Jobless
 ce-job-desc-townfolk = A free citizen who has saved enough money to take a week off and do whatever their heart desires.
 
-# Academy
-
-ce-job-name-academy-student = Student
-ce-job-desc-academy-student = A pupil of the Thaumaturgic Academy, learning the fundamentals of science under the professors' guidance.
-
-ce-job-name-academy-professor = Professor
-ce-job-desc-academy-professor = A teacher of the Academy, instructing students in the secrets of nature and pursuing their own research.
-
-ce-job-name-academy-rector = Academy Rector
-ce-job-desc-academy-rector = The head of the Thaumaturgic Academy, responsible for the safety of the educational process and overseeing the direction of research.

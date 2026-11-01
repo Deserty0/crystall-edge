@@ -10,7 +10,7 @@
     emagType: Access
   - type: Sprite
     sprite: Objects/Tools/access_breaker.rsi
-    state: icon
+    state: syndi-icon
   - type: Item
     sprite: Objects/Tools/access_breaker.rsi
 

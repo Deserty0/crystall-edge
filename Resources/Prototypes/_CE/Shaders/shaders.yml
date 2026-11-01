@@ -1,4 +1,14 @@
 - type: shader
+  id: CEMurk
+  kind: source
+  path: "/Textures/_CE/Shaders/murk.swsl"
+
+- type: shader
+  id: CEMurkDebug
+  kind: source
+  path: "/Textures/_CE/Shaders/murkdebug.swsl"
+
+- type: shader
   id: CEWave
   kind: source
   path: "/Textures/_CE/Shaders/wave.swsl"
@@ -25,6 +35,11 @@
   path: "/Textures/_CE/Shaders/zblur.swsl"
 
 - type: shader
+  id: CEZFog
+  kind: source
+  path: "/Textures/_CE/Shaders/zfog.swsl"
+
+- type: shader
   id: CEShockWave
   kind: source
   path: "/Textures/_CE/Shaders/shock_wave.swsl"
@@ -33,3 +48,18 @@
   id: CECloudShadow
   kind: source
   path: "/Textures/_CE/Shaders/cloud_shadow.swsl"
+
+- type: shader
+  id: CEMurkDissolving
+  kind: source
+  path: "/Textures/_CE/Shaders/murk_dissolving.swsl"
+
+- type: shader
+  id: CEMurkDesaturate
+  kind: source
+  path: "/Textures/_CE/Shaders/murk_desaturate.swsl"
+
+- type: shader
+  id: CEDarkSide
+  kind: source
+  path: "/Textures/_CE/Shaders/dark_side.swsl"

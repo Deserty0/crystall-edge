@@ -259,9 +259,6 @@
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
     color: "#8A9A5B"
-  - type: GuideHelp
-    guides:
-    - Cloning # Should remove this, we don't have cloning and don't want cloning
 
 - type: entity
   parent: MaterialBiomass
@@ -270,54 +267,6 @@
   components:
   - type: Stack
     count: 1
-
-# Following not used currently
-- type: entity
-  parent: MaterialBase
-  id: MaterialHideBear
-  name: bear hide
-  components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: bearpelt
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: bearpelt_glow
-      shader: unshaded
-  - type: Item
-    sprite: Clothing/Head/Misc/hides.rsi
-    heldPrefix: bear
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hides.rsi
-    equippedPrefix: bear
-    slots:
-      - HEAD
-  - type: PointLight
-    radius: 1.2
-    energy: 2.7
-    color: "#4faffb"
-    slots:
-
-- type: entity
-  parent: MaterialBase
-  id: MaterialHideCorgi
-  name: corgi hide
-  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
-  components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    state: corgihide
-  - type: Item
-    heldPrefix: corgihide
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hides.rsi
-    equippedPrefix: corgi2
-    slots:
-    - HEAD
-  - type: Tag
-    tags:
-    - HideCorgi
 
 - type: entity
   parent: MaterialBase
@@ -458,71 +407,13 @@
     count: 1
 
 - type: entity
-  parent: [ MaterialBase, FoodBase ]
-  id: MaterialBananium
-  name: bananium
-  suffix: Full
-  components:
-  - type: PhysicalComposition
-    materialComposition:
-      Bananium: 150
-  - type: Sprite
-    state: bananium_3
-    layers:
-    - state: bananium_3
-      map: [ "base" ]
-  - type: Stack
-    stackType: Bananium
-    count: 10
-    baseLayer: base
-    layerStates:
-    - bananium
-    - bananium_2
-    - bananium_3
-  - type: FlavorProfile
-    flavors:
-    - banana
-  - type: Edible
-    solution: composite
-    trash:
-    - TrashBananiumPeel
-  - type: BadFood
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 4
-      - ReagentId: Vitamin
-        Quantity: 2
-      - ReagentId: Honk
-        Quantity: 4
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuiceBanana
-        Quantity: 5
-      - ReagentId: Honk
-        Quantity: 5
-  - type: Item
-    heldPrefix: bananium
-
-- type: entity
-  parent: MaterialBananium
-  id: MaterialBananium1
-  suffix: Single
-  components:
-  - type: Sprite
-    state: bananium
-  - type: Stack
-    count: 1
-
-- type: entity
   parent: [SolutionCompositeNormalStackable, MaterialBase, FoodBase]
   id: MaterialWebSilk
   name: silk
   description: A webby material.
   suffix: Full
   components:
+  - type: Material
   - type: PhysicalComposition
     materialComposition:
       WebSilk: 100
@@ -552,14 +443,6 @@
   - type: Item
     sprite: Objects/Materials/silk.rsi
     heldPrefix: silk
-
-- type: entity
-  parent: MaterialWebSilk
-  id: MaterialWebSilk25
-  suffix: 25
-  components:
-  - type: Stack
-    count: 25
 
 - type: entity
   parent: MaterialWebSilk
@@ -707,45 +590,3 @@
       Gunpowder: 100
   - type: Item
     size: Tiny
-
-- type: entity
-  parent: MaterialBase
-  id: MaterialGoliathHide
-  name: goliath hide plates
-  description: Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna.
-  suffix: Full
-  components:
-  - type: Sprite
-    sprite: Objects/Materials/hide.rsi
-    layers:
-    - state: goliath_hide
-      map: [ "base" ]
-  - type: StaticPrice
-    price: 0
-  - type: StackPrice
-    price: 1500
-  - type: Appearance
-  - type: Stack
-    stackType: GoliathHide
-    baseLayer: base
-    layerStates:
-    - goliath_hide
-    - goliath_hide_2
-    - goliath_hide_3
-  - type: Item
-    size: Large
-    heldPrefix: goliathhide
-    sprite: Objects/Materials/hide.rsi
-    shape:
-    - 0,0,2,2
-  - type: Tag
-    tags:
-    - GoliathPlate
-
-- type: entity
-  parent: MaterialGoliathHide
-  id: MaterialGoliathHide1
-  suffix: 1
-  components:
-  - type: Stack
-    count: 1

@@ -14,23 +14,24 @@
   description: department-Civilian-description
   color: "#9FED58"
   weight: -10
+  ignoreForDepartmentFallback: true
   roles:
   - Bartender
   - Botanist
   - Chaplain
   - Chef
-  - Clown
   - HeadOfPersonnel
   - Janitor
   - Lawyer
   - Librarian
-  - Mime
   - Musician
   - Passenger
   - Reporter
   - Visitor
   - ServiceWorker
+  - TramDriver
 
+# Please kill this
 - type: department
   id: CentralCommand
   name: department-CentralCommand
@@ -62,6 +63,7 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
+  # Please kill these
   - CentralCommandOfficial
   - CBURN
   - ERTLeader
@@ -122,21 +124,14 @@
   - ResearchAssistant
 
 - type: department
-  id: Silicon
-  name: department-Silicon
-  description: department-Silicon-description
-  color: "#D381C9"
-  roles:
-  - Borg
-  - StationAi
-
-- type: department
   id: Specific
   name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
   weight: 10
+  ignoreForDepartmentFallback: true
   roles:
   - Reporter
   - Psychologist
+  - TramDriver
   primary: false

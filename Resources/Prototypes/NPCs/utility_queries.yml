@@ -1,32 +1,4 @@
 - type: utilityQuery
-  id: InventoryGuns
-  query:
-    - !type:InventoryQuery
-    - !type:ComponentFilter
-      components:
-        - type: Gun
-  considerations:
-    - !type:TargetAmmoCon
-      curve: !type:QuadraticCurve
-
-- type: utilityQuery
-  id: NearbyAmmo
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: Ammo
-        - type: Item
-  considerations:
-    - !type:TargetAmmoMatchesCon
-      curve: !type:BoolCurve
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-    # TODO: Get ammo count.
-    - !type:TargetAccessibleCon
-      curve: !type:BoolCurve
-
-- type: utilityQuery
   id: NearbyFood
   query:
     - !type:ComponentQuery
@@ -39,6 +11,7 @@
       curve: !type:PresetCurve
         preset: TargetDistance
     - !type:FoodValueCon
+      hungerThreshold: Peckish
       curve: !type:QuadraticCurve
         slope: 1.0
         exponent: 0.4
@@ -58,28 +31,12 @@
     curve: !type:PresetCurve
       preset: TargetDistance
   - !type:DrinkValueCon
+    thirstThreshold: Thirsty
     curve: !type:QuadraticCurve
       slope: 1.0
       exponent: 0.4
   - !type:TargetAccessibleCon
     curve: !type:BoolCurve
-
-- type: utilityQuery
-  id: NearbyGuns
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: Gun
-        - type: Item
-  considerations:
-    # TODO: Prefer highest DPC probably?
-    - !type:TargetAmmoCon
-      curve: !type:BoolCurve
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-    - !type:TargetAccessibleCon
-      curve: !type:BoolCurve
 
 - type: utilityQuery
   id: NearbyMeleeTargets
@@ -100,27 +57,6 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
-
-- type: utilityQuery
-  id: NearbyColdMeleeTargets
-  query:
-  - !type:NearbyHostilesQuery
-  considerations:
-  - !type:TargetLowTempCon
-    curve: !type:BoolCurve
-    minTemp: 250
-  - !type:TargetIsAliveCon
-    curve: !type:BoolCurve
-  - !type:TargetDistanceCon
-    curve: !type:PresetCurve
-      preset: TargetDistance
-  - !type:TargetHealthCon
-    curve: !type:PresetCurve
-      preset: TargetHealth
-  - !type:TargetAccessibleCon
-    curve: !type:BoolCurve
-  - !type:TargetInLOSOrCurrentCon
-    curve: !type:BoolCurve
 
 - type: utilityQuery
   id: OrderedTargets
@@ -168,27 +104,6 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
-  id: NearbyOnFire
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: Flammable
-          # why does Flammable even have a required damage
-          damage:
-            types:
-              Heat: 0
-  considerations:
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-    - !type:TargetAccessibleCon
-      curve: !type:BoolCurve
-    - !type:TargetInLOSOrCurrentCon
-      curve: !type:BoolCurve
-    - !type:TargetOnFireCon
-      curve: !type:BoolCurve
-
-- type: utilityQuery
   id: NearbyPuddles
   query:
     - !type:ComponentQuery
@@ -203,29 +118,6 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
-
-- type: utilityQuery
-  id: MedibotInjectable
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: InjectableSolution
-        - type: Damageable
-        - type: MobState
-    - !type:ComponentFilter
-      components:
-        - type: NPCRecentlyInjected
-      retainWithComp: false
-  considerations:
-    - !type:TargetIsCritCon
-      curve: !type:QuadraticCurve
-        slope: 1
-        exponent: 1
-        yOffset: 0.1
-        xOffset: 0
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
 
 - type: utilityQuery
   id: NearbyGunTargets
@@ -265,7 +157,6 @@
 #        preset: TargetDistance
 #    - !type:TargetAccessibleCon
 #      curve: !type:BoolCurve
-
 
 # Presets
 - type: utilityCurvePreset

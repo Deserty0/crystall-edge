@@ -23,24 +23,18 @@
     tags:
     - DrinkBottle
     - Trash
-  - type: Destructible # Same as parent, but spawns BrokenBottle instead of ShardGlass
+  - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
           BrokenBottle:
             min: 1
             max: 1
         transferForensics: true
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   abstract: true
@@ -69,19 +63,6 @@
   parent: DrinkBottleGlassSmallBase
   id: DrinkBottleGlassSmallBaseFull
   suffix: Full
-
-- type: entity
-  abstract: true
-  parent: [ SolutionLarge, DrinkBottleGlassBase ]
-  id: DrinkBottleGlassLargeBaseFull
-  suffix: Full
-  components:
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,3
-
-# Large Glass Bottles
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -496,84 +477,6 @@
     tags:
     - Wine
     - DrinkBottle
-
-- type: entity
-  name: nt cahors bottle
-  parent: DrinkBottleGlassBase
-  id: DrinkBottleNTCahors
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ntcahors.rsi
-  - type: Tag
-    tags:
-    - Wine
-    - DrinkBottle
-    - Trash
-
-- type: entity
-  name: nt cahors bottle
-  parent: DrinkBottleNTCahors
-  id: DrinkNTCahorsBottleFull
-  suffix: Full
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: NTCahors
-        Quantity: 120
-  - type: Tag
-    tags:
-    - Wine
-    - DrinkBottle
-
-# Large bottles
-
-- type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassLargeBaseFull]
-  id: DrinkBeerGrowler # todo Needs to be renamed DrinkBeerBottleFullGrowler
-  name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
-  description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Beer
-        Quantity: 240
-  - type: Label
-    localizedLabel: reagent-name-beer
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer.rsi
-  - type: Openable
-    closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
-  - type: Sealable
-    examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
-  - type: Tag
-    tags:
-    - Beer
-    - DrinkBottle
-
-- type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassLargeBaseFull]
-  id: DrinkAleBottleFullGrowler
-  name: Magm-Ale growler
-  description: A true dorf's drink of choice. XL growler bottle.
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Ale
-        Quantity: 240
-  - type: Label
-    localizedLabel: reagent-name-ale
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/alebottle.rsi
-  - type: Openable
-    closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
-  - type: Sealable
-    examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
-
-
-# Small glass bottles
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBase]

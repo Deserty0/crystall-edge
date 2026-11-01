@@ -6,6 +6,9 @@
       limit: 1
       required: false
     enum.HumanoidVisualLayers.FacialHair:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Head:
       limit: 1
       required: false
     enum.HumanoidVisualLayers.Snout:
@@ -17,6 +20,9 @@
       required: true
       default: [ CECarrinTail1 ]
     enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Special:
       limit: 1
       required: true
       default: [ CECarrinWings1 ]
@@ -47,9 +53,6 @@
     enum.HumanoidVisualLayers.HeadTop:
       limit: 0
       required: false
-    enum.HumanoidVisualLayers.Special:
-      limit: 0
-      required: false
 
 - type: entity
   parent: CEBaseSpeciesAppearance
@@ -63,6 +66,7 @@
       state: wings
       visible: false
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Special" ]
     - map: [ "enum.HumanoidVisualLayers.Head" ]
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
@@ -217,9 +221,10 @@
     sprite: _CE/Mobs/Species/Carrin/parts.rsi
     state: full
   - type: Vocal
-    emoteSounds: CEUnisexCarcat #TODO: change to carrin sound
+    emoteSounds: CEUnisexCarrin
   - type: Speech
     speechSounds: CECarcat #TODO: change to carrin sound
+    allowedEmotes: ['Chirp', 'CECall', 'CEScree', 'CECaw', 'CESquawk', 'CECoo']
   - type: FootstepModifier
     footstepSoundCollection:
       collection: CEStepCarrin
@@ -243,19 +248,12 @@
       - anim: ClawAttack1
       - anim: ClawAttack2
       - anim: ClawAttack3
-  - type: CEWeaponStaminaCost
-    costs:
-      Primary: 5
+      Secondary:
+      - anim: ClawCarrinKick
   # Flying birb!
   - type: CESkinColoredLayers
     maps:
     - wings
-  - type: CEZFlyer # Flying birb!!!
-  - type: CEControllableFlight
-    startFlightDoAfter: 1.5
-  - type: CEZFlyerBlockHands
-  - type: CEZFlyerStamina
-    staminaDraw: 10
   - type: AmbientSound
     enabled: false
     volume: 2
@@ -289,18 +287,16 @@
   - type: VisualOrganMarkings
     markingData:
       group: CECarrin
-  - type: CEMagicEssenceStructure
-    essences:
-      Beast: { min: 1, max: 3 }
-      Flight: { min: 0, max: 2 }
 
 - type: entity
   parent: [ OrganBaseTorso, CEOrganCarrinExternal ]
   id: CEOrganCarrinTorso
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseHead, CEOrganCarrinExternal ]
   id: CEOrganCarrinHead
+  categories: [ HideSpawnMenu ]
   components:
   - type: VisualOrganMarkings
     hideableLayers:
@@ -310,38 +306,47 @@
 - type: entity
   parent: [ OrganBaseArmLeft, CEOrganCarrinExternal ]
   id: CEOrganCarrinArmLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseArmRight, CEOrganCarrinExternal ]
   id: CEOrganCarrinArmRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseHandLeft, CEOrganCarrinExternal ]
   id: CEOrganCarrinHandLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseHandRight, CEOrganCarrinExternal ]
   id: CEOrganCarrinHandRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseLegLeft, CEOrganCarrinExternal ]
   id: CEOrganCarrinLegLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseLegRight, CEOrganCarrinExternal ]
   id: CEOrganCarrinLegRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseFootLeft, CEOrganCarrinExternal ]
   id: CEOrganCarrinFootLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseFootRight, CEOrganCarrinExternal ]
   id: CEOrganCarrinFootRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseEyes, OrganHumanInternal, CEOrganCarrinExternal ]
   id: CEOrganCarrinEyes
+  categories: [ HideSpawnMenu ]
   components:
   - type: VisualOrgan
     data:

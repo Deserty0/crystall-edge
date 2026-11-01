@@ -13,7 +13,8 @@
         Sugar: 0.4
         Nutriment: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.2 #its flour
 
 - type: reagent
@@ -29,7 +30,8 @@
       metabolites:
         Nutriment: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.2 #its cornflour
 
 - type: reagent
@@ -97,7 +99,6 @@
       effects:
       - !type:Emote
         emote: Cough
-        showInChat: true
         showInGuidebook: true
         probability: 0.05
   reactiveEffects:
@@ -148,21 +149,6 @@
       metabolites:
         Sugar: 0.8
         Nutriment: 0.2
-
-- type: reagent
-  id: OilOlive
-  name: reagent-name-oil-olive
-  group: Foods
-  desc: reagent-desc-oil-olive
-  physicalDesc: reagent-physical-desc-oily
-  flavor: oily
-  flavorMinimum: 0.05
-  color: olive
-  recognizable: true
-  metabolisms:
-    Digestion:
-      metabolites:
-        Nutriment: 1.5
 
 - type: reagent
   id: Oil
@@ -223,7 +209,8 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         conditions:
         - !type:ReagentCondition #Only satiates when eaten with nutriment
           reagent: Nutriment
@@ -252,22 +239,6 @@
     Digestion:
       metabolites:
         Nutriment: 1.5
-
-- type: reagent
-  id: TeaPowder
-  name: reagent-name-tea-powder
-  desc: reagent-desc-tea-powder
-  physicalDesc: reagent-physical-desc-powdery
-  flavor: tea
-  color: "#7F8400"
-  group: Foods
-  metabolisms:
-    Digestion:
-      metabolites:
-        Nutriment: 0.2
-      effects:
-      - !type:SatiateThirst
-        factor: -0.2
 
 - type: reagent
   id: FrostOil

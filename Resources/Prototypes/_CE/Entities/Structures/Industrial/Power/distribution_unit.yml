@@ -2,6 +2,7 @@
   abstract: true
   parent:
   - CEConstructibleMachine
+  - CEBaseMachineEnergized
   - BaseMachine
   id: CEDistributionUnitBase
   categories: [ ForkFiltered ]
@@ -62,12 +63,12 @@
   - type: BatteryCharger
     voltage: High
     node: input
-  - type: PowerMonitoringDevice
+  - type: CEPowerMonitoringDevice
     group: APC
     sourceNode: input
     loadNode: output
-    sprite: Structures/Power/power.rsi
-    state: distribution
+    sprite: _CE/Structures/Industrial/Power/distribution_unit.rsi
+    state: base
   - type: PowerProvider
     voltage: Apc
   - type: Apc

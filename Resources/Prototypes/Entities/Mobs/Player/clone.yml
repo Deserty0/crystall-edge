@@ -8,7 +8,6 @@
 - type: cloningSettings
   id: TraitsMental
   components:
-  - Clumsy
   - Pacified
   - Paracusia
   - LightweightDrunk
@@ -21,7 +20,6 @@
   - Narcolepsy
   - ImpairedMobility
   # - LegsParalyzed (you get healed)
-  - Muted
   - PermanentBlindness
   - Snoring
   - Unrevivable
@@ -35,7 +33,6 @@
   id: Body
   components:
   # general
-  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
@@ -75,6 +72,10 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
+  - Damageable # Sprites and damage modifier
+  - Flammable # Displacements
+  - CreamPied # Displacements
+  - Hands # displacements
   - Puller
   - Vocal # voice sounds
 
@@ -85,7 +86,6 @@
   - BibleUser
   - CommandStaff
   - MindShield
-  - MimePowers
   - SpaceNinja
   - Thieving
 
@@ -93,8 +93,6 @@
 - type: cloningSettings
   id: Antag
   components:
-  - HeadRevolutionary
-  - Revolutionary
   - NukeOperative
 
 - type: cloningSettings
@@ -127,47 +125,31 @@
   components:
   - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
-# changeling identity copying
+# for plant clones
 - type: cloningSettings
-  id: ChangelingCloningSettings
-  parent: [Body, TraitsPhysical, BaseEquipmentBlacklist]
-  statusEffectWhitelist:
-    components:
-    - ChangelingCloneableStatusEffect
+  id: PlantClone
   components:
-  # These are already part of the base species prototype that is spawned for the clone,
-  # that means we only need to copy them over when switching between species.
-  # So these don't need to be part of the Body settings, unless someone makes a trait that adjusts these components.
-  - BodyEmotes
-  - MessyDrinker
-  # - Fixtures TODO: A better way to clone fixtures or a fixture fix. Currently if you devour someone on the ground and transform, you lose collision with tables as they were knocked down when they were copied.
-  - Speech
-  - TemperatureProtection
-  - TypingIndicator
-  - ScaleVisuals # for dwarf height
+  - Plant
+  - PlantHarvest
+  - PlantChemicals
+  - PlantGrowth
+  - PlantAtmospheric
+  - PlantConsumeExudeGas
+  - PlantWeedPest
+  - PlantToxins
+  # traits
+  - PlantTraitKudzu
+  - PlantTraitLigneous
+  - PlantTraitScream
+  - PlantTraitUnviable
+
+# for plant lifecycle clones
+- type: cloningSettings
+  id: PlantLifecycleClone
+  parent: PlantClone
+  components:
+  # traits
+  - PlantTraitSampled
+  - PlantTraitSeedless
   eventComponents:
-  # these need special treatment in the event subscription
-  - Inventory # arachnid pockets and diona feet
-  - Wagging # lizard tails
-  - Storage # slime storage
-  - Rootable # diona
-  - Sericulture # arachnids
-  - MovementSpeedModifier # moths when weightless
-  - JumpAbility # vulp leaping
-  - Bloodstream # blood reagents
-  copyInternalStorage: false
-  copyImplants: false
-  raiseEntityRenamedEvent: false
-
-
-# spawner
-- type: entity
-  id: RandomCloneSpawner
-  name: Random Clone
-  suffix: Non-Antag
-  components:
-  - type: Sprite
-    sprite: Mobs/Aliens/paradox_clone.rsi
-    state: preview
-  - type: RandomCloneSpawner
-    settings: BaseClone
+  - PlantHolder

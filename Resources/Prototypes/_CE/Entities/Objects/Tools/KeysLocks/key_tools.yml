@@ -8,20 +8,19 @@
   - type: Item
     storedRotation: -90
   - type: Sprite
-    sprite: _CE/Objects/Tools/keys.rsi
+    sprite: _CE/Objects/Tools/lockpick.rsi
     state: lockpick_iron
   - type: CELockpick
-    health: 10
+  - type: GuideHelp
+    guides:
+    - CELocksKeysGuideEN
+    - CELocksKeysGuideRU
   - type: Tag
     tags:
     - CELockpick
   - type: PhysicalComposition
     materialComposition:
       CEIron: 10
-  - type: CEMagicEssenceStructure
-    essences:
-      Metal: { min: 1, max: 3 }
-      Trap: { min: 0, max: 2 }
 
 - type: entity
   parent: BaseItem
@@ -33,14 +32,15 @@
   - type: Item
     storedRotation: 45
   - type: Sprite
-    sprite: _CE/Objects/Tools/keys.rsi
+    sprite: _CE/Objects/Tools/lockpick.rsi
     state: file
   - type: CEKeyFile
+  - type: GuideHelp
+    guides:
+    - CELocksKeysGuideEN
+    - CELocksKeysGuideRU
   - type: UseDelay
     delay: 1.0
   #- type: PhysicalComposition
   #  materialComposition:
   #    CEIron: 10
-  - type: CEMagicEssenceStructure
-    essences:
-      Metal: { min: 1, max: 3 }

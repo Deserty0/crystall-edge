@@ -1,0 +1,54 @@
+<screens:CEMinimalismGameScreen
+    xmlns="https://spacestation14.io"
+    xmlns:screens="clr-namespace:Content.Client._CE.UserInterface.Screens"
+    xmlns:menuBar="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
+    xmlns:actions="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
+    xmlns:alerts="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
+    xmlns:ceChat="clr-namespace:Content.Client._CE.UserInterface.Systems.Chat.Widgets"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
+    xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:vitals="clr-namespace:Content.Client._CE.UserInterface.Systems.Vitals.Widgets"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xe="clr-namespace:Content.Client.UserInterface.XamlExtensions"
+    xmlns:is="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
+    Name="CEMinimalismHud"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center">
+    <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
+        <controls:MainViewport Name="MainViewport"/>
+    </LayoutContainer>
+    <BoxContainer Name="TopLeft" Access="Protected" Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <menuBar:GameTopMenuBar Name="TopBar" Access="Public" />
+            <!-- Stand-in for the hidden top bar's AHelp button: shown (blinking) only while there is
+                 an unread AHelp message, driven by CEAHelpAlertUIController -->
+            <controls:MenuButton
+                Name="AHelpAlertButton"
+                Access="Public"
+                Visible="False"
+                Icon="{xe:Tex '/Textures/Interface/info.svg.192dpi.png'}"
+                BoundKey="{x:Static is:ContentKeyFunctions.OpenAHelp}"
+                ToolTip="{Loc 'ui-options-function-open-a-help'}"
+                MinSize="42 64" />
+            <!-- Buffer so big votes don't skew it -->
+            <Control/>
+        </BoxContainer>
+        <BoxContainer Name="VoteMenu" Access="Public" Margin="0 10 0 10" Orientation="Vertical"/>
+    </BoxContainer>
+    <widgets:GhostGui Name="Ghost" Access="Protected" />
+    <!-- Opens the character menu (which now hosts the inventory) - same spot and texture as the
+         old inline inventory toggle, so it stays recognizable -->
+    <controls:SlotButton Name="CharacterMenuButton" Access="Public" ButtonTexturePath="Slots/toggle" />
+    <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
+    <!-- Bottom-left, no-background, fading chat -->
+    <ceChat:CEChatBox Name="Chat" Access="Protected" />
+    <alerts:AlertsUI Name="Alerts" Access="Protected" />
+    <vitals:CEHealthUI Name="HealthBar" Access="Public" />
+    <vitals:CEManaUI Name="ManaBar" Access="Public" />
+    <vitals:CEClockUI Name="Clock" Access="Public" />
+    <vitals:CEStaminaUI Name="StaminaBar" Access="Public" />
+    <vitals:CERoundProgressUI Name="RoundProgressBar" Access="Public" />
+    <actions:ActionsBar Name="Actions" Access="Protected" />
+</screens:CEMinimalismGameScreen>

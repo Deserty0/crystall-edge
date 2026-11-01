@@ -14,11 +14,6 @@
     - Recyclable
     - Trash
   - type: BotanySwab
-  - type: GuideHelp
-    guides:
-  # - Virology (when it's back)
-    - Botany
-    - Chemicals
 
 - type: entity
   parent: BaseAmmoProvider # this is for cycling swabs out and not spawning 30 entities, trust
@@ -36,20 +31,3 @@
       - BotanySwab
     proto: DiseaseSwab
     capacity: 30
-  - type: GuideHelp
-    guides:
-  # - Virology (when it's back)
-    - Botany
-    - Chemicals
-
-- type: entity
-  parent: BaseItem
-  id: Vaccine
-  name: vaccine
-  description: Prevents people who DON'T already have a disease from catching it.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
-    state: salpen

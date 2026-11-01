@@ -37,9 +37,6 @@
       weight: 3
     - id: TrashBakedBananaPeel
       weight: 2
-    - id: TrashMimanaPeel
-    - id: TrashBananiumPeel
-      weight: 0.5
     - id: TrashBananaPeelExplosive
       weight: 0.001 # 1 in 6,500
 
@@ -73,18 +70,3 @@
     offset: 0.2
     table: !type:NestedSelector
       tableId: GenericTrashItems
-
-- type: entity
-  parent: MarkerBase
-  id: RandomBananaPeel90
-  name: random banana peel spawner
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Specific/Hydroponics/banana.rsi
-      state: peel
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllBananaPeelsTable
-      prob: 0.9

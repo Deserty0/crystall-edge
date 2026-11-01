@@ -4,6 +4,7 @@ using Content.Shared.Effects;
 using Content.Shared.Jittering;
 using Content.Shared.Power;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -33,13 +34,7 @@ public sealed partial class CESharedDrillSystem : EntitySystem
 
     private readonly List<EntityUid> _cachedEntityList = new();
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CEDrillComponent, PowerChangedEvent>(OnPowerChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPowerChange(Entity<CEDrillComponent> ent, ref PowerChangedEvent args)
     {
         var enabled = args.Powered;
@@ -75,18 +70,22 @@ public sealed partial class CESharedDrillSystem : EntitySystem
             var rayCastResults = _physics.IntersectRay(xform.MapID, ray, distance, uid, returnOnFirstHit: false);
 
             _cachedEntityList.Clear();
+            var hitAny = false;
             foreach (var hit in rayCastResults)
             {
-                _damageable.TryChangeDamage(hit.HitEntity, melee.Damage, false, true, uid);
+                hitAny = true;
+                _damageable.TryChangeDamage(hit.HitEntity, melee.Damage, out var dealt, false, true, uid);
 
                 _meleeSound.PlayHitSound(hit.HitEntity, uid, SharedMeleeWeaponSystem.GetHighestDamageSound(melee.Damage, _proto), null, melee);
-                _cachedEntityList.Add(hit.HitEntity);
+
+                if (dealt.GetTotal() > 0)
+                    _cachedEntityList.Add(hit.HitEntity);
             }
 
-            if (_cachedEntityList.Count == 0)
+            if (!hitAny)
                 continue;
 
-            if (_net.IsClient)
+            if (_net.IsClient && _cachedEntityList.Count > 0)
                 _color.RaiseEffect(Color.Red, _cachedEntityList, Filter.Pvs(uid, entityManager: EntityManager));
             _jitter.DoJitter(uid, freq, true, drill.JitterAmplitude, drill.JitterFreq);
         }

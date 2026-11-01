@@ -198,14 +198,14 @@
 
 - type: entity
   parent: CEClothingShirtBase
-  id: CEClothingShirtGuard
-  name: guard's shirt
-  description: The shirt worn by the imperial guard. All identical, in a single, strict style.
+  id: CEClothingShirtSheriff
+  name: sheriff's shirt
+  description: The shirt worn by the sheriff, in a single, strict style.
   components:
   - type: Sprite
-    sprite: _CE/Clothing/Shirt/Guard/shirt.rsi
+    sprite: _CE/Clothing/Shirt/Sheriff/shirt.rsi
   - type: Clothing
-    sprite: _CE/Clothing/Shirt/Guard/shirt.rsi
+    sprite: _CE/Clothing/Shirt/Sheriff/shirt.rsi
 
 - type: entity
   parent: CEClothingShirtBase
@@ -261,3 +261,14 @@
     sprite: _CE/Clothing/Shirt/Academy/robe2.rsi
   - type: Clothing
     sprite: _CE/Clothing/Shirt/Academy/robe2.rsi
+
+- type: entity
+  parent: CEClothingShirtBase
+  id: CEClothingShirtKeyKeeper
+  name: key keeper shirt
+  description: A neat shirt worn by those who keep the keys.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Shirt/KeyKeeper/shirt.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Shirt/KeyKeeper/shirt.rsi

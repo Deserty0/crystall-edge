@@ -87,9 +87,6 @@
       path: /Audio/Ambience/Objects/gas_pump.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
-  - type: GuideHelp
-    guides:
-    - Pumps
 
 - type: entity
   parent: GasBinaryBase
@@ -159,9 +156,6 @@
     - type: WiredNetworkConnection
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
-    - type: GuideHelp
-      guides:
-      - Pumps
 
 - type: entity
   parent: GasBinaryBase
@@ -219,9 +213,6 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
-  - type: GuideHelp
-    guides:
-    - PressureRegulator
 
 - type: entity
   parent: GasBinaryBase
@@ -261,9 +252,6 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
-    - type: GuideHelp
-      guides:
-      - PassiveGate
 
 - type: entity
   parent: GasBinaryBase
@@ -322,9 +310,6 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
-    - type: GuideHelp
-      guides:
-      - ManualValve
 
 - type: entity
   parent: GasBinaryBase
@@ -394,9 +379,6 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
-  - type: GuideHelp
-    guides:
-    - SignalValve
 
 - type: entity
   parent: GasBinaryBase
@@ -433,9 +415,6 @@
       node: port
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
-    - type: GuideHelp
-      guides:
-      - GasCanisters
 
 - type: entity
   parent: GasVentPump
@@ -491,12 +470,9 @@
       enabled: true
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
-    - type: GuideHelp
-      guides:
-      - AirVent
 
 - type: entity
-  parent: [ BaseMachine, ConstructibleMachine ]
+  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: GasRecycler
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
@@ -553,24 +529,17 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
   - type: Transform
     noRot: false
-  - type: GuideHelp
-    guides:
-    - GasRecycling
   - type: TegCirculator
 
 - type: entity
@@ -616,9 +585,6 @@
     node: radiator
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: Thermoregulator
-  - type: GuideHelp
-    guides:
-    - Radiators
 
 - type: entity
   parent: HeatExchanger

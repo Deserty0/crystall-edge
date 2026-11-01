@@ -5,12 +5,10 @@ using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Spawners.Components;
-using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Players;
@@ -182,6 +180,9 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            if (!_randomizeCharacters && _ceSpeciesRequirements.TryRefuseJoin(player, character)) // CrystallEdge: a character of a locked species stays in the lobby
+                return;
+
             string speciesId;
             if (_randomizeCharacters)
             {
@@ -265,22 +266,22 @@ namespace Content.Server.GameTicking
                 if (jobPrototype.JoinNotifyCrew)
                 {
                     _chatSystem.DispatchStationAnnouncement(station,
-                        Loc.GetString("latejoin-arrival-announcement-special",
+                        Loc.GetString("ce-round-portal-arrival-announcement-special", // CrystallEdge: fantasy arrival text
                             ("character", MetaData(mob).EntityName),
                             ("entity", mob),
                             ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
-                        Loc.GetString("latejoin-arrival-sender"),
+                        Loc.GetString("ce-round-portal-announcement-sender"), // CrystallEdge: fantasy arrival text
                         playDefaultSound: false,
                         colorOverride: Color.Gold);
                 }
                 else
                 {
                     _chatSystem.DispatchStationAnnouncement(station,
-                        Loc.GetString("latejoin-arrival-announcement",
+                        Loc.GetString("ce-round-portal-arrival-announcement", // CrystallEdge: fantasy arrival text
                             ("character", MetaData(mob).EntityName),
                             ("entity", mob),
                             ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
-                        Loc.GetString("latejoin-arrival-sender"),
+                        Loc.GetString("ce-round-portal-announcement-sender"), // CrystallEdge: fantasy arrival text
                         playDefaultSound: false);
                 }
             }

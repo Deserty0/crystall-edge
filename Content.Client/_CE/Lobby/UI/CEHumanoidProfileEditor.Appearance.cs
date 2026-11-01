@@ -1,0 +1,281 @@
+using System.Linq;
+using Content.Shared.Chat.Prototypes;
+using Content.Shared.Guidebook;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
+using Content.Shared.Speech.Components;
+using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
+
+namespace Content.Client._CE.Lobby.UI;
+
+public sealed partial class CEHumanoidProfileEditor
+{
+    public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
+
+    private ColorSelectorSliders _rgbSkinColorSelector;
+    private List<EmoteSoundsPrototype> _voices = new();
+
+    private void UpdateGenderControls()
+    {
+        if (Profile == null)
+        {
+            return;
+        }
+
+        PronounsButton.SelectId((int)Profile.Gender);
+    }
+
+    private void UpdateAgeEdit()
+    {
+        AgeEdit.Text = Profile?.Age.ToString() ?? "";
+    }
+
+    private void UpdateSexControls()
+    {
+        if (Profile == null)
+            return;
+
+        SexButton.Clear();
+
+        var sexes = new List<Sex>();
+
+        // add species sex options, default to just none if we are in bizzaro world and have no species
+        if (_prototypeManager.Resolve(Profile.Species, out var speciesProto))
+        {
+            foreach (var sex in speciesProto.Sexes)
+            {
+                sexes.Add(sex);
+            }
+        }
+        else
+        {
+            sexes.Add(Sex.Unsexed);
+        }
+
+        // add button for each sex
+        foreach (var sex in sexes)
+        {
+            SexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int)sex);
+        }
+
+        if (sexes.Contains(Profile.Sex))
+            SexButton.SelectId((int)Profile.Sex);
+        else
+            SexButton.SelectId((int)sexes[0]);
+    }
+
+    private void UpdateEyePickers()
+    {
+        if (Profile == null)
+        {
+            return;
+        }
+
+        _markingsModel.SetOrganEyeColor(Profile.Appearance.EyeColor);
+        EyeColorPicker.SetData(Profile.Appearance.EyeColor);
+    }
+
+    private void UpdateVoiceControls()
+    {
+        if (Profile == null)
+            return;
+
+        VoiceButton.Clear();
+        _voices.Clear();
+
+        var speciesPrototype = _prototypeManager.Index(Profile.Species);
+        var availableVoices = speciesPrototype.Voices;
+
+        _voices.AddRange(availableVoices.Select(protoId => _prototypeManager.Index(protoId)));
+
+        if (_voices.All(proto => Profile?.Voice != proto.ID))
+            SetVoice(speciesPrototype.DefaultSoundsBySex[(int)Profile.Sex]);
+
+        for (var i = 0; i < availableVoices.Count; i++)
+        {
+            var name = Loc.GetString(_voices[i].VoiceSelectorName);
+            VoiceButton.AddItem(name, i);
+
+            if (Profile?.Voice.Equals(_voices[i].ID) == true)
+            {
+                VoiceButton.SelectId(i);
+            }
+        }
+    }
+
+    private void UpdateSkinColor()
+    {
+        if (Profile == null)
+            return;
+
+        var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+        var strategy = _prototypeManager.Index(skin).Strategy;
+
+        switch (strategy.InputType)
+        {
+            case SkinColorationStrategyInput.Unary:
+                {
+                    if (!Skin.Visible)
+                    {
+                        Skin.Visible = true;
+                        RgbSkinColorContainer.Visible = false;
+                    }
+
+                    Skin.Value = strategy.ToUnary(Profile.Appearance.SkinColor);
+
+                    break;
+                }
+            case SkinColorationStrategyInput.Color:
+                {
+                    if (!RgbSkinColorContainer.Visible)
+                    {
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
+                    }
+
+                    _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(Profile.Appearance.SkinColor);
+
+                    break;
+                }
+        }
+    }
+
+    /// <summary>
+    /// Whether the picked species can be saved: not locked by its requirements.
+    /// </summary>
+    public bool SpeciesValid => Profile is null || !SpeciesPicker.IsLocked(Profile.Species);
+
+    /// <summary>
+    /// Refreshes the species selector - on profile change, species prototype reload or unlock (achievement) updates.
+    /// </summary>
+    public void RefreshSpecies()
+    {
+        SpeciesPicker.Populate(Profile);
+
+        // If our species isn't available then reset it to default.
+        if (Profile != null && SpeciesPicker.GetRoundStartSpecies().All(s => s.ID != Profile.Species))
+            SetSpecies(HumanoidCharacterProfile.DefaultSpecies);
+
+        UpdateSaveButton();
+    }
+
+    /// <summary>
+    /// Round-start species the player can't pick yet - kept out of the randomizer.
+    /// </summary>
+    private HashSet<string> GetLockedSpecies()
+    {
+        return SpeciesPicker.GetRoundStartSpecies()
+            .Where(s => SpeciesPicker.IsLocked(s.ID))
+            .Select(s => s.ID)
+            .ToHashSet();
+    }
+
+    private void SetSpecies(string newSpecies)
+    {
+        Profile = Profile?.WithSpecies(newSpecies);
+        OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
+        _markingsModel.OrganData = _markingManager.GetMarkingData(newSpecies);
+        _markingsModel.ValidateMarkings();
+        // In case there's job restrictions for the species
+        RefreshJobs();
+        // In case there's species restrictions for loadouts
+        RefreshLoadouts();
+        UpdateSexControls(); // update sex for new species
+        UpdateVoiceControls();
+        SpeciesPicker.SetSelection(Profile?.Species);
+        ReloadPreview();
+        UpdateSaveButton();
+    }
+
+    private void SetAge(int newAge)
+    {
+        Profile = Profile?.WithAge(newAge);
+        ReloadPreview();
+    }
+
+    private void SetSex(Sex newSex)
+    {
+        Profile = Profile?.WithSex(newSex);
+        // for convenience, default to most common gender when new sex is selected
+        switch (newSex)
+        {
+            case Sex.Male:
+                Profile = Profile?.WithGender(Gender.Male);
+                break;
+            case Sex.Female:
+                Profile = Profile?.WithGender(Gender.Female);
+                break;
+            default:
+                Profile = Profile?.WithGender(Gender.Epicene);
+                break;
+        }
+
+        // this does the same as above but for voice
+        if (_prototypeManager.TryIndex(Profile?.Species, out var prototype))
+            SetVoice(prototype.DefaultSoundsBySex[(int)newSex]);
+
+        UpdateGenderControls();
+        UpdateVoiceControls();
+        _markingsModel.SetOrganSexes(newSex);
+        ReloadPreview();
+    }
+
+    private void SetVoice(ProtoId<EmoteSoundsPrototype> newVoice)
+    {
+        Profile = Profile?.WithVoice(newVoice);
+        SetDirty();
+    }
+
+    private void SetGender(Gender newGender)
+    {
+        Profile = Profile?.WithGender(newGender);
+        ReloadPreview();
+    }
+
+    private void OnSkinColorOnValueChanged()
+    {
+        if (Profile is null) return;
+
+        var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+        var strategy = _prototypeManager.Index(skin).Strategy;
+
+        switch (strategy.InputType)
+        {
+            case SkinColorationStrategyInput.Unary:
+                {
+                    if (!Skin.Visible)
+                    {
+                        Skin.Visible = true;
+                        RgbSkinColorContainer.Visible = false;
+                    }
+
+                    var color = strategy.FromUnary(Skin.Value);
+
+                    _markingsModel.SetOrganSkinColor(color);
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
+                    break;
+                }
+            case SkinColorationStrategyInput.Color:
+                {
+                    if (!RgbSkinColorContainer.Visible)
+                    {
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = strategy.ClosestSkinColor(_rgbSkinColorSelector.Color);
+
+                    _markingsModel.SetOrganSkinColor(color);
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
+                    break;
+                }
+        }
+
+        ReloadProfilePreview();
+    }
+}

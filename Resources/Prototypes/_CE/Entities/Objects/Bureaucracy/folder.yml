@@ -39,9 +39,6 @@
       storagebase: !type:Container
   - type: StaticPrice
     price: 1
-  - type: CEMagicEssenceStructure
-    essences:
-      Order: { min: 1, max: 4 }
 
 - type: entity
   id: CEPaperFolderBlue
@@ -49,6 +46,8 @@
   components:
   - type: Sprite
     state: folder_blue
+  - type: Item
+    heldPrefix: folder_blue
 
 - type: entity
   id: CEPaperFolderRed
@@ -56,6 +55,8 @@
   components:
   - type: Sprite
     state: folder_red
+  - type: Item
+    heldPrefix: folder_red
 
 - type: entity
   id: CEPaperFolderGreen
@@ -63,6 +64,8 @@
   components:
   - type: Sprite
     state: folder_green
+  - type: Item
+    heldPrefix: folder_green
 
 - type: entity
   id: CEPaperFolderPurple
@@ -70,4 +73,6 @@
   components:
   - type: Sprite
     state: folder_purple
+  - type: Item
+    heldPrefix: folder_purple
 

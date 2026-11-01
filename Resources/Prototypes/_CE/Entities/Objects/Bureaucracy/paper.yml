@@ -16,17 +16,9 @@
   - type: Item
     size: Tiny
   - type: Appearance
+  - type: PaperVisualizer
   - type: PaperVisuals
     contentImageModulate: "#998665"
-  - type: Flammable
-    fireSpread: true
-    alwaysCombustible: true
-    damage:
-      types:
-        Heat: 1
-  - type: FireVisuals
-    sprite: Effects/fire.rsi
-    normalState: fire
   - type: Damageable
     damageModifierSet: Wood
   - type: Injurable
@@ -60,10 +52,6 @@
     - Document
   - type: StaticPrice
     price: 2
-  - type: CEMagicEssenceStructure
-    essences:
-      Order: { min: 1, max: 3 }
-      Plant: { min: 0, max: 2 }
 
 - type: entity
   parent: CEBasePaper

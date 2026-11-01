@@ -41,7 +41,7 @@
     delay: 1
   - type: PointLight
     enabled: false
-    mask: /Textures/_CE/Effects/LightMasks/crystal_cone.png
+    lightMask: CECrystalCone
     autoRot: true
     energy: 6
     radius: 6
@@ -90,7 +90,3 @@
     materialComposition:
       CEIron: 10
       CEBrass: 6
-  - type: CEMagicEssenceStructure
-    essences:
-      Light: { min: 1, max: 4 }
-      Energia: { min: 0, max: 2 }

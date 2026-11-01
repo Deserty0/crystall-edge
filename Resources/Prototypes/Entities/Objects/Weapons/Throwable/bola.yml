@@ -1,8 +1,8 @@
 - type: entity
-  name: bola
+  abstract: true
   parent: [BaseItem, BaseSecurityContraband]
-  id: Bola
-  description: Linked together with some spare cuffs and metal.
+  id: BaseBola
+  name: bola
   components:
   - type: Item
     size: Normal
@@ -13,9 +13,6 @@
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: Construction
-    graph: Bola
-    node: bola
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
@@ -54,3 +51,13 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity
+  parent: BaseBola
+  id: Bola
+  name: makeshift bola
+  description: A makeshift bola, cobbled together with some spare cuffs and metal. It doesn't look like it's going to stay together for very long.
+  components:
+  - type: Construction
+    graph: Bola
+    node: bola

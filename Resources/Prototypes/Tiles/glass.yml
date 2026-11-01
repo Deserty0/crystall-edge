@@ -1,0 +1,17 @@
+- type: tile
+  id: FloorGlass
+  parent: BaseStationTile
+  name: tiles-glass-floor
+  sprite: /Textures/Tiles/Glass/glass.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetGlass1
+
+- type: tile
+  id: FloorRGlass
+  parent: BaseStationTile
+  name: tiles-reinforced-glass-floor
+  sprite: /Textures/Tiles/Glass/glass-reinf.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetRGlass1

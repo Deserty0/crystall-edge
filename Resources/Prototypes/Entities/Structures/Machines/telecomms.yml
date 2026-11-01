@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: TelecomServer
   name: telecommunication server
   description: When powered and filled with encryption keys it allows radio headset communication.
@@ -158,17 +158,15 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: !type:DamageTrigger
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:EmptyContainersBehaviour
+        containers:
+        - key_slots
   - type: Machine
     board: TelecomServerCircuitboard
   - type: WiresPanel
@@ -200,84 +198,4 @@
       - EncryptionKeyScience
       - EncryptionKeySecurity
       - EncryptionKeyService
-      - EncryptionKeyCommand
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledCommon
-  suffix: Common
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyCommon
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledCargo
-  suffix: Cargo
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyCargo
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledEngineering
-  suffix: Engineering
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyEngineering
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledMedical
-  suffix: Medical
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyMedical
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledScience
-  suffix: Science
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyScience
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledSecurity
-  suffix: Security
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeySecurity
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledService
-  suffix: Service
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyService
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledCommand
-  suffix: Command
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
       - EncryptionKeyCommand

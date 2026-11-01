@@ -1,0 +1,72 @@
+using Content.Server.Mind;
+using Content.Server.Roles;
+using Content.Shared._CE.Roles;
+using Content.Shared.Mind;
+using Robust.Shared.Prototypes;
+
+namespace Content.Server._CE.Roles;
+
+/// <summary>
+/// Answers <see cref="CERequestSecretRoleInfoEvent"/> with the requesting player's current secret role,
+/// read off their mind's <see cref="CESecretRoleComponent"/>. Kept separate from the vanilla
+/// CharacterInfoEvent pipeline - see <see cref="CESecretRoleInfoEvent"/> for why.
+/// </summary>
+public sealed partial class CESecretRoleInfoSystem : EntitySystem
+{
+    [Dependency] private MindSystem _minds = default!;
+    [Dependency] private RoleSystem _role = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeNetworkEvent<CERequestSecretRoleInfoEvent>(OnRequestSecretRoleInfo);
+    }
+
+    private void OnRequestSecretRoleInfo(CERequestSecretRoleInfoEvent msg, EntitySessionEventArgs args)
+    {
+        if (!args.SenderSession.AttachedEntity.HasValue
+            || args.SenderSession.AttachedEntity != GetEntity(msg.NetEntity))
+            return;
+
+        var entity = args.SenderSession.AttachedEntity.Value;
+
+        TryGetSecretRole(entity, out var secretRole, out var originalSecretRole);
+
+        RaiseNetworkEvent(new CESecretRoleInfoEvent(GetNetEntity(entity), secretRole, originalSecretRole), args.SenderSession);
+    }
+
+    /// <summary>
+    /// Looks up the current and original secret role assigned to an arbitrary entity's mind. Unlike
+    /// <see cref="OnRequestSecretRoleInfo"/> (which only answers a client about themselves),
+    /// this has no self-only restriction - callers decide who else is allowed to see the result.
+    /// </summary>
+    public bool TryGetSecretRole(EntityUid entity,
+        out ProtoId<CESecretRolePrototype>? role,
+        out ProtoId<CESecretRolePrototype>? originalRole)
+    {
+        role = null;
+        originalRole = null;
+
+        return _minds.TryGetMind(entity, out var mindId, out var mind) &&
+               TryGetMindSecretRole((mindId, mind), out role, out originalRole);
+    }
+
+    /// <summary>
+    /// Same as <see cref="TryGetSecretRole"/>, but straight off a mind - works for characters with no body left.
+    /// </summary>
+    public bool TryGetMindSecretRole(Entity<MindComponent> mind,
+        out ProtoId<CESecretRolePrototype>? role,
+        out ProtoId<CESecretRolePrototype>? originalRole)
+    {
+        role = null;
+        originalRole = null;
+
+        if (!_role.MindHasRole<CESecretRoleComponent>(mind.AsNullable(), out var roleEnt))
+            return false;
+
+        role = roleEnt.Value.Comp2.Role;
+        originalRole = roleEnt.Value.Comp2.OriginalRole;
+        return role is not null;
+    }
+}

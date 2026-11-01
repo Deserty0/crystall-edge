@@ -61,9 +61,6 @@
             "name": "pda-clear"
         },
         {
-            "name": "pda-clown"
-        },
-        {
             "name": "pda-cmo"
         },
         {
@@ -223,9 +220,6 @@
             "name": "pda-ert"
         },
         {
-            "name": "pda-cluwne"
-        },
-        {
             "name": "pda-seniorengineer"
         },
         {
@@ -250,6 +244,9 @@
                     0.3
                 ]
             ]
+        },
+        {
+            "name": "pda-tramdriver"
         }
     ]
 }

@@ -4,23 +4,16 @@
  */
 
 using Content.Shared._CE.Cooking.Components;
-using Content.Shared._CE.Cooking.Prototypes;
 using Content.Shared.DoAfter;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._CE.Cooking;
 
 public abstract partial class CESharedCookingSystem
 {
-    private void InitDoAfter()
-    {
-        SubscribeLocalEvent<CEFoodCookerComponent, EntParentChangedMessage>(OnParentChanged);
+    private static readonly TimeSpan CookingTime = TimeSpan.FromSeconds(20);
 
-        SubscribeLocalEvent<CEFoodCookerComponent, CECookingDoAfter>(OnCookFinished);
-        SubscribeLocalEvent<CEFoodCookerComponent, CEBurningDoAfter>(OnCookBurned);
-    }
-
+    [SubscribeLocalEvent]
     private void OnParentChanged(Entity<CEFoodCookerComponent> ent, ref EntParentChangedMessage args)
     {
         StopCooking(ent);
@@ -34,18 +27,7 @@ public abstract partial class CESharedCookingSystem
         _appearance.SetData(ent, CECookingVisuals.Cooking, true);
 
         // Recipe will be determined at the end of cooking based on current contents
-        var doAfterArgs = new DoAfterArgs(EntityManager, ent, TimeSpan.FromSeconds(20), new CECookingDoAfter(), ent)
-        {
-            NeedHand = false,
-            BreakOnWeightlessMove = false,
-            RequireCanInteract = false,
-        };
-
-        DoAfter.TryStartDoAfter(doAfterArgs, out var doAfterId);
-        ent.Comp.DoAfterId = doAfterId;
-        _ambientSound.SetAmbience(ent, true);
-
-        Dirty(ent);
+        StartDoAfter(ent, new CECookingDoAfter());
     }
 
     protected void StartBurning(Entity<CEFoodCookerComponent> ent)
@@ -55,7 +37,12 @@ public abstract partial class CESharedCookingSystem
 
         _appearance.SetData(ent, CECookingVisuals.Burning, true);
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, ent, 20, new CEBurningDoAfter(), ent)
+        StartDoAfter(ent, new CEBurningDoAfter());
+    }
+
+    private void StartDoAfter(Entity<CEFoodCookerComponent> ent, DoAfterEvent ev)
+    {
+        var doAfterArgs = new DoAfterArgs(EntityManager, ent, CookingTime, ev, ent)
         {
             NeedHand = false,
             BreakOnWeightlessMove = false,
@@ -65,8 +52,6 @@ public abstract partial class CESharedCookingSystem
         DoAfter.TryStartDoAfter(doAfterArgs, out var doAfterId);
         ent.Comp.DoAfterId = doAfterId;
         _ambientSound.SetAmbience(ent, true);
-
-        Dirty(ent);
     }
 
     protected void StopCooking(Entity<CEFoodCookerComponent> ent)
@@ -81,22 +66,25 @@ public abstract partial class CESharedCookingSystem
         _appearance.SetData(ent, CECookingVisuals.Burning, false);
 
         _ambientSound.SetAmbience(ent, false);
-
-        Dirty(ent);
     }
 
-    protected virtual void OnCookBurned(Entity<CEFoodCookerComponent> ent, ref CEBurningDoAfter args)
+    [SubscribeLocalEvent]
+    private void OnCookBurned(Entity<CEFoodCookerComponent> ent, ref CEBurningDoAfter args)
     {
         StopCooking(ent);
 
         if (args.Cancelled || args.Handled)
             return;
 
-        BurntFood(ent);
+        if (!TryComp<CEFoodHolderComponent>(ent, out var holder))
+            return;
+
+        BurntFood(ent, holder);
 
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnCookFinished(Entity<CEFoodCookerComponent> ent, ref CECookingDoAfter args)
     {
         StopCooking(ent);
@@ -108,25 +96,13 @@ public abstract partial class CESharedCookingSystem
             return;
 
         // Recipe is determined at the end of cooking based on current ingredients
-        var recipe = GetRecipe(ent);
+        var recipe = GetRecipe(ent, holder);
         if (recipe is null)
             return;
 
-        Cook(ent, recipe);
-        UpdateFoodDataVisuals((ent, holder));
+        Cook(ent, holder, recipe);
 
         args.Handled = true;
-    }
-
-    private float GetRecipeComplexity(ProtoId<CECookingRecipePrototype>? recipe)
-    {
-        if (recipe is null)
-            return 0;
-
-        if (!_proto.Resolve(recipe.Value, out var indexedRecipe))
-            return 0;
-
-        return indexedRecipe.GetComplexity();
     }
 }
 

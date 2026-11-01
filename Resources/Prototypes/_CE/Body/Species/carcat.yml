@@ -62,15 +62,11 @@
       limit: 0
       required: false
   appearances:
-    enum.HumanoidVisualLayers.Head:
-      matchSkin: true
     enum.HumanoidVisualLayers.Snout:
       matchSkin: true
     enum.HumanoidVisualLayers.Tail:
       matchSkin: true
     enum.HumanoidVisualLayers.HeadTop:
-      matchSkin: true
-    enum.HumanoidVisualLayers.Chest:
       matchSkin: true
     enum.HumanoidVisualLayers.LArm:
       matchSkin: true
@@ -172,6 +168,7 @@
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Special" ]
     - map: [ "enum.HumanoidVisualLayers.Head" ]
     - map: [ "enum.HumanoidVisualLayers.Snout" ]
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
@@ -246,10 +243,6 @@
   id: CEMobCarcat
   name: Mr. Cat
   components:
-  - type: FireVisuals
-    sprite: _CE/Mobs/Effects/onfire.rsi
-    normalState: Small_burning
-    alternateState: Carcat_burning
   - type: Icon
     sprite: _CE/Mobs/Species/Carcat/parts.rsi
     state: full
@@ -275,19 +268,10 @@
       - anim: ClawAttack1
       - anim: ClawAttack2
       - anim: ClawAttack3
-  - type: CEWeaponStaminaCost
-    costs:
-      Primary: 5
-  - type: NightVision #Night vision
-    enabled: false
-    prioritized: false
-    relayOverlay: false
-    action: ActionToggleNightVision
-    lightingColor: '#FFFFFF15'
+      Secondary:
+      - anim: ClawCarcatKick
   - type: FootstepModifier
     footstepSoundCollection: null # Silent footstep
-  - type: CESoftPaws #Soft paws. Awwww
-    maxSpeedLimit: 7 # 2 floors safe fall
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -314,18 +298,16 @@
   - type: VisualOrganMarkings
     markingData:
       group: CECarcat
-  - type: CEMagicEssenceStructure
-    essences:
-      Beast: { min: 1, max: 3 }
-      Life: { min: 0, max: 2 }
 
 - type: entity
   parent: [ OrganBaseTorso, CEOrganCarcatExternal ]
   id: CEOrganCarcatTorso
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseHead, CEOrganCarcatExternal ]
   id: CEOrganCarcatHead
+  categories: [ HideSpawnMenu ]
   components:
   - type: VisualOrganMarkings
     hideableLayers:
@@ -352,38 +334,47 @@
 - type: entity
   parent: [ OrganBaseArmLeft, CEOrganCarcatExternal ]
   id: CEOrganCarcatArmLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseArmRight, CEOrganCarcatExternal ]
   id: CEOrganCarcatArmRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseHandLeft, CEOrganCarcatExternal ]
   id: CEOrganCarcatHandLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseHandRight, CEOrganCarcatExternal ]
   id: CEOrganCarcatHandRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseLegLeft, CEOrganCarcatExternal ]
   id: CEOrganCarcatLegLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseLegRight, CEOrganCarcatExternal ]
   id: CEOrganCarcatLegRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseFootLeft, CEOrganCarcatExternal ]
   id: CEOrganCarcatFootLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseFootRight, CEOrganCarcatExternal ]
   id: CEOrganCarcatFootRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseEyes, OrganHumanInternal, CEOrganCarcatExternal ]
   id: CEOrganCarcatEyes
+  categories: [ HideSpawnMenu ]
   components:
   - type: VisualOrgan
     data:

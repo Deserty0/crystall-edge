@@ -1,21 +1,14 @@
+using Content.Shared._CE.EntityEffect;
 using Content.Shared._CE.Farming.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server._CE.Farming;
 
 public sealed partial class CEFarmingSystem
 {
-    private void InitializeResources()
-    {
-        SubscribeLocalEvent<CEPlantEnergyFromLightComponent, CEPlantUpdateEvent>(OnTakeEnergyFromLight);
-        SubscribeLocalEvent<CEPlantMetabolizerComponent, CEPlantUpdateEvent>(OnPlantMetabolizing);
-        SubscribeLocalEvent<CEPlantProducingComponent, CEPlantUpdateEvent>(OnPlantProducing);
-        SubscribeLocalEvent<CEPlantComponent, CEPlantUpdateEvent>(OnGroundUpdate);
 
-        SubscribeLocalEvent<CEPlantGrowingComponent, CEAfterPlantUpdateEvent>(OnPlantGrowing);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGroundUpdate(Entity<CEPlantComponent> ent, ref CEPlantUpdateEvent args)
     {
         var xform = Transform(ent);
@@ -39,28 +32,24 @@ public sealed partial class CEFarmingSystem
         AffectResource(ent, ent.Comp.CachedResource.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnTakeEnergyFromLight(Entity<CEPlantEnergyFromLightComponent> regeneration, ref CEPlantUpdateEvent args)
     {
-        var gainEnergy = false;
-        var daylight = DayCycle.UnderSunlight(regeneration);
-
-        if (regeneration.Comp.Daytime && daylight)
-            gainEnergy = true;
-
-        if (regeneration.Comp.Nighttime && !daylight)
-            gainEnergy = true;
-
-        if (gainEnergy)
-            AffectEnergy(args.Plant, regeneration.Comp.Energy);
-    }
-
-    private void OnPlantMetabolizing(Entity<CEPlantMetabolizerComponent> ent, ref CEPlantUpdateEvent args)
-    {
-        if (!SolutionQuery.TryComp(args.Plant, out var solmanager))
+        if (!LightLevel.TryGetLightLevel(regeneration, out var level))
             return;
 
-        var solEntity = new Entity<SolutionManagerComponent?>(args.Plant, solmanager);
-        if (!_solutionContainer.TryGetSolution(solEntity, ent.Comp.Solution, out var soln, out _))
+        var comp = regeneration.Comp;
+        var factor = comp.Inverted
+            ? level > comp.MaxLevel ? 0f : 1f - level
+            : level < comp.MinLevel ? 0f : level;
+
+        AffectEnergy(args.Plant, comp.Energy * factor);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlantMetabolizing(Entity<CEPlantMetabolizerComponent> ent, ref CEPlantUpdateEvent args)
+    {
+        if (!_solutionContainer.TryGetSolution(args.Plant.Owner, ent.Comp.Solution, out var soln, out _))
             return;
 
         var splitted = _solutionContainer.SplitSolution(soln.Value, ent.Comp.SolutionPerUpdate);
@@ -69,15 +58,26 @@ public sealed partial class CEFarmingSystem
             if (!ent.Comp.Metabolization.TryGetValue(reagent.Reagent.ToString(), out var effects))
                 continue;
 
-            var reagentPercentage = reagent.Quantity / ent.Comp.SolutionPerUpdate;
+            var reagentPercentage = (float)(reagent.Quantity / ent.Comp.SolutionPerUpdate);
+            var effectArgs = new CEEntityEffectArgs(
+                EntityManager,
+                Source: args.Plant.Owner,
+                Used: null,
+                Angle: default,
+                Speed: 0f,
+                Target: args.Plant.Owner,
+                Position: null,
+                Power: reagentPercentage);
+
             foreach (var effect in effects)
             {
-                effect.Effect((ent, args.Plant.Comp), reagentPercentage, EntityManager);
+                effect.Effect(effectArgs);
             }
         }
     }
 
-    private void OnPlantProducing(Entity<CEPlantProducingComponent> ent, ref CEPlantUpdateEvent args)
+    [SubscribeLocalEvent]
+    private void OnPlantProducing(Entity<CEPlantProducingComponent> ent, ref CEAfterPlantUpdateEvent args)
     {
         var plant = args.Plant.Comp;
 
@@ -105,6 +105,7 @@ public sealed partial class CEFarmingSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantGrowing(Entity<CEPlantGrowingComponent> growing, ref CEAfterPlantUpdateEvent args)
     {
         if (args.Plant.Comp.Energy < growing.Comp.EnergyCost)

@@ -30,14 +30,15 @@
     maxDisplacementFillLevels: 2
     canGiveFood: true
     autoRename: false
-  - type: CEFoodCooker
-    foodType: Soup
-    solutionId: cooker
   - type: Item
     size: Ginormous
   - type: MultiHandedItem
   - type: RefillableSolution
     solution: cooker
+  - type: SolutionTransfer
+    canSend: false
+    transferAmount: 10
+    maxTransferAmount: 20
   - type: Spillable
     solution: cooker
   - type: SolutionItemStatus

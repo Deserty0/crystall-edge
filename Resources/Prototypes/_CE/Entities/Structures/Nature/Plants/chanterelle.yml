@@ -1,10 +1,10 @@
 - type: entity
   id: CEPlantChanterelle
   parent:
+  - CEPlantBaseFungalType
   - CEPlantBase
   - CEPlantBaseDarknessEnergy
   - CEPlantBaseSingleHarvest
-  - CEPlantBaseFungalType
   - CEPlantBaseGrowingFast
   - CEPlantBaseMetabolizerFast
   - CEPlantBaseMetabolizerWater
@@ -29,3 +29,12 @@
       CEFoodChanterelle: 2
   - type: CEPlantKudzu
     proto: CEPlantChanterelle
+
+# Already grown chanterelle for mapping and world generation
+- type: entity
+  id: CEPlantChanterelleGrown
+  parent: CEPlantChanterelle
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 1

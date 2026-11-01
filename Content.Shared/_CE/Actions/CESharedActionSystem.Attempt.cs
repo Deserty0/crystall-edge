@@ -1,11 +1,14 @@
 using Content.Shared._CE.Actions.Components;
 using Content.Shared._CE.Animation.Item.Components;
+using Content.Shared._CE.EntityEffect;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
+using Content.Shared.Mind.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.SSDIndicator;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Map;
 
 namespace Content.Shared._CE.Actions;
@@ -14,20 +17,10 @@ public abstract partial class CESharedActionSystem
 {
     [Dependency] private ExamineSystemShared _examine = default!;
 
-    private void InitializeAttempts()
-    {
-
-        SubscribeLocalEvent<CEActionManaCostComponent, ActionAttemptEvent>(OnManacostActionAttempt);
-        SubscribeLocalEvent<CEActionStaminaCostComponent, ActionAttemptEvent>(OnStaminaCostActionAttempt);
-        SubscribeLocalEvent<CEActionWeaponRequiredComponent, ActionAttemptEvent>(OnWeaponRequiredActionAttempt);
-
-        SubscribeLocalEvent<CEActionSSDBlockComponent, ActionValidateEvent>(OnActionSSDAttempt);
-        SubscribeLocalEvent<CEActionRequireLineOfSightComponent, ActionValidateEvent>(OnLineOfSightValidate);
-    }
-
     /// <summary>
     /// Before using a spell, a mana check is made for the amount of mana to show warnings.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnManacostActionAttempt(Entity<CEActionManaCostComponent> ent, ref ActionAttemptEvent args)
     {
         if (args.Cancelled)
@@ -54,18 +47,19 @@ public abstract partial class CESharedActionSystem
         //Trying get mana from performer
         if (!TryComp<BatteryComponent>(args.User, out var playerMana))
         {
-            Popup.PopupClient(Loc.GetString("ce-magic-spell-no-mana-component"), args.User, args.User);
+            Popup.PopupEntity(Loc.GetString("ce-magic-spell-no-mana-component"), args.User, args.User);
             args.Cancelled = true;
             return;
         }
 
-        if (playerMana.LastCharge < requiredMana)
+        if (_battery.GetCharge((args.User, playerMana)) < requiredMana)
         {
-            Popup.PopupClient(Loc.GetString("ce-magic-spell-not-enough-mana"), args.User, args.User);
+            Popup.PopupEntity(Loc.GetString("ce-magic-spell-not-enough-mana"), args.User, args.User);
             args.Cancelled = true;
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnWeaponRequiredActionAttempt(Entity<CEActionWeaponRequiredComponent> ent, ref ActionAttemptEvent args)
     {
         if (args.Cancelled)
@@ -75,10 +69,11 @@ public abstract partial class CESharedActionSystem
             HasComp<CEWeaponComponent>(held))
             return;
 
-        Popup.PopupClient(Loc.GetString("ce-magic-weapon-required"), args.User, args.User);
+        Popup.PopupEntity(Loc.GetString("ce-magic-weapon-required"), args.User, args.User);
         args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnActionSSDAttempt(Entity<CEActionSSDBlockComponent> ent, ref ActionValidateEvent args)
     {
         if (args.Invalid)
@@ -89,11 +84,52 @@ public abstract partial class CESharedActionSystem
 
         if (ssdIndication.IsSSD)
         {
-            Popup.PopupClient(Loc.GetString("ce-magic-spell-ssd"), args.User, args.User);
+            Popup.PopupEntity(Loc.GetString("ce-magic-spell-ssd"), args.User, args.User);
             args.Invalid = true;
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnTargetConditionsValidate(Entity<CEActionTargetConditionsComponent> ent, ref ActionValidateEvent args)
+    {
+        if (args.Invalid)
+            return;
+
+        if (GetEntity(args.Input.EntityTarget) is not { Valid: true } target)
+            return;
+
+        var effectArgs = new CEEntityEffectArgs(EntityManager, args.User, null, Angle.Zero, 1f, target, null);
+        foreach (var condition in ent.Comp.Conditions)
+        {
+            if (condition.Passes(effectArgs))
+                continue;
+
+            var description = condition.GetDescription(EntityManager, _proto);
+            if (description != string.Empty)
+                Popup.PopupEntity(description, args.User, args.User);
+
+            args.Invalid = true;
+            return;
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnTargetRequireMindValidate(Entity<CEActionTargetRequireMindComponent> ent, ref ActionValidateEvent args)
+    {
+        if (args.Invalid)
+            return;
+
+        if (GetEntity(args.Input.EntityTarget) is not { Valid: true } target)
+            return;
+
+        if (TryComp<MindContainerComponent>(target, out var mindContainer) && mindContainer.HasMind)
+            return;
+
+        Popup.PopupEntity(Loc.GetString("ce-magic-spell-target-no-mind"), args.User, args.User);
+        args.Invalid = true;
+    }
+
+    [SubscribeLocalEvent]
     private void OnLineOfSightValidate(Entity<CEActionRequireLineOfSightComponent> ent, ref ActionValidateEvent args)
     {
         if (args.Invalid)
@@ -115,10 +151,11 @@ public abstract partial class CESharedActionSystem
         if (_examine.InRangeUnOccluded(args.User, coords, range))
             return;
 
-        Popup.PopupClient(Loc.GetString("dash-ability-cant-see"), args.User, args.User);
+        Popup.PopupEntity(Loc.GetString("dash-ability-cant-see"), args.User, args.User);
         args.Invalid = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnStaminaCostActionAttempt(Entity<CEActionStaminaCostComponent> ent, ref ActionAttemptEvent args)
     {
         if (args.Cancelled)
@@ -129,5 +166,18 @@ public abstract partial class CESharedActionSystem
 
         if (staminaComp.CritThreshold - staminaComp.StaminaDamage < ent.Comp.Cost)
             args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRequireNightActionAttempt(Entity<CEActionRequireNightComponent> ent, ref ActionAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (_transform.GetMap(args.User) is { } map && !_dayCycle.IsDayNow(map))
+            return;
+
+        Popup.PopupEntity(Loc.GetString("ce-action-require-night"), args.User, args.User);
+        args.Cancelled = true;
     }
 }

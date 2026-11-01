@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtOfLife
+  name: skirt of life
+  description: A skirt that symbolizes the joy and positivity of our life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Civilian/skirtoflife.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Civilian/skirtoflife.rsi

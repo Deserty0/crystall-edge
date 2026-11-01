@@ -1,3 +1,4 @@
+using Content.Shared._CE.Roles;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -148,7 +149,8 @@ namespace Content.Shared.GameTicking
     [Serializable, NetSerializable]
     public sealed class TickerJobsAvailableEvent(
         Dictionary<NetEntity, string> stationNames,
-        Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> jobsAvailableByStation)
+        Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> jobsAvailableByStation,
+        Dictionary<NetEntity, ProtoId<JobWeightPrototype>?> jobWeightsByStation)
         : EntityEventArgs
     {
         /// <summary>
@@ -157,6 +159,8 @@ namespace Content.Shared.GameTicking
         public Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> JobsAvailableByStation { get; } = jobsAvailableByStation;
 
         public Dictionary<NetEntity, string> StationNames { get; } = stationNames;
+
+        public Dictionary<NetEntity, ProtoId<JobWeightPrototype>?> JobWeightsByStation { get; } = jobWeightsByStation;
     }
 
     [Serializable, NetSerializable, DataDefinition]
@@ -191,6 +195,23 @@ namespace Content.Shared.GameTicking
             public bool Observer;
 
             public bool Connected;
+
+            // CrystallEdge: job icon + secret roles revealed in the round-end manifest
+            /// <summary>
+            /// The player's job, for its icon - null if they had none.
+            /// </summary>
+            public ProtoId<JobPrototype>? Job;
+
+            /// <summary>
+            /// The player's secret role, or null if they never held one.
+            /// </summary>
+            public ProtoId<CESecretRolePrototype>? SecretRole;
+
+            /// <summary>
+            /// The first secret role the player was granted - equal to <see cref="SecretRole"/> unless it changed.
+            /// </summary>
+            public ProtoId<CESecretRolePrototype>? OriginalSecretRole;
+            // CrystallEdge end
         }
 
         public string GamemodeTitle { get; }

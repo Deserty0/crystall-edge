@@ -1,31 +1,4 @@
 - type: entity
-  parent: CratePirate
-  id: CrateCargoLuxuryHardsuit
-  name: luxury mining hardsuit crate
-  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingOuterHardsuitLuxury
-        - id: ClothingMaskBreath
-        - id: OxygenTankFilled
-        - id: NitrogenTankFilled
-
-- type: entity
-  parent: CrateGenericSteel
-  id: CrateCargoParcelWrap
-  name: parcel wrap crate
-  description: All your parcel wrapping needs in one crate, containing three rolls of parcel wrap.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage:
-        id: ParcelWrap
-        amount: 3
-
-- type: entity
   parent: CratePrivateSecure
   id: CrateCargoGambling
   name: the grand lottery $$$
@@ -111,8 +84,8 @@
       weight: 0.01
     - id: WeaponLauncherPirateCannon
       weight: 0.1
-    - id: WeaponPistolCHIMP
-      weight: 0.1
+    - id: Throngler
+      weight: 0.0001
     - id: WeaponSniperMosin
     - id: WeaponMakeshiftLaser
       weight: 0.1
@@ -140,8 +113,6 @@
       weight: 0.1
     - id: ClothingOuterHardsuitSanta
       weight: 0.1
-    - id: ClothingBackpackERTClown
-      weight: 0.1
     - id: ClothingNeckCloakAdmin
     - id: ClothingOuterFlannelBlue
     - id: ClothingHeadHelmetBone
@@ -166,7 +137,6 @@
   table: !type:GroupSelector
     children:
     - id: ClothingNeckBling
-    - id: ClothingShoesBling
     - id: IngotGold1
     - id: IngotGold
       weight: 0.1

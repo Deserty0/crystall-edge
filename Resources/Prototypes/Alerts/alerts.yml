@@ -95,7 +95,6 @@
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
 
-
 - type: alert
   id: Cold
   category: Temperature
@@ -138,14 +137,6 @@
   name: alerts-walking-name
   description: alerts-walking-desc
   clientHandled: true
-
-- type: alert
-  id: Stun
-  icons:
-  - sprite: /Textures/Objects/Weapons/Melee/stunbaton.rsi #Should probably draw a proper icon
-    state: stunbaton_off
-  name: alerts-stunned-name
-  description: alerts-stunned-desc
 
 - type: alert
   id: Knockdown
@@ -387,26 +378,6 @@
   description: alerts-parched-desc
 
 - type: alert
-  id: Muted
-  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
-  name: alerts-muted-name
-  description: alerts-muted-desc
-
-- type: alert
-  id: VowOfSilence
-  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
-  name: alerts-vow-silence-name
-  clickEvent: !type:BreakVowAlertEvent
-  description: alerts-vow-silence-desc
-
-- type: alert
-  id: VowBroken
-  icons: [ /Textures/Interface/Actions/scream.png ]
-  name: alerts-vow-broken-name
-  clickEvent: !type:RetakeVowAlertEvent
-  description: alerts-vow-broken-desc
-
-- type: alert
   id: Pulled
   icons: [ /Textures/Interface/Alerts/Pull/pulled.png ]
   clickEvent: !type:StopBeingPulledAlertEvent
@@ -471,14 +442,6 @@
   minSeverity: 0
   maxSeverity: 1
 
-- type: alert
-  id: Adrenaline
-  icons:
-  - sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
-  name: alerts-adrenaline-name
-  description: alerts-adrenaline-desc
-
 # Making alerts for innate abilities like this should generally be avoided by turning them into actions or giving better UX.
 # This was done this way because several entities currently can pry innately and have no indicator for this whatsoever.
 # The ideal solution would be to clean up actions to handle this sort of thing easier while avoiding bloating the action UI.
@@ -504,36 +467,4 @@
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health1
   name: Debug2
-  description: Debug
-
-- type: alert
-  id: Debug3
-  icons:
-  - sprite: /Textures/Interface/Alerts/human_alive.rsi
-    state: health2
-  name: Debug3
-  description: Debug
-
-- type: alert
-  id: Debug4
-  icons:
-  - sprite: /Textures/Interface/Alerts/human_alive.rsi
-    state: health3
-  name: Debug4
-  description: Debug
-
-- type: alert
-  id: Debug5
-  icons:
-  - sprite: /Textures/Interface/Alerts/human_alive.rsi
-    state: health4
-  name: Debug5
-  description: Debug
-
-- type: alert
-  id: Debug6
-  icons:
-  - sprite: /Textures/Interface/Alerts/human_critical.rsi
-    state: critical
-  name: Debug6
   description: Debug

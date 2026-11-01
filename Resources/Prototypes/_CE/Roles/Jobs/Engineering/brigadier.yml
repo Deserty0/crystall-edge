@@ -9,11 +9,9 @@
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: ce-job-supervisors-empire
-  weight: 3
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: CEEngineering
-      time: 2.5h
+    - !type:CEAchievementRequirement
+      achievement: RoundsFinishedAliveEngineering2
 
 - type: startingGear
   id: CEBrigadierGear
@@ -46,6 +44,7 @@
       entity_storage: !type:AllSelector
         children:
         - id: CEClothingEyesMiningGlasses
+        - id: CEClothingEyesEnergyScanner
         - id: CECrowbar
         - id: CEWrench
         - id: CEScrewdriver
@@ -59,6 +58,7 @@
         - id: CERubberStampEngineering
         - id: CEThirdArm
         - id: CEThirdArmModuleManipulation
+        - id: CEThirdArmModuleMining
 
 - type: entity
   id: CEBedsideTableFilledBrigadier

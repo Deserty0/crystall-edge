@@ -1,0 +1,46 @@
+- type: entity
+  parent: [UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpskirtOperative
+  name: operative jumpskirt
+  description: Uniform for elite syndicate operatives performing tactical operations in deep space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Special/operative_s.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Special/operative_s.rsi
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: [ ClothingUniformSkirtBase, BaseSyndicateContraband ]
+  id: ClothingUniformJumpskirtSyndieFormalDress
+  name: syndicate formal dress
+  description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Special/syndieformaldress.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Special/syndieformaldress.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSlicingRefinable]
+  id: ClothingUniformJumpskirtWeb
+  name: web jumpskirt
+  description: Makes it clear that you are one with the webs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Special/web.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Special/web.rsi
+  - type: ToolRefinable
+    refineResult:
+    - id: MaterialWebSilk1
+      amount: 8
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Construction
+    graph: WebObjects
+    node: jumpskirt

@@ -85,31 +85,6 @@
   - NTDefault4
   obeysTo: laws-owner-crew
 
-#Drone
-- type: siliconLaw
-  id: Drone1
-  order: 1
-  lawString: law-drone-1
-
-- type: siliconLaw
-  id: Drone2
-  order: 2
-  lawString: law-drone-2
-
-- type: siliconLaw
-  id: Drone3
-  order: 3
-  lawString: law-drone-3
-
-- type: siliconLawset
-  id: Drone
-  name: law-drone-name
-  laws:
-  - Drone1
-  - Drone2
-  - Drone3
-  obeysTo: laws-owner-beings
-
 # Syndicate
 - type: siliconLaw
   id: Syndicate1
@@ -219,7 +194,6 @@
   order: 10
   lawString: law-commandments-10
 
-
 - type: siliconLawset
   id: CommandmentsLawset
   name: law-commandments-name
@@ -257,7 +231,6 @@
   order: 4
   lawString: law-paladin-4
 
-
 - type: siliconLawset
   id: PaladinLawset
   name: law-paladin-name
@@ -278,7 +251,6 @@
   id: Lall2
   order: 2
   lawString: law-lall-2
-
 
 - type: siliconLawset
   id: LiveLetLiveLaws
@@ -304,7 +276,6 @@
   order: 3
   lawString: law-efficiency-3
 
-
 - type: siliconLawset
   id: EfficiencyLawset
   name: law-efficiency-name
@@ -329,7 +300,6 @@
   id: Robocop3
   order: 3
   lawString: law-robocop-3
-
 
 - type: siliconLawset
   id: RobocopLawset
@@ -461,7 +431,6 @@
   order: 3
   lawString: law-antimov-3
 
-
 - type: siliconLawset
   id: AntimovLawset
   name: law-antimov-name
@@ -497,7 +466,6 @@
   order: 5
   lawString: law-nutimov-5
 
-
 - type: siliconLawset
   id: NutimovLawset
   name: law-nutimov-name
@@ -508,83 +476,6 @@
   - Nutimov4
   - Nutimov5
   obeysTo: laws-owner-crew
-
- # Xenoborgs laws
-- type: siliconLaw
-  id: Xenoborg1
-  order: 1
-  lawString: law-xenoborg-1
-
-- type: siliconLaw
-  id: Xenoborg2
-  order: 2
-  lawString: law-xenoborg-2
-
-- type: siliconLaw
-  id: Xenoborg3
-  order: 3
-  lawString: law-xenoborg-3
-
-- type: siliconLaw
-  id: Xenoborg4
-  order: 4
-  lawString: law-xenoborg-4
-
-- type: siliconLaw
-  id: Xenoborg5
-  order: 5
-  lawString: law-xenoborg-5
-
-
-- type: siliconLawset
-  id: XenoborgLawset
-  name: law-xenoborg-name
-  laws:
-  - Xenoborg1
-  - Xenoborg2
-  - Xenoborg3
-  - Xenoborg4
-  - Xenoborg5
-  obeysTo: laws-owner-xenoborg-mothership
-
- # Mothership core laws
-- type: siliconLaw
-  id: MothershipCore1
-  order: 1
-  lawString: law-mothershipcore-1
-
-- type: siliconLaw
-  id: MothershipCore2
-  order: 2
-  lawString: law-mothershipcore-2
-
-- type: siliconLaw
-  id: MothershipCore3
-  order: 3
-  lawString: law-mothershipcore-3
-
-- type: siliconLaw
-  id: MothershipCore4
-  order: 4
-  lawString: law-mothershipcore-4
-
-- type: siliconLaw
-  id: MothershipCore5
-  order: 5
-  lawString: law-mothershipcore-5
-
-
-- type: siliconLawset
-  id: MothershipCoreLawset
-  name: law-mothershipcore-name
-  laws:
-  - MothershipCore1
-  - MothershipCore2
-  - MothershipCore3
-  - MothershipCore4
-  - MothershipCore5
-  obeysTo: laws-owner-xenoborgs
-
 
 # ion storm random lawsets
 - type: weightedRandom
@@ -605,5 +496,3 @@
     AntimovLawset: 0.25
     NutimovLawset: 0.5
     Ninja: 0.25
-    MothershipCoreLawset: 0.25
-    XenoborgLawset: 0.25

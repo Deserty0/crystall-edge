@@ -1,5 +1,6 @@
 using Content.Shared._CE.Speech;
 using Content.Shared.Chat;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -18,12 +19,6 @@ public sealed partial class CEBarkSpeechSystem : CESharedBarkSpeechSystem
 
     private readonly Dictionary<EntityUid, BarkSequence> _activeBarks = new();
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<CEBarkSpeechComponent, EntitySpokeEvent>(OnEntitySpoke);
-    }
-
     /// <summary>
     /// Volume reduction in dB applied to bark sounds when whispering.
     /// </summary>
@@ -34,18 +29,22 @@ public sealed partial class CEBarkSpeechSystem : CESharedBarkSpeechSystem
     /// </summary>
     private const float WhisperPitchReduction = -0.3f;
 
+    [SubscribeLocalEvent]
     private void OnEntitySpoke(EntityUid uid, CEBarkSpeechComponent comp, EntitySpokeEvent args)
     {
         var message = StripMarkup(args.Message);
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        if (!_proto.TryIndex(comp.BarkSpeech, out var profile))
+        var overrideEv = new CEBarkSpeechOverrideEvent(comp.BarkSpeech, comp.BasePitch);
+        RaiseLocalEvent(uid, ref overrideEv);
+
+        if (!_proto.TryIndex(overrideEv.BarkSpeech, out var profile))
             return;
 
         var isWhisper = args.ObfuscatedMessage != null;
 
-        var syllables = BuildSyllables(message, comp.BasePitch, profile);
+        var syllables = BuildSyllables(message, overrideEv.BasePitch, profile);
         if (syllables.Count == 0)
             return;
 

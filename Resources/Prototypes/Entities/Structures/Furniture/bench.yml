@@ -1,7 +1,7 @@
 - type: entity
+  parent: [ SeatBase, StructureHealthFurniture ]
   name: comfortable bench
   id: BenchComfy
-  parent: SeatBase
   description: A bench with an extremely comfortable backrest.
   components:
   - type: Transform
@@ -17,23 +17,17 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
-
-- type: entity
-  id: BenchColorfulComfy
-  suffix: Solo. Colorful
-  parent: BenchComfy
-  description: A bench with an extremely comfortable backrest.
-  components:
-  - type: Sprite
-    layers:
-    - state: bench_solo_base
-      color: "#767e82"
-    - state: bench_solo_cover
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          bench_solo_cover: Rainbow
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   id: BenchRedComfy

@@ -1,5 +1,7 @@
+using Content.Server._CE.Humanoid;
 using System.Linq;
 using System.Numerics;
+using Content.Server._CE.Roles;
 using Content.Server.Announcements;
 using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
@@ -32,6 +34,8 @@ namespace Content.Server.GameTicking
         [Dependency] private DiscordWebhook _discord = default!;
         [Dependency] private RoleSystem _role = default!;
         [Dependency] private ITaskManager _taskManager = default!;
+        [Dependency] private CESecretRoleSelectionSystem _secretRoles = default!; // CrystallEdge: reveal secret role in round-end manifest
+        [Dependency] private CESpeciesRequirementsSystem _ceSpeciesRequirements = default!; // CrystallEdge: species requirements
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -373,6 +377,7 @@ namespace Content.Server.GameTicking
             var readyPlayers = new List<ICommonSession>();
             var readyPlayerProfiles = new Dictionary<NetUserId, HumanoidCharacterProfile>();
             var autoDeAdmin = _cfg.GetCVar(CCVars.AdminDeadminOnJoin);
+            var lockedSpeciesPlayers = new List<ICommonSession>(); // CrystallEdge: species requirements
             foreach (var (userId, status) in _playerGameStatuses)
             {
                 if (LobbyEnabled && status != PlayerGameStatus.ReadyToPlay) continue;
@@ -386,7 +391,6 @@ namespace Content.Server.GameTicking
                 DebugTools.Assert(_userDb.IsLoadComplete(session), $"Player was readied up but didn't have user DB data loaded yet??");
 #endif
 
-                readyPlayers.Add(session);
                 HumanoidCharacterProfile profile;
                 if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
                 {
@@ -396,10 +400,29 @@ namespace Content.Server.GameTicking
                 {
                     var speciesToBlacklist =
                         new HashSet<string>(_cfg.GetCVar(CCVars.ICNewAccountSpeciesBlacklist).Split(","));
+                    CESpeciesRequirementsSystem.AddRestrictedSpecies(speciesToBlacklist, ProtoMan); // CrystallEdge: species requirements
                     profile = HumanoidCharacterProfile.Random(speciesToBlacklist);
                 }
+
+                // CrystallEdge: a character of a locked species stays in the lobby, before jobs are handed out
+                if (!_randomizeCharacters && _ceSpeciesRequirements.TryRefuseJoin(session, profile))
+                {
+                    lockedSpeciesPlayers.Add(session);
+                    continue;
+                }
+                // CrystallEdge end
+
+                readyPlayers.Add(session);
                 readyPlayerProfiles.Add(userId, profile);
             }
+
+            // CrystallEdge: species requirements
+            foreach (var session in lockedSpeciesPlayers)
+            {
+                _playerGameStatuses[session.UserId] = PlayerGameStatus.NotReadyToPlay;
+                RaiseNetworkEvent(GetStatusMsg(session), session.Channel);
+            }
+            // CrystallEdge end
 
             DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());
 
@@ -582,6 +605,18 @@ namespace Content.Server.GameTicking
                     Observer = observer,
                     Connected = connected
                 };
+
+                // CrystallEdge: job icon + secret roles in the round-end manifest
+                if (_jobs.MindTryGetJobId(mindId, out var jobId))
+                    playerEndRoundInfo.Job = jobId;
+
+                if (_secretRoles.TryGetSecretRoles(mindId, out var secretRole, out var originalSecretRole))
+                {
+                    playerEndRoundInfo.SecretRole = secretRole;
+                    playerEndRoundInfo.OriginalSecretRole = originalSecretRole;
+                }
+                // CrystallEdge end
+
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
 

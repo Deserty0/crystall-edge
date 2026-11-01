@@ -342,7 +342,6 @@
     children:
     - id: ToyRubberDuck
     - id: RubberChicken
-    - id: ClownRecorder
     - id: WhoopieCushion
     - id: NewtonCradle
     - id: Skub
@@ -367,8 +366,6 @@
     - !type:GroupSelector # Usually get the normal horn
       weight: .005 # 1 in 200
       children:
-      - id: CluwneHorn # you lose, clown >:o)
-      - id: BananiumHorn
       - id: PushHorn
       - id: GoldenBikeHorn
 
@@ -376,7 +373,6 @@
   id: AllCrayonsTable
   table: !type:GroupSelector
     children:
-    - id: CrayonMime
     - id: CrayonRainbow
     - id: CrayonWhite
     - id: CrayonBlack
@@ -388,38 +384,6 @@
     - id: CrayonPurple
 
 ## Spawners ##
-
-- type: entity
-  parent: MarkerBase
-  id: ToySpawner90
-  name: Toy Spawner
-  suffix: 90
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/bikehorn.rsi
-      state: icon
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllToysTable
-      prob: 0.9
-
-- type: entity
-  parent: MarkerBase
-  id: PlushieSpawner50
-  name: Plushie Spawner
-  suffix: 50
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/Plushies/bee.rsi
-      state: icon
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllPlushiesTable
-      prob: 0.5
 
 - type: entity
   parent: MarkerBase
@@ -436,103 +400,3 @@
     table: !type:NestedSelector
       tableId: AllFigurinesTable
       prob: 0.9
-
-- type: entity
-  parent: MarkerBase
-  id: MechFigurineSpawner50
-  name: Mech Figurine Spawner
-  suffix: 50
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/mech_figurines.rsi
-      state: ripley
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllFigurineMechsTable
-      prob: 0.5
-
-- type: entity
-  parent: MarkerBase
-  id: ToyWeaponSpawner90
-  name: Toy Weapon Spawner
-  suffix: 90
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/rubber_hammer.rsi
-      state: icon
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllToyWeaponsTable
-      prob: 0.9
-
-- type: entity
-  parent: MarkerBase
-  id: CapGunSpawner90
-  name: Cap Gun Spawner
-  suffix: 90
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/capgun.rsi
-      state: base
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: RandomCapGunTable
-      prob: 0.9
-
-- type: entity
-  parent: MarkerBase
-  id: MiscToySpawner90
-  name: Miscellaneous Toy Spawner
-  suffix: 90
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/Balloons/nanotrasen.rsi
-      state: icon
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllMiscToysTable
-      prob: 0.9
-
-- type: entity
-  parent: MarkerBase
-  id: ToySoundMakerSpawner90
-  name: Toy Sound Maker Spawner
-  suffix: 90
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/rubber_chicken.rsi
-      state: icon
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: AllToySoundMakerTable
-      prob: 0.9
-
-- type: entity
-  parent: MarkerBase
-  id: CrayonSpawner90
-  name: Crayon Spawner
-  suffix: 90
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Fun/crayons.rsi
-      state: rainbow
-  - type: EntityTableSpawner
-    table: !type:GroupSelector
-      prob: 0.9
-      children:
-      - !type:NestedSelector
-        tableId: AllCrayonsTable
-      - id: CrayonBox
-        weight: 0.05 # 1 in 20

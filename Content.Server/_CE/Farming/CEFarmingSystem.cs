@@ -1,7 +1,8 @@
-using Content.Shared._CE.DayCycle;
 using Content.Shared._CE.Farming;
 using Content.Shared._CE.Farming.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Destructible;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -14,17 +15,9 @@ public sealed partial class CEFarmingSystem : CESharedFarmingSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        InitializeResources();
-        InitializeKudzu();
-
-        SubscribeLocalEvent<CEPlantComponent, MapInitEvent>(OnMapInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<CEPlantComponent> plant, ref MapInitEvent args)
     {
         var proto = MetaData(plant).EntityPrototype;
@@ -42,6 +35,13 @@ public sealed partial class CEFarmingSystem : CESharedFarmingSystem
 
         if (plant.Comp.RandomGrowthLevel)
             AffectGrowth(plant, _random.NextFloat(0f, 1f));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAnchorStateChanged(Entity<CEPlantComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            _destructible.DestroyEntity(ent.Owner);
     }
 
     public override void Update(float frameTime)

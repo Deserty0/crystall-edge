@@ -1,5 +1,6 @@
 - type: entity
   id: CEPipeBase
+  parent: CEBaseMachineEnergized
   categories: [ ForkFiltered ]
   abstract: true
   components:
@@ -16,3 +17,4 @@
   - type: Injurable
     damageContainer: Inorganic
   - type: CEPipeVis
+  - type: CECable

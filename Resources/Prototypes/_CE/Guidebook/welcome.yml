@@ -5,12 +5,12 @@
   name: Welcome to CrystallEdge
   text: "/ServerInfo/_CE/Guidebook_EN/Welcome.xml"
   children:
-  - CESpeciesGuideEN
+  - CECityObjectiveGuideEN
   - CECookingRecipesEN
   - CEFarmingGuideEN
   - CEMiningGuideEN
-  - CEImperialLawsEN
-  - CEThaumaturgyEN
+  - CETradeGuideEN
+  - CELocksKeysGuideEN
 
 - type: guideEntry
   hidden: false
@@ -19,9 +19,9 @@
   name: Welcome to CrystallEdge
   text: "/ServerInfo/_CE/Guidebook_RU/Welcome.xml"
   children:
-  - CESpeciesGuideRU
+  - CECityObjectiveGuideRU
   - CECookingRecipesRU
   - CEFarmingGuideRU
   - CEMiningGuideRU
-  - CEImperialLawsRU
-  - CEThaumaturgyRU
+  - CETradeGuideRU
+  - CELocksKeysGuideRU

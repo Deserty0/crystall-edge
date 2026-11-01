@@ -1,13 +1,7 @@
-# Guard
+# Sheriff
 
 - type: playTimeTracker
-  id: CEJobGuardCommander
-
-- type: playTimeTracker
-  id: CEJobGuard
-
-- type: playTimeTracker
-  id: CEJobInvestigator
+  id: CEJobSheriff
 
 # Tavern
 
@@ -22,6 +16,14 @@
 
 - type: playTimeTracker
   id: CEJobFarmer
+
+# Guild
+
+- type: playTimeTracker
+  id: CEJobGuildmaster
+
+- type: playTimeTracker
+  id: CEJobAdventurer
 
 # Engineering
 
@@ -39,13 +41,5 @@
 - type: playTimeTracker
   id: CEJobBard
 
-# Academy
-
 - type: playTimeTracker
-  id: CEJobAcademyStudent
-
-- type: playTimeTracker
-  id: CEJobAcademyProfessor
-
-- type: playTimeTracker
-  id: CEJobAcademyRector
+  id: CEJobKeyKeeper

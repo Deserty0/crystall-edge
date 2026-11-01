@@ -15,15 +15,12 @@
 - type: latheRecipePack
   id: ScienceEquipment
   recipes:
-  - AnomalyScanner
-  - NodeScanner
-  - AnomalyLocator
-  - AnomalyLocatorWide
   - HoloprojectorField
   - SignallerAdvanced
   - DeviceQuantumSpinInverter
   - DeviceDesynchronizer
   - ClothingBackpackHarmpack
+  - TeleporterChipBlank
 
 - type: latheRecipePack
   id: ScienceClothing
@@ -46,14 +43,12 @@
 - type: latheRecipePack
   id: ScienceWeapons
   recipes:
-  - WeaponPistolCHIMP
   - WeaponForceGun
   - WeaponProtoKineticAccelerator
   - PKAUpgradeDamage
   - PKAUpgradeRange
   - PKAUpgradeFireRate
   - WeaponTetherGun
-  - WeaponGauntletGorilla
 
 # Only contains parts for making basic modular grenades, no actual explosives
 - type: latheRecipePack
@@ -76,13 +71,8 @@
   - FlatpackerMachineCircuitboard
   - SheetifierMachineCircuitboard
   - PowerCageRechargerCircuitboard
-  - AnalysisComputerCircuitboard
-  - AnomalyVesselCircuitboard
-  - AnomalyVesselExperimentalCircuitboard
-  - AnomalySynchronizerCircuitboard
-  - APECircuitboard
-  - ArtifactAnalyzerMachineCircuitboard
-  - ArtifactCrusherMachineCircuitboard
+  - StationTeleportersControlCircuitboard
+  - StationTeleporterMachineCircuitboard
 
 - type: latheRecipePack
   id: CameraBoards
@@ -100,9 +90,6 @@
   recipes:
   - RipleyCentralElectronics
   - RipleyPeripheralsElectronics
-  - HonkerCentralElectronics
-  - HonkerPeripheralsElectronics
-  - HonkerTargetingElectronics
   - HamtrCentralElectronics
   - HamtrPeripheralsElectronics
 

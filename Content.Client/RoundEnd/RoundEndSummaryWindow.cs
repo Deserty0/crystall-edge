@@ -1,10 +1,14 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Message;
+using Content.Shared._CE.Roles;
 using RoundEndPlayerInfo = Content.Shared.GameTicking.RoundEndMessageEvent.RoundEndPlayerInfo;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -16,6 +20,7 @@ namespace Content.Client.RoundEnd;
 public sealed partial class RoundEndSummaryWindow : DefaultWindow
 {
     [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!; // CrystallEdge: job/secret role icons
 
     public int RoundId;
     private readonly RoundEndPlayerInfo[] _playersInfo;
@@ -27,11 +32,11 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
     {
         ICName,
         Role,
-        PlayerType,
+        SecretRole, //CrystallEdge: replaced PlayerType (Antag/Crew/Observer) with the player's secret role
         OOCName
     }
 
-    private SortField _currentSortField = SortField.PlayerType;
+    private SortField _currentSortField = SortField.SecretRole; //CrystallEdge: was SortField.PlayerType
     private bool _sortDescending;
 
     public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId, RoundEndPlayerInfo[] info)
@@ -154,10 +159,10 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
 
         var icNameButton = CreateSortButton("round-end-summary-window-player-manifest-tab-sort-character", SortField.ICName);
         var roleButton = CreateSortButton("round-end-summary-window-player-manifest-tab-sort-role", SortField.Role);
-        var playerTypeButton = CreateSortButton("round-end-summary-window-player-manifest-tab-sort-player-type", SortField.PlayerType);
+        var secretRoleButton = CreateSortButton("ce-roundend-secret-role-column", SortField.SecretRole); //CrystallEdge: replaced player-type sort button with secret role
         var oocNameButton = CreateSortButton("round-end-summary-window-player-manifest-tab-sort-player", SortField.OOCName);
 
-        playerTypeButton.SetSortIndicator(true);
+        secretRoleButton.SetSortIndicator(true); //CrystallEdge: was playerTypeButton
         headerContainer.AddChild(icNameButton);
 
         // Add small spacer between buttons
@@ -176,7 +181,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
             HorizontalExpand = false
         });
 
-        headerContainer.AddChild(playerTypeButton);
+        headerContainer.AddChild(secretRoleButton); //CrystallEdge: was playerTypeButton
 
         // Add small spacer between buttons
         headerContainer.AddChild(new Control
@@ -307,28 +312,21 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
             HorizontalExpand = true,
             ClipText = true
         };
-        _playerGrid.AddChild(roleLabel);
-
-        // Player Type column
-        var playerTypeLabel = new Label
+        // CrystallEdge: job icon before its name
+        var roleCell = MakeIconCell();
+        if (!playerInfo.Observer &&
+            playerInfo.Job is { } jobId &&
+            _prototype.TryIndex(jobId, out var job) &&
+            _prototype.TryIndex(job.Icon, out var jobIcon))
         {
-            Text = GetPlayerTypeText(playerInfo),
-            VerticalAlignment = VAlignment.Center,
-            HorizontalExpand = true,
-            ClipText = true
-        };
-
-        // Apply color coding based on player type
-        if (playerInfo.Antag)
-        {
-            playerTypeLabel.FontColorOverride = Color.Red;
-        }
-        else if (playerInfo.Observer)
-        {
-            playerTypeLabel.FontColorOverride = Color.Gray;
+            roleCell.AddChild(MakeRoleIcon(_entityManager.System<SpriteSystem>().Frame0(jobIcon.Icon), false));
         }
 
-        _playerGrid.AddChild(playerTypeLabel);
+        roleCell.AddChild(roleLabel);
+        _playerGrid.AddChild(roleCell);
+        // CrystallEdge end
+
+        _playerGrid.AddChild(MakeSecretRoleCell(playerInfo)); //CrystallEdge: replaced Player Type (Antag/Crew/Observer) with the player's secret role
 
         // OOC Name column
         var oocNameLabel = new Label
@@ -371,18 +369,103 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         static string GetRoleKey(RoundEndPlayerInfo p) =>
             (p.Observer ? "zzz_observer" : p.Role).ToLowerInvariant();
 
-        static int GetPlayerTypeSortKey(RoundEndPlayerInfo p) =>
-            p.Antag ? 1 : p.Observer ? 3 : 2;
+        //CrystallEdge: was GetPlayerTypeSortKey (Antag -> Crew -> Observer), now sorts by current secret role name, empty last
+        string GetSecretRoleKey(RoundEndPlayerInfo p) =>
+            (GetSecretRoleName(p.SecretRole) ?? "zzz_none").ToLowerInvariant();
 
         return _currentSortField switch
         {
             SortField.ICName => ApplySort(filteredPlayers, GetIcKey, _sortDescending),
             SortField.OOCName => ApplySort(filteredPlayers, GetOocKey, _sortDescending),
             SortField.Role => ApplySort(filteredPlayers, GetRoleKey, _sortDescending),
-            SortField.PlayerType => ApplySort(filteredPlayers, GetPlayerTypeSortKey, _sortDescending),
+            SortField.SecretRole => ApplySort(filteredPlayers, GetSecretRoleKey, _sortDescending),
             _ => filteredPlayers
         };
     }
+
+    // CrystallEdge: secret role cell - only the current role is named, a changed role shows as
+    // "faded original icon → current icon", with both names in the tooltip
+    private Control MakeSecretRoleCell(RoundEndPlayerInfo playerInfo)
+    {
+        var cell = MakeIconCell();
+        var label = new Label
+        {
+            Text = GetSecretRoleName(playerInfo.SecretRole) ?? "-",
+            VerticalAlignment = VAlignment.Center,
+            HorizontalExpand = true,
+            ClipText = true
+        };
+
+        if (playerInfo.SecretRole is not { } roleId || !_prototype.TryIndex(roleId, out var role))
+        {
+            cell.AddChild(label);
+            return cell;
+        }
+
+        var roleIcon = _entityManager.System<CESecretRoleIconSystem>();
+        if (roleIcon.TryGetDepartment(roleId, out var department))
+            label.FontColorOverride = department.Color;
+
+        if (playerInfo.OriginalSecretRole is { } originalId &&
+            originalId != roleId &&
+            _prototype.TryIndex(originalId, out var originalRole))
+        {
+            if (GetSecretRoleIcon(originalRole) is { } originalTexture)
+            {
+                cell.AddChild(MakeRoleIcon(originalTexture, true));
+                cell.AddChild(new Label
+                {
+                    Text = "→",
+                    FontColorOverride = Color.FromHex("#999999"),
+                    VerticalAlignment = VAlignment.Center,
+                    Margin = new Thickness(0, 0, 4, 0),
+                });
+            }
+
+            cell.ToolTip = roleIcon.GetRolesName(originalId, roleId);
+        }
+
+        if (GetSecretRoleIcon(role) is { } texture)
+            cell.AddChild(MakeRoleIcon(texture, false));
+
+        cell.AddChild(label);
+        return cell;
+    }
+
+    private static BoxContainer MakeIconCell()
+    {
+        return new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            VerticalAlignment = VAlignment.Center,
+            MouseFilter = MouseFilterMode.Stop,
+        };
+    }
+
+    private static TextureRect MakeRoleIcon(Texture texture, bool faded)
+    {
+        return new TextureRect
+        {
+            Texture = texture,
+            Stretch = TextureRect.StretchMode.KeepAspectCentered,
+            SetSize = new Vector2(20, 20),
+            Margin = new Thickness(0, 0, 4, 0),
+            VerticalAlignment = VAlignment.Center,
+            Modulate = faded ? Color.White.WithAlpha(0.5f) : Color.White,
+        };
+    }
+
+    private Texture? GetSecretRoleIcon(CESecretRolePrototype role)
+    {
+        return _prototype.TryIndex(role.Icon, out var icon) ? _entityManager.System<SpriteSystem>().Frame0(icon.Icon) : null;
+    }
+
+    private string? GetSecretRoleName(ProtoId<CESecretRolePrototype>? roleId)
+    {
+        return roleId is { } id && _prototype.TryIndex(id, out var role) ? role.LocalizedName : null;
+    }
+    // CrystallEdge end
 
     private static IEnumerable<RoundEndPlayerInfo> ApplySort<TKey>(
         IEnumerable<RoundEndPlayerInfo> players,
@@ -427,13 +510,13 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
                 return true;
         }
 
-        // Search in player type
-        var playerType = GetPlayerTypeText(playerInfo);
-        if (playerType.Contains(_searchText, StringComparison.OrdinalIgnoreCase))
+        // Search in secret role //CrystallEdge: was player type (Antag/Crew/Observer) search
+        if (GetSecretRoleName(playerInfo.SecretRole) is { } secretRole &&
+            secretRole.Contains(_searchText, StringComparison.OrdinalIgnoreCase))
             return true;
 
-        // Search for "Observer" when they are observers
-        if (playerInfo.Observer && "observer".Contains(_searchText, StringComparison.OrdinalIgnoreCase))
+        if (GetSecretRoleName(playerInfo.OriginalSecretRole) is { } originalSecretRole && // CrystallEdge: original role is searchable too
+            originalSecretRole.Contains(_searchText, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;

@@ -1,3 +1,4 @@
+# Mushrooms feed mostly on water: mycelium adds a little resource, plain dirt adds none.
 - type: entity
   id: CEPlantBaseFungalType # MUSHROOMS
   abstract: true

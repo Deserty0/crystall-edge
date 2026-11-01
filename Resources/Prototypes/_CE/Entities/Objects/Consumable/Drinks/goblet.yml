@@ -16,6 +16,8 @@
   name: iron goblet
   categories: [ ForkFiltered ]
   components:
+  - type: Item
+    heldPrefix: iron_goblet
   - type: Sprite
     sprite: _CE/Objects/Consumable/Drinks/goblet.rsi
     layers:
@@ -26,10 +28,6 @@
   - type: PhysicalComposition
     materialComposition:
       CEIron: 10
-  - type: CEMagicEssenceStructure
-    essences:
-      Metal: { min: 1, max: 3 }
-      Void: { min: 0, max: 2 }
 
 - type: entity
   parent: CEDrinkBaseGoblet
@@ -37,6 +35,8 @@
   name: copper goblet
   categories: [ ForkFiltered ]
   components:
+  - type: Item
+    heldPrefix: copper_goblet
   - type: Sprite
     sprite: _CE/Objects/Consumable/Drinks/goblet.rsi
     layers:
@@ -46,10 +46,6 @@
         visible: false
   - type: StaticPrice
     price: 15
-  - type: CEMagicEssenceStructure
-    essences:
-      Metal: { min: 1, max: 3 }
-      Void: { min: 0, max: 2 }
 
 - type: entity
   parent: CEDrinkBaseGoblet
@@ -58,6 +54,8 @@
   description: A goblet made of solid gold to show how rich its owner is.
   categories: [ ForkFiltered ]
   components:
+  - type: Item
+    heldPrefix: gold_goblet
   - type: Sprite
     sprite: _CE/Objects/Consumable/Drinks/goblet.rsi
     layers:
@@ -67,10 +65,6 @@
         visible: false
   - type: StaticPrice
     price: 50
-  - type: CEMagicEssenceStructure
-    essences:
-      Greed: { min: 1, max: 2 }
-      Void: { min: 0, max: 2 }
 
 - type: entity
   parent: CEDrinkBaseGoblet
@@ -80,6 +74,8 @@
   categories: [ DoNotMap ]
   suffix: Artifact
   components:
+  - type: Item
+    heldPrefix: bottomless_goblet
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: bottomless-fill-
@@ -95,8 +91,3 @@
       maxVol: 1000
   - type: StaticPrice
     price: 220
-  - type: CEMagicEssenceStructure
-    essences:
-      Greed: { min: 3, max: 2 }
-      Void: { min: 5, max: 6 }
-      Magic: { min: 1, max: 3 }

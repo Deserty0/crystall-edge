@@ -2,10 +2,12 @@ using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Placeable;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Timing;
 
 namespace Content.Server._CE.Temperature;
@@ -18,19 +20,18 @@ public sealed partial class CETemperatureSystem : EntitySystem
     [Dependency] private PointLightSystem _pointLight = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    /// <summary>
+    /// Reusable buffer of the solutions heated by a single heater this tick.
+    /// </summary>
+    private readonly List<Entity<SolutionComponent>> _heatedSolutions = new();
 
-        SubscribeLocalEvent<CEEntityHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<CESolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<CEEntityHeaterComponent> ent, ref PowerChangedEvent args)
     {
         SetPowerVisuals(ent, args.Powered);
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<CESolutionHeaterComponent> ent, ref PowerChangedEvent args)
     {
         SetPowerVisuals(ent, args.Powered);
@@ -57,9 +58,14 @@ public sealed partial class CETemperatureSystem : EntitySystem
 
             heater.NextHeat = _timing.CurTime + heater.Frequency;
 
+            if (itemPlacer.PlacedEntities.Count == 0)
+                continue;
+
+            // Power is shared between all placed entities, like in EntityHeaterSystem
+            var energy = heater.Power / itemPlacer.PlacedEntities.Count;
             foreach (var placed in itemPlacer.PlacedEntities)
             {
-                _temperature.ChangeHeat(placed, heater.Power);
+                _temperature.ChangeHeat(placed, energy);
             }
         }
 
@@ -74,15 +80,24 @@ public sealed partial class CETemperatureSystem : EntitySystem
 
             heater.NextHeat = _timing.CurTime + heater.Frequency;
 
+            _heatedSolutions.Clear();
             foreach (var placed in itemPlacer.PlacedEntities)
             {
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(placed))
                 {
-                    if (!soln.Comp.Solution.CanReact)
-                        continue;
-
-                    _solutionContainer.AddThermalEnergy(soln, heater.Power);
+                    if (soln.Comp.Solution.CanReact)
+                        _heatedSolutions.Add(soln);
                 }
+            }
+
+            if (_heatedSolutions.Count == 0)
+                continue;
+
+            // Power is shared between all heated solutions
+            var energy = heater.Power / _heatedSolutions.Count;
+            foreach (var soln in _heatedSolutions)
+            {
+                _solutionContainer.AddThermalEnergy(soln, energy);
             }
         }
     }

@@ -87,7 +87,6 @@
     accent: genericAggressive
   - type: Speech
     speechVerb: SmallMob
-  - type: NonSpreaderZombie
 
 - type: entity
   parent: Solution
@@ -100,11 +99,3 @@
       reagents:
       - ReagentId: Toxin
         Quantity: 5
-
-- type: entity
-  id: MobTickSalvage
-  parent: MobTick
-  suffix: "Salvage Ruleset"
-  components:
-  - type: SalvageMobRestrictions
-

@@ -1,0 +1,43 @@
+- type: entity
+  parent: CEBaseGameRule
+  id: CEGameRuleNightmareAwakening
+  components:
+  - type: GameRule
+  - type: CESecretRoleSelection
+    departments:
+    - department: Nightmares
+      share: 0.10
+      minPlayers: 10
+      roles:
+      - role: Werewolf
+    - department: Brotherhood
+      share: 0.20
+      minPlayers: 5
+      roles:
+      - role: Recruiter
+        max: 1
+      - role: Thief
+        weight: 2
+      - role: Assassin
+    #- department: Coven
+    #  share: 0.05
+    #  roles:
+    #  - role: Seer
+    #    max: 1
+    - department: City
+      share: 0.70
+      roles:
+      - role: Bodyguard
+        weight: 2
+      - role: Helper
+        weight: 2
+      - role: DarkVessel
+        max: 1
+        weight: 0.25
+      - role: BountyHunter
+      - role: Priest
+        max: 2
+      - role: Immortal
+        max: 1
+      - role: Civilian
+        fallback: true

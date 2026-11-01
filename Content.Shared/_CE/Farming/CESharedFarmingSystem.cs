@@ -1,13 +1,12 @@
-using Content.Shared._CE.DayCycle;
 using Content.Shared._CE.Farming.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Destructible;
+using Content.Shared._CE.Light;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -20,11 +19,10 @@ public abstract partial class CESharedFarmingSystem : EntitySystem
 {
     [Dependency] protected SharedMapSystem MapSystem = default!;
     [Dependency] protected TurfSystem Turf = default!;
-    [Dependency] protected CEDayCycleSystem DayCycle = default!;
+    [Dependency] protected CELightLevelSystem LightLevel = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -36,26 +34,13 @@ public abstract partial class CESharedFarmingSystem : EntitySystem
 
     protected EntityQuery<CEPlantComponent> PlantQuery;
     protected EntityQuery<CEPlantProducingComponent> PlantProducingQuery;
-    protected EntityQuery<SolutionManagerComponent> SolutionQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-        InitializeSeeds();
-        InitializeGather();
-        InitializeGatherAdditional();
-        InitializeExamine();
 
         PlantQuery = GetEntityQuery<CEPlantComponent>();
         PlantProducingQuery = GetEntityQuery<CEPlantProducingComponent>();
-        SolutionQuery = GetEntityQuery<SolutionManagerComponent>();
-
-        SubscribeLocalEvent<CEPlantComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
-    }
-    private void OnAnchorStateChanged(Entity<CEPlantComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        if (!args.Anchored)
-            _destructible.DestroyEntity(ent.Owner);
     }
 
     public void AffectEnergy(Entity<CEPlantComponent> ent, float energyDelta)

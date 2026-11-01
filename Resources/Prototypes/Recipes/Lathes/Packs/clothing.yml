@@ -125,8 +125,6 @@
   - ClothingUniformJumpskirtChaplain
   - ClothingUniformJumpsuitChef
   - ClothingUniformJumpskirtChef
-  - ClothingUniformJumpsuitClown
-  - ClothingUniformJumpskirtClown
   - ClothingUniformJumpsuitHydroponics
   - ClothingUniformJumpskirtHydroponics
   - ClothingUniformJumpsuitJanitor
@@ -135,9 +133,8 @@
   - ClothingUniformJumpskirtLawyerBlack
   - ClothingUniformJumpsuitLibrarian
   - ClothingUniformJumpskirtColorLightBrown
-  - ClothingUniformJumpsuitMime
-  - ClothingUniformJumpskirtMime
   - ClothingUniformJumpsuitMusician
+  - ClothingUniformJumpsuitTramDriver
 
 - type: latheRecipePack
   id: WinterCoats
@@ -151,8 +148,6 @@
   - ClothingOuterWinterQM
   - ClothingOuterWinterRD
   - ClothingOuterWinterMusician
-  - ClothingOuterWinterClown
-  - ClothingOuterWinterMime
   - ClothingOuterWinterCoat
   - ClothingOuterWinterJani
   - ClothingOuterWinterBar
@@ -177,6 +172,7 @@
   - ClothingNeckTieRed
   - ClothingNeckTieDet
   - ClothingNeckTieSci
+  - ClothingNeckTieSerious
 
 - type: latheRecipePack
   id: Scarves

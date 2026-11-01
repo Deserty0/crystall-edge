@@ -17,7 +17,7 @@ namespace Content.Shared.Body.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent,]
 [AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
-[Access(typeof(SharedBloodstreamSystem))]
+[Access(typeof(BloodstreamSystem))]
 public sealed partial class BloodstreamComponent : Component
 {
     public const string DefaultBloodSolutionName = "bloodstream";
@@ -73,6 +73,15 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MaxBleedAmount = 10.0f;
+
+    // CrystallEdge: critical mobs keep bleeding out instead of suffocating
+    /// <summary>
+    /// Bleeding added every update interval while the mob is critical.
+    /// Higher than <see cref="BleedReductionAmount"/>, so bandaging only buys time.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float CECriticalBleedAmount = 1f;
+    // CrystallEdge end
 
     /// <summary>
     /// What percentage of current blood is necessary to avoid dealing blood loss damage?
@@ -157,7 +166,7 @@ public sealed partial class BloodstreamComponent : Component
     /// Caches the blood data of an entity.
     /// This is modified by DNA on init so it's not savable.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public List<ReagentData>? BloodData;
 
     /// <summary>

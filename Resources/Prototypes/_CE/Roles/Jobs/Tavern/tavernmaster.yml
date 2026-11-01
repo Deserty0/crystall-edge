@@ -9,11 +9,9 @@
   supervisors: ce-job-supervisors-empire
   requireAdminNotify: true
   joinNotifyCrew: true
-  weight: 2
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: CETavern
-      time: 2.5h
+    - !type:CEAchievementRequirement
+      achievement: RoundsFinishedAliveTavern2
 
 - type: startingGear
   id: CETavernmasterGear
@@ -48,7 +46,6 @@
         children:
         - id: CERubberStampApproved
         - id: CERubberStampDenied
-        - id: CERubberStampGuildmaster
 
 - type: entity
   id: CEBedsideTableFilledTavernmaster
@@ -61,8 +58,10 @@
         rolls: !type:RangeNumberSelector
           range: 2, 3
         children:
-        - id: CEClothingCloakTavernmaster
-        - id: CEClothingHeadFedoraTavernmaster
+        - id: CEClothingCloakTavernmasterJacket1
+        - id: CEClothingCloakTavernmasterJacket2
+        - id: CEClothingPantsTavern
+        - id: CEClothingPantsTavernSkirt
 
 - type: entity
   id: CEKeyRingTavernmaster

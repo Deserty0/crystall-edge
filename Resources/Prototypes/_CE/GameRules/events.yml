@@ -24,15 +24,14 @@
       path: /Audio/_CE/Announce/broken_pipe_far.ogg
       params:
         volume: 10
-    weight: 5
     duration: 1
-    minimumPlayers: 5
+    minimumPlayers: 0
   - type: CEPipeBreakageRule
     replacementMap:
       CEPipeBrassMedium: CEPipeBrassMediumBroken
       CEPipeBrassBig: CEPipeBrassBigBroken
     centerPrototype: CEPipeBrassBig
-    radius: 5
+    radius: 3
     breakChance: 0.8
     centerVfx: CEShockWaveStrongVFX
     breakSound:

@@ -11,6 +11,8 @@
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       size: Ginormous
+      shape:
+      - 0,0,4,5
       heldPrefix: riot
     - type: Blocking
       passiveBlockModifier:
@@ -24,27 +26,32 @@
       damageContainer: Shield
     - type: ExaminableDamage
       messages: ShieldMessages
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 125 #This is probably enough damage before it breaks
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel:
-              min: 2
-              max: 2
-            SheetGlass:
-              min: 2
-              max: 2
     - type: StaticPrice
       price: 100
+
+- type: entity
+  abstract: true
+  id: BaseShieldDestructible
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125 #This is probably enough damage before it breaks
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel:
+            min: 2
+            max: 2
+          SheetGlass:
+            min: 2
+            max: 2
 
 - type: entity
   name: base repairable shield
@@ -68,7 +75,7 @@
 
 - type: entity
   name: riot shield
-  parent: [ BaseRepairableShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseShieldDestructible, BaseSecurityContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
@@ -81,151 +88,6 @@
           Slash: 15
           Piercing: 5
           Heat: 5
-
-- type: entity
-  name: laser shield
-  parent: [ BaseRepairableShield, BaseSecurityContraband ]
-  id: RiotLaserShield
-  description: A shield built for withstanding lasers, but not much else.
-  components:
-    - type: Sprite
-      state: riot_laser-icon
-    - type: Item
-      heldPrefix: riot_laser
-    - type: Blocking
-      passiveBlockModifier:
-        flatReductions:
-          Blunt: 5
-          Slash: 10
-          Piercing: 5
-          Heat: 20
-
-- type: entity
-  name: ballistic shield
-  parent: [ BaseRepairableShield, BaseSecurityContraband ]
-  id: RiotBulletShield
-  description: A shield built for protecting against ballistics, but not much else.
-  components:
-    - type: Sprite
-      state: riot_bullet-icon
-    - type: Item
-      heldPrefix: riot_bullet
-    - type: Blocking
-      passiveBlockModifier:
-        flatReductions:
-          Blunt: 10
-          Slash: 5
-          Piercing: 20
-          Heat: 5
-
-#Craftable shields
-
-- type: entity
-  name: wooden buckler
-  parent: BaseShield
-  id: WoodenBuckler
-  description: A small round wooden makeshift shield.
-  components:
-    - type: Sprite
-      state: buckler-icon
-    - type: Item
-      heldPrefix: buckler
-    - type: Blocking
-      passiveBlockModifier:
-        flatReductions:
-          Blunt: 5
-          Slash: 5
-          Piercing: 5
-          Heat: 5
-    - type: Construction
-      graph: WoodenBuckler
-      node: woodenBuckler
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 75 #Weaker shield
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: WoodDestroy
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MaterialWoodPlank:
-              min: 5
-              max: 5
-    - type: StaticPrice
-      price: 150
-
-- type: entity
-  name: cardboard shield
-  parent: BaseShield
-  id: CardShield
-  description: A shield made of cardboard. Won't protect you from much.
-  components:
-    - type: Sprite
-      state: cardshield-icon
-    - type: Item
-      heldPrefix: cardshield
-    - type: Blocking
-      passiveBlockModifier:
-        flatReductions:
-          Blunt: 1
-          Slash: 1
-          Piercing: 1
-          Heat: 1
-    - type: Construction
-      graph: CardShield
-      node: cardShield
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 25 #Very very weak shield
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound: /Audio/Items/Toys/ToyFall2.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MaterialCardboard:
-              min: 2
-              max: 4
-    - type: StaticPrice
-      price: 20
-
-- type: entity
-  name: makeshift shield
-  parent: BaseRepairableShield
-  id: MakeshiftShield
-  description: A rundown looking shield, not good for much.
-  components:
-    - type: Sprite
-      state: makeshift-icon
-    - type: Item
-      heldPrefix: metal
-    - type: Construction
-      graph: MakeshiftShield
-      node: makeshiftShield
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 75
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel:
-              min: 1
-              max: 2
 
 - type: entity
   name: web shield
@@ -267,65 +129,12 @@
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
-  name: clockwork shield
-  parent: BaseRepairableShield
-  id: ClockworkShield
-  description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
-  components:
-    - type: Sprite
-      state: ratvarian-icon
-    - type: Item
-      heldPrefix: ratvarian
-      #Have it break into brass when clock cult is in
-
-- type: entity
-  name: mirror shield
-  parent: [ BaseShield, BaseMagicalContraband ]
-  id: MirrorShield
-  description: Eerily glows red... you hear the geometer whispering
-  components:
-    - type: Sprite
-      state: mirror-icon
-    - type: Item
-      heldPrefix: mirror
-    - type: Reflect
-      reflectProb: 0.95
-      reflects:
-        - Energy
-    - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
-      passiveBlockModifier:
-        coefficients:
-          Heat: 0.5
-        flatReductions:
-          Blunt: 5
-          Slash: 10
-          Piercing: 5
-          Heat: 25
-      blockSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/glass_step.ogg
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: GlassBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetGlass:
-              min: 5
-              max: 5
-
-- type: entity
   name: energy shield
   parent: [BaseItem, BaseSyndicateContraband]
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
+    - type: ItemToggleExaminableStatus
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
@@ -336,6 +145,8 @@
         path: /Audio/Weapons/ebladehum.ogg
     - type: ItemToggleSize
       activatedSize: Huge
+      activatedShape:
+      - 0,0,3,3
     - type: ComponentToggler
       components:
       - type: DisarmMalus
@@ -425,10 +236,13 @@
 
 - type: entity
   name: telescopic shield
-  parent: BaseRepairableShield
+  parent: [ BaseRepairableShield, BaseShieldDestructible ]
   id: TelescopicShield
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
+    - type: ItemToggleExaminableStatus
+      onText: item-toggle-examined-active
+      offText: item-toggle-examined-not-active
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/telescopicon.ogg
@@ -444,6 +258,8 @@
         malus: 0.6
     - type: ItemToggleSize
       activatedSize: Huge
+      activatedShape:
+      - 0,0,3,3
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
@@ -453,6 +269,8 @@
           map: [ "shield" ]
     - type: Item
       size: Small
+      shape:
+      - 0,0,1,1
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       heldPrefix: teleriot
     - type: UseDelay

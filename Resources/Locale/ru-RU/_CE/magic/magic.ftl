@@ -3,6 +3,13 @@ ce-energy-deficit-popup = Недостаточно маны!
 
 ce-magic-manacost = Затраты маны
 ce-magic-cooldown = Перезарядка
+ce-magic-cooldown-time = { $minutes ->
+    [0] { $seconds } с
+   *[other] { $minutes } мин{ $seconds ->
+        [0] {""}
+       *[other] {" "}{ $seconds } с
+    }
+}
 
 ce-magic-spell-not-enough-mana = Недостаточно маны!
 ce-magic-spell-no-mana-component = Вы не используете магическую энергию.
@@ -27,6 +34,7 @@ ce-magic-staminacost = Затраты выносливости
 ce-magic-weapon-required = Необходимо держать в руках оружие
 ce-magic-spell-pacified = Это может причинить кому-то вред!
 ce-magic-spell-ssd = Не трогайте отключившихся игроков!
+ce-action-require-night = Можно использовать только ночью.
 
 ce-magic-spell-target-not-mob = Цель должна быть живым существом!
 
@@ -37,3 +45,5 @@ ce-magic-spell-target-mob-state-critical = умирающих
 
 ce-magic-skillpointcost = Стоимость ресурса "{$name}": [color=#eba834]{$count}[/color]
 ce-magic-spell-skillpoint-not-enough = Не хватает {$count} ресурса(ов) "{$name}"!
+
+ce-magic-spell-target-no-mind = У цели должна быть душа!

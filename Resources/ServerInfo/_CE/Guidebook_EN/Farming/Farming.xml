@@ -45,24 +45,32 @@ You can find out how effective the soil type being used is by examining the grow
 
 # Watering
 
-To make a plant grow faster, it must be [color=yellow]watered[/color]. In the future, different plants may require different reagents, but for now it's only water...
-The only water source in the game right now is unfinished - these are unattractive water tiles that exist on every map.
+To make a plant grow, it must be [color=yellow]watered[/color]. In the future different plants may require different reagents, but for now it is only water.
 
-If you don't water the plant, it won't die, but it will grow significantly slower.
+Where to get water:
+- [color=yellow]Rain[/color] fills any open container left under the open sky - wooden barrels, bottles, mugs, vials.
+- A planted bed drinks rain straight from the sky too, as long as it is not covered.
+- The old, unfinished water tiles still exist on every map.
 
-Different plants require watering at different frequencies - some need to be watered twice a day, while others only need it once every 2 days.
-
-Examine the plant to see if it has drunk all the water or not.
+Scoop water with a [color=yellow]bucket[/color] and use it on a plant. Examine the plant to see whether it has drunk all its water yet.
 
 <Box>
+  <GuideEntityEmbed Entity="CEBaseBarrel"/>
   <GuideEntityEmbed Entity="CEBucket"/>
   <GuideEntityEmbed Entity="CEWaterFloorEntity"/>
-  <GuideEntityEmbed Entity="CEBucket"/>
 </Box>
+
+Without water a plant [color=yellow]stops growing[/color], but it never dies.
 
 # Lighting
 
-Most plants require [color=yellow]natural light[/color] to grow.
-Mushrooms are an exception - they prefer darkness.
+Most plants need [color=yellow]light[/color] to grow. Both sunlight and [color=yellow]lamps[/color] count, so you can grow crops indoors or underground under good lighting.
+
+- The brighter the light, the faster the plant grows. Bright noon is best, dusk is slow, and at night it stops.
+- A roof blocks sunlight, but not the light of lamps beneath it.
+
+Mushrooms are an exception - they prefer [color=yellow]darkness[/color] and grow fastest at night or in dark cellars. Too much light, from the sun or a lamp, stops their growth.
+
+Examine a plant to see whether it is getting too little or too much light.
 
 </Document>

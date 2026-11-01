@@ -12,7 +12,7 @@
     doAfterDuration: 4.0
   - type: Sprite
     layers:
-      - sprite: Objects/Materials/Shards/crystal.rsi
+      - sprite: Objects/Materials/Shards/crystal-shard.rsi
         state: shard1
         map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
@@ -161,20 +161,3 @@
     tags:
       - Trash
       - CrystalRed
-
-- type: entity
-  parent: ShardCrystalBase
-  id: ShardCrystalRandom
-  name: random crystal shard
-  components:
-  - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      - id: ShardCrystalGreen
-      - id: ShardCrystalPink
-      - id: ShardCrystalYellow
-      - id: ShardCrystalBlack
-      - id: ShardCrystalOrange
-      - id: ShardCrystalBlue
-      - id: ShardCrystalCyan
-      - id: ShardCrystalRed

@@ -15,9 +15,6 @@
     - ConstructionMaterial
   - type: Damageable
     damageModifierSet: Metallic
-  - type: GuideHelp
-    guides:
-    - ExpandingRepairingStation
 
 - type: entity
   parent: SheetMetalBase
@@ -99,28 +96,11 @@
       map: ["base"]
   - type: Item
     heldPrefix: brass
-  - type: FloorTile
-    outputs:
-    - PlatingBrass
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Zinc
-        Quantity: 3.3
-      - ReagentId: Copper
-        Quantity: 6.7
-
-- type: entity
-  parent: SheetBrass
-  id: SheetBrass10
-  name: brass
-  suffix: 10
-  components:
-  - type: Sprite
-    state: brass
-  - type: Stack
-    stackType: Brass
-    count: 10
+      - ReagentId: Brass
+        Quantity: 10
 
 - type: entity
   parent: SheetBrass

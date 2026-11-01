@@ -2,8 +2,6 @@
   id: BasicCalmEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: AnomalySpawn
-    - id: BluespaceArtifact
     - id: BluespaceLocker
     - id: BreakerFlip
     - id: BureaucraticError
@@ -20,7 +18,6 @@
     - id: SlimesSpawnHorde
     - id: SolarFlare
     - id: SnakeSpawnHorde
-    - id: SpiderClownSpawnHorde
     - id: SpiderSpawnHorde
     - id: VentClog
 
@@ -31,20 +28,6 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     - id: RevenantSpawn
-    - !type:NestedSelector
-      tableId: DerelictBorgEventTable
-
-- type: entityTable
-  id: ModerateAntagEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
-    children:
-    - id: DragonSpawn
-    - id: NinjaSpawn
-    - id: ParadoxCloneSpawn
-    - id: SleeperAgents
-    - id: ZombieOutbreak
-    - id: LoneOpsSpawn
-    - id: WizardSpawn
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
@@ -74,16 +57,6 @@
     selectionTime: Never
 
 - type: entity
-  id: BaseStationEvent
-  parent: BaseGameRule
-  abstract: true
-  components:
-  - type: GameRule
-    delay:
-      min:  10
-      max:  20
-
-- type: entity
   id: BaseStationEventShortDelay
   parent: BaseGameRule
   abstract: true
@@ -102,34 +75,6 @@
     delay:
       min:  40
       max:  60
-
-- type: entity
-  id: AnomalySpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncementColor: "#18abf5"
-    startAudio:
-      path: /Audio/Announcements/announce.ogg
-    weight: 8
-    duration: 35
-  - type: AnomalySpawnRule
-
-- type: entity
-  id: BluespaceArtifact
-  parent: BaseStationEventShortDelay
-  components:
-  - type: GameRule
-    delay:
-      min:  30
-      max:  30
-  - type: StationEvent
-    startAnnouncementColor: "#18abf5"
-    startAudio:
-      path: /Audio/Announcements/announce.ogg
-    weight: 8
-    duration: 35
-  - type: BluespaceArtifactRule
 
 - type: entity
   id: BluespaceLocker
@@ -151,6 +96,9 @@
     duration: 1
     minimumPlayers: 15
   - type: BreakerFlipRule
+    blacklist:
+      components:
+        - ProtectedGrid
 
 - type: entity
   id: BureaucraticError
@@ -290,18 +238,6 @@
   - type: RandomSpawnRule
     prototype: MobRevenant
 
-- type: entity
-  parent: [ BaseAntagGhostRoleRule, BaseWizardRule ]
-  id: WizardSpawn
-  components:
-  - type: StationEvent
-    weight: 1 # rare
-    duration: null
-    occursDuringRoundEnd: false
-    earliestStart: 30
-    reoccurrenceDelay: 60
-    minimumPlayers: 30
-
 # disabled until event is rewritten to be more interesting
 #- type: entity
 #  id: FalseAlarm
@@ -347,8 +283,8 @@
       path: /Audio/Announcements/power_off.ogg
       params:
         volume: -4
-    duration: 60
-    maxDuration: 120
+    duration: 50
+    maxDuration: 100
   - type: PowerGridCheckRule
 
 - type: entity
@@ -455,68 +391,6 @@
       rolls: 4, 8
       children:
       - id: MobGiantSpiderAngry
-
-- type: entity
-  id: SpiderClownSpawnHorde
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-horde-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 20
-    weight: 1.5
-    duration: 5
-    maxDuration: 20
-  - type: VentHordeRule
-    table: !type:GroupSelector
-      rolls: 4, 8
-      children:
-      - id: MobClownSpider
-
-- type: entity
-  id: ZombieOutbreak
-  parent: BaseGameRule
-  components:
-  - type: StationEvent
-    earliestStart: 90
-    minimumPlayers: 40
-    weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
-    duration: 1
-    occursDuringRoundEnd: false
-  - type: ZombieRule
-  - type: AntagSelection
-    antags:
-    - !type:LinearAntagCount
-      proto: InitialInfected
-      range:
-        min: 1
-        max: 3
-  - type: DynamicRuleCost
-    cost: 200
-
-- type: entity
-  parent: [ BaseAntagGhostRoleRule, BaseNukeopsRule ]
-  id: LoneOpsSpawn
-  components:
-  - type: StationEvent
-    earliestStart: 35
-    weight: 5.5
-    minimumPlayers: 20
-    duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
-    occursDuringRoundEnd: false
-  - type: RuleGrids
-  - type: LoadMapRule
-    gridPath: /Maps/Shuttles/ShuttleEvent/striker.yml
-  - type: NukeopsRule
-    roundEndBehavior: Nothing
-  - type: AntagSelection
-    antags:
-    - !type:FixedAntagCount
-      proto: LoneOp
-  - type: DynamicRuleCost
-    cost: 75
 
 - type: entity
   parent: BaseTraitorRule

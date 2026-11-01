@@ -30,7 +30,7 @@ namespace Content.Benchmarks;
 [CategoriesColumn]
 public class ComponentQueryBenchmark
 {
-    public const string Map = "Maps/saltern.yml";
+    public const string Map = "Maps/_CE/Shaar/Shaar0.yml";
 
     private TestPair _pair = default!;
     private IEntityManager _entMan = default!;
@@ -259,7 +259,7 @@ public struct QueryBenchEvent
     public int HashCode;
 }
 
-public sealed class QueryBenchSystem : EntitySystem
+public sealed partial class QueryBenchSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -60,6 +60,13 @@
   components:
   - type: PickRandomPerson
     conditions:
+    - !type:AntagonistTagCondition # Only roll on-station targets.
+      tags:
+      - OnStation
+    - !type:AntagonistTagCondition # Don't roll unkillable targets.
+      inverted: true
+      tags:
+      - Unkillable
     # Can't have multiple objectives to kill the same person.
     - !type:ObjectiveTargetCondition
       inverted: true
@@ -81,14 +88,6 @@
       components:
       - KillPersonCondition
   - type: SocialObjective
-
-# requires that the target survives the round
-- type: entity
-  abstract: true
-  parent: BaseSocialObjective
-  id: BaseKeepAliveObjective
-  components:
-  - type: KeepAliveCondition
 
 # requires that the target completes at least 50% of their objectives
 - type: entity
@@ -125,14 +124,6 @@
   id: BaseCodeObjective
   components:
   - type: CodeCondition
-
-# a free objective, which is a free greentext
-- type: entity
-  abstract: true
-  parent: BaseObjective
-  id: BaseFreeObjective
-  components:
-  - type: FreeObjective
 
 # requires the player to perform some action a certain number of times
 - type: entity

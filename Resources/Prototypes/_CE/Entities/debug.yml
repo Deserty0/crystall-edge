@@ -15,25 +15,15 @@
     solution:
       maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable.
       reagents:
-      - ReagentId: CEWater
+      - ReagentId: Water
         Quantity: 9999999
   - type: SolutionRegeneration
     generated:
       reagents:
-      - ReagentId: CEWater
+      - ReagentId: Water
         Quantity: 100
   - type: Edible
     solution: pool
     edible: Drink
-
-- type: entity
-  parent: ComputerPowerMonitoring
-  id: CEComputerPowerMonitoring
-  categories: [ ForkFiltered, DoNotMap ]
-  suffix: Debug, 0W
-  components:
-  - type: ApcPowerReceiver
-    powerLoad: 0
-  - type: PowerState
-    idlePowerDraw: 0
-    workingPowerDraw: 0
+  - type: DrawableSolution
+    solution: pool

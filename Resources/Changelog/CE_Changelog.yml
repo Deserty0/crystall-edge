@@ -707,3 +707,887 @@
   id: 1066
   time: '2026-08-15T13:23:55.0000000+00:00'
   url: https://github.com/crystallpunk-14/crystall-edge/pull/407
+- author: TheShuEd
+  changes:
+  - message: "The \u201CStatic Inventory Position\u201D option has been removed\u2014\
+      the inventory will no longer overlap the action bar"
+    type: Remove
+  - message: Fixed a bug where the action bar overlapped the stamina bar
+    type: Fix
+  id: 1067
+  time: '2026-08-18T16:46:40.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/417
+- author: TheShuEd
+  changes:
+  - message: Night vision now provides a higher minimum illumination level, allowing
+      you to see in the dark without having to attach a light source that is invisible
+      to others.
+    type: Tweak
+  - message: Added Lurker midround ghostrole (only adminabuse rn)
+    type: Add
+  id: 1068
+  time: '2026-08-18T12:24:45.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/418
+- author: TheShuEd
+  changes:
+  - message: Added advanced thaumaturgical glasses that can help you to find essence
+      nodes. Researchable.
+    type: Add
+  - message: Fixed bug when equipping mining goggles explodes server.
+    type: Fix
+  - message: Pipe breakage event radius lowered from 5 to 3 tiles.
+    type: Tweak
+  id: 1069
+  time: '2026-08-19T14:21:24.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/421
+- author: TheShuEd
+  changes:
+  - message: Fixed a bug that caused some walls and fences to appear to be floating
+      in the air
+    type: Fix
+  - message: Fixed a bug that caused hitscans to be invisible from other levels.
+    type: Fix
+  id: 1070
+  time: '2026-08-20T12:26:06.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/425
+- author: TheShuEd
+  changes:
+  - message: Fixed armchairs! They are now pullable, anchorable and deconstructable.
+    type: Fix
+  id: 1071
+  time: '2026-08-20T16:00:01.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/426
+- author: TheShuEd
+  changes:
+  - message: Passive mana regeneration has been added
+    type: Add
+  - message: "The \u201CKnowledge Copying\u201D skill has been added\u2014without\
+      \ it, it is now impossible to create knowledge books. Scientists learn this\
+      \ skill at the start of the round; it can be recorded and passed on to other\
+      \ players."
+    type: Add
+  - message: "Added a new research branch for scientists, \u201CSpellcasting,\u201D\
+      \ which allows them to teach spells to players. Magic focus items (staffs) for\
+      \ casting spells, and much more."
+    type: Add
+  id: 1072
+  time: '2026-08-22T13:16:18.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/427
+- author: TheShuEd
+  changes:
+  - message: The Magic Focus Amulet has been added. It allows you to cast spells while
+      it is equipped in the belt slot.
+    type: Add
+  - message: Infusion rituals have been removed as an intermediate step requiring
+      spell training. Now all you have to do is conduct some research or read a book
+      to gain access to the spell.
+    type: Tweak
+  id: 1073
+  time: '2026-08-24T10:36:32.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/432
+- author: TheShuEd
+  changes:
+  - message: Lampposts can now be unanchored and pulled away.
+    type: Add
+  - message: The cooldown on the Lurker's jump has been increased from 3 to 7 seconds.
+    type: Tweak
+  - message: Flying magical essences now disappear after being absorbed by a magical
+      focus.
+    type: Fix
+  - message: Fixed a bug that caused passive mana regeneration to work only visually
+      and prevented players from casting spells.
+    type: Fix
+  id: 1074
+  time: '2026-08-24T13:55:18.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/433
+- author: TheShuEd
+  changes:
+  - message: We've added the ability to kick people! They fall to the ground in a
+      very funny way while taking stamina damage. Added by default to all races as
+      an alternative right-click attack
+    type: Add
+  - message: A huge number of food orders, as well as orders for growing vegetables
+      in large batches, have been added to the horticulture trading platform.
+    type: Add
+  - message: Vegetables have been removed from the horticulture trading platform.
+      Seeds remain. Enjoy your garden.
+    type: Remove
+  - message: Lightning strikes are now much less frequent during storms.
+    type: Tweak
+  - message: The Lurker's melee attacks now consume stamina as intended.
+    type: Fix
+  - message: Fixed a bug that prevented players from making mashed potatoes
+    type: Fix
+  - message: Fixed a bug that allowed infinite crafting of ash from planks.
+    type: Fix
+  id: 1075
+  time: '2026-08-24T21:15:31.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/436
+- author: TheShuEd
+  changes:
+  - message: Rain and storm weather are now filling barrels, plants, and bottles with
+      water.
+    type: Add
+  id: 1076
+  time: '2026-08-25T12:50:22.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/439
+- author: TheShuEd
+  changes:
+  - message: "The Academy can learn two new spells: \u201CFeather fall\u201D and \u201C\
+      Plant Growth\u201D."
+    type: Add
+  - message: The time required to assume command roles has been increased.
+    type: Tweak
+  - message: Shaar Map was updated.
+    type: Tweak
+  id: 1077
+  time: '2026-08-26T10:14:34.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/441
+- author: TheShuEd
+  changes:
+  - message: Farming plants now can DIE without water. Just like in CE1.
+    type: Add
+  id: 1078
+  time: '2026-08-27T15:38:47.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/442
+- author: TheShuEd
+  changes:
+  - message: Using a crowbar or other tools capable of breaking tiles while your character
+      is looking up now allows you to break the ceiling.
+    type: Add
+  id: 1079
+  time: '2026-08-27T15:42:28.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/434
+- author: TheShuEd
+  changes:
+  - message: Added mop.
+    type: Add
+  id: 1080
+  time: '2026-08-27T18:34:44.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/443
+- author: TheShuEd
+  changes:
+  - message: 'Two types of island map projectors have been added: a public map projector
+      and a projector that displays the entire network of wires. Supports z-levels
+      visualization.'
+    type: Add
+  id: 1081
+  time: '2026-08-28T21:52:17.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/444
+- author: TheShuEd
+  changes:
+  - message: "A new device, the \u201Cdimensional elevator\u201D has been added\u2014\
+      it allows you to create a vertical pair of portals between z-levels, down to\
+      \ the nearest available level below"
+    type: Add
+  id: 1082
+  time: '2026-09-07T19:25:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/452
+- author: TheShuEd
+  changes:
+  - message: "The \u201CEnergy Extractor\u201D has been added \u2014 a new, simple\
+      \ generator that accepts energy crystals and efficiently produces energy. This\
+      \ solves the problem of low energy production for the city and makes it possible\
+      \ to start up the power grid even if all the batteries are drained."
+    type: Add
+  id: 1083
+  time: '2026-09-10T13:31:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/453
+- author: TheShuEd, D1nazzewr
+  changes:
+  - message: Added pack of new markings for Carrins
+    type: Add
+  - message: Elves ears now uncolorable
+    type: Fix
+  id: 1084
+  time: '2026-09-12T14:45:27.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/461
+- author: TheShuEd
+  changes:
+  - message: Removed ambitions system
+    type: Remove
+  - message: Removed bluetext system
+    type: Remove
+  id: 1085
+  time: '2026-09-17T20:10:41.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/472
+- author: TheShuEd
+  changes:
+  - message: Thief is back!
+    type: Add
+  - message: Golden flem statue was added.
+    type: Add
+  - message: trading platforms no longer require players to deposit money into them.
+      They automatically take money directly from buyers' pockets and wallets.
+    type: Tweak
+  id: 1086
+  time: '2026-09-22T15:38:44.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/475
+- author: TheShuEd
+  changes:
+  - message: Added autumn grass bag inside trading platform and random crates
+    type: Add
+  id: 1087
+  time: '2026-09-25T06:49:46.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/480
+- author: TheShuEd
+  changes:
+  - message: The visual effects for rain, storms, and light snowfall have been significantly
+      improved
+    type: Tweak
+  id: 1088
+  time: '2026-09-25T22:20:21.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/481
+- author: TheShuEd
+  changes:
+  - message: Added a progress bar showing the spread of murk and the charging of light,
+      visible to all players.
+    type: Add
+  - message: Removed Wordolon_2 bark
+    type: Remove
+  - message: The number of ore veins has increased in proportion to the increased
+      size of the island
+    type: Tweak
+  - message: The visibility of the edge of the murk has been improved
+    type: Tweak
+  - message: Fixed a bug where players with the same role could see each other
+    type: Fix
+  - message: "Fixed a bug where a player who was \u201CLost in the Murk\u201D was\
+      \ not counted as dead for the purposes of the Lover and the Werewolf."
+    type: Fix
+  - message: Fixed a bug that allowed players to return to the body of a character
+      dissolved in darkness.
+    type: Fix
+  - message: Fixed a bug where the dissolution level would flicker when there were
+      many players nearby.
+    type: Fix
+  - message: Fixed an issue where logs could not be cut into planks using sharp objects.
+    type: Fix
+  id: 1089
+  time: '2026-09-27T18:40:39.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/485
+- author: TheShuEd
+  changes:
+  - message: Dimensional shards that appear from hungry nodes can now be sold for
+      5 silver coins.
+    type: Add
+  - message: The second layer of the weather visualizer - showing raindrops on the
+      ground - has been removed for performance reasons.
+    type: Remove
+  - message: Fixed a bug that caused all magic nodes to have the same lifespan and
+      explode simultaneously, putting a heavy load on the server.
+    type: Fix
+  - message: We will reduce the amount of essence inside the magic node by half to
+      reduce the load on the server.
+    type: Tweak
+  - message: Hungry nodes no longer disappear over time.
+    type: Tweak
+  - message: Magic nodes will no longer spawn in the Murk.
+    type: Tweak
+  - message: The number of gold coins required to complete the thief's objective has
+      been reduced from 20 to 10 gold coins.
+    type: Tweak
+  - message: You can now inspect hungry nodes to see a hint on what to do with them
+      and view the names of the required essences.
+    type: Tweak
+  id: 1090
+  time: '2026-09-28T13:42:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/486
+- author: TheShuEd
+  changes:
+  - message: Crossbow & bolts
+    type: Add
+  - message: Bow & arrows
+    type: Add
+  - message: Quiver
+    type: Add
+  - message: Skimitar
+    type: Add
+  - message: Sword
+    type: Add
+  - message: Spear
+    type: Add
+  - message: Wooden Staff
+    type: Add
+  - message: War Axe
+    type: Add
+  - message: Two Handed Sword
+    type: Add
+  - message: You can find upon all these cool things in crates around town, or buy
+      them at the new store.
+    type: Add
+  id: 1091
+  time: '2026-09-28T21:54:08.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/487
+- author: TheShuEd
+  changes:
+  - message: "A new secret role, \u201CTormentor,\u201D has been added."
+    type: Add
+  - message: "All guards have gained the innate skill \u201CMilitary Training,\u201D\
+      \ which allows them to fully restore their stamina once every 5 minutes."
+    type: Add
+  - message: Added a bola for the guard.
+    type: Add
+  - message: The Guard's Mace is working again, and it has been significantly redesigned.
+      When activated, it fires energy orbs that deal heavy damage to stamina.
+    type: Fix
+  - message: The separate key and room for the armory guard have been removed; it
+      is now located in the main hallway. The entrance to the armory via the roof
+      is secured.
+    type: Tweak
+  id: 1092
+  time: '2026-09-29T11:02:53.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/488
+- author: TheShuEd
+  changes:
+  - message: Werewolfes now have new skill "Time sense"
+    type: Add
+  - message: A large clock displaying the time has been added
+    type: Add
+  - message: "Healing items now have the \u201Csano\u201D aspect rather than the \u201C\
+      victus\u201D"
+    type: Tweak
+  - message: The number of pylons required to power the city has been reduced from
+      6 to 4, and they have been moved inside the city rather than outside in the
+      darkness. The excess areas around the city have been removed back.
+    type: Tweak
+  - message: Fixed a bug where climbing over fences would work only intermittently.
+    type: Fix
+  id: 1093
+  time: '2026-09-29T21:42:07.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/491
+- author: TheShuEd
+  changes:
+  - message: Conveyors can now be rotated without unclipping them
+    type: Tweak
+  - message: Fixed a bug that prevented the web from being destroyed
+    type: Fix
+  - message: You can now repaint scars in the character editor
+    type: Fix
+  id: 1094
+  time: '2026-09-30T15:57:08.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/493
+- author: TheShuEd
+  changes:
+  - message: The loudspeakers mounted on the walls have been added.
+    type: Add
+  - message: A radio room has been added, through which information can be broadcast
+      throughout the city via loudspeakers.
+    type: Add
+  id: 1095
+  time: '2026-09-30T19:55:44.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/492
+- author: TheShuEd
+  changes:
+  - message: Shadow eaters added
+    type: Add
+  id: 1096
+  time: '2026-10-01T10:44:56.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/495
+- author: TheShuEd
+  changes:
+  - message: Energy scanner goggles have been added. They allow you to see pipes through
+      Z-levels and view information about the pipes' power supply.
+    type: Add
+  id: 1097
+  time: '2026-10-01T12:10:26.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/496
+- author: TheShuEd
+  changes:
+  - message: The tormentor and the lover can no longer choose each other as targets
+    type: Tweak
+  - message: Fixed a bug where a phantom item would appear in the Carrins' hands after
+      they began flying
+    type: Fix
+  - message: A bug that prevented users from making soups has been fixed.
+    type: Fix
+  id: 1098
+  time: '2026-10-01T19:47:23.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/497
+- author: TheShuEd
+  changes:
+  - message: Any interaction with pipes or critical power equipment without a protective
+      suit is now interrupted by a burst of energy that knocks the player back and
+      deals damage. Sabotaging pipes has become significantly more difficult.
+    type: Add
+  - message: "The elves' innate ability, \u201CImmunity to Mana Damage,\u201D has\
+      \ been removed."
+    type: Remove
+  - message: Passive mana regeneration has been removed from all creatures.
+    type: Remove
+  - message: "Elves have gained a new innate ability called \u201CMana Control,\u201D\
+      \ which allows them to either passively regenerate mana or passively expend\
+      \ it, depending on the mode"
+    type: Add
+  id: 1099
+  time: '2026-10-02T10:43:01.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/498
+- author: TheShuEd
+  changes:
+  - message: Fixed mugs!
+    type: Fix
+  - message: Fixed carring torso markings.
+    type: Fix
+  - message: Attack with rope now starts roping doAfter
+    type: Fix
+  id: 1100
+  time: '2026-10-02T14:48:09.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/499
+- author: KittyCat432
+  changes:
+  - message: Added 30 new tips along with 23 repurpose from older tips.
+    type: Add
+  id: 1101
+  time: '2026-10-04T12:49:49.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/502
+- author: TheShuEd
+  changes:
+  - message: Diamond ore has been added. It is quite rare. Diamonds are useless on
+      their own, but merchants pay a lot of money for them.
+    type: Add
+  - message: Added a diamond ore core. Infinite. There is only one of these on the
+      entire map. Can only be mined with advanced drills.
+    type: Add
+  - message: "\U0001F48E\U0001F48E\U0001F48E Crystal \U0001F48E\U0001F48E\U0001F48E\
+      \ Punk \U0001F48E\U0001F48E\U0001F48E or \U0001F48EEdge\U0001F48E\U0001F48E\U0001F48E\
+      \U0001F48E"
+    type: Add
+  id: 1102
+  time: '2026-10-06T14:24:35.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/506
+- author: TheShuEd
+  changes:
+  - message: Trading platform mechanics have been removed.
+    type: Remove
+  - message: "The thief's \u201CBlack Market\u201D ability has been removed"
+    type: Remove
+  - message: "The thief's objective has been simplified (and has become less interesting)\u2014\
+      it now requires spending 10 gold coins on any items in the shadow merchants'\
+      \ shop."
+    type: Tweak
+  - message: Gold toys and lock picks are now available at the new store
+    type: Tweak
+  - message: The Shadow Traders' Camp has been added. Vendors set out a random assortment
+      of goods at dawn and close their shops at night.
+    type: Add
+  - message: Fixed a bug that allowed players to pull a mob to disable its movement
+      AI.
+    type: Fix
+  id: 1103
+  time: '2026-10-06T10:44:33.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/504
+- author: TheShuEd
+  changes:
+  - message: Orders for spellbooks and essence orbs have been added to the store.
+      Scientists now have a way to make money.
+    type: Add
+  - message: The guard's revolver's magazine capacity has been increased from 8 to
+      12 rounds
+    type: Tweak
+  - message: "Fixed a bug that prevented players from using a guard's \u201CMilitary\
+      \ Training\u201D ability when they in stamina crit."
+    type: Fix
+  id: 1104
+  time: '2026-10-06T21:48:05.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/507
+- author: TheShuEd
+  changes:
+  - message: "The \u201CInvestigator\u201D role has been added to the Guard Department."
+    type: Add
+  - message: Casting spells leaves traces that are visible when wearing thaumaturgical
+      goggles or an investigator's mask.
+    type: Add
+  - message: Magic focuses have been removed. Spells now require only mana to cast.
+    type: Remove
+  id: 1105
+  time: '2026-10-07T11:54:01.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/508
+- author: TheShuEd
+  changes:
+  - message: Removed infusion altar mechanic.
+    type: Remove
+  - message: ELA moved from infusion recipes to merchant store
+    type: Tweak
+  id: 1106
+  time: '2026-10-08T19:31:04.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/513
+- author: TheShuEd
+  changes:
+  - message: Added brotherhood secret fraction! It includes a vandal, a recruiter,
+      and a thief (the thief was transferred from the city faction). The faction's
+      goal is to protect one another. No one in the brotherhood should die.
+    type: Add
+  - message: 'A new city dweller role has been added: Bounty Hunter. This character,
+      who has a large sum of money at his disposal, must track down and kill all members
+      of the brotherhood.'
+    type: Add
+  - message: Fixed a bug where destroying a body was not counted as a kill
+    type: Fix
+  id: 1107
+  time: '2026-10-07T22:22:45.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/512
+- author: TheShuEd
+  changes:
+  - message: You can now buy 4 Shards of Light and the Book of the Sphere Restoration
+      Ritual at the Caravan of Shadows shop
+    type: Add
+  - message: The pylons, the monolith charge, the hungry nodes, and the entire passive
+      monolith charging system have been removed.
+    type: Remove
+  - message: 'The conditions for the city''s victory have changed: You must purchase
+      4 shards of light and a book, and perform the ritual.'
+    type: Tweak
+  id: 1108
+  time: '2026-10-09T19:46:21.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/515
+- author: TheShuEd
+  changes:
+  - message: 'Added 2 new city secret roles: Priest and Immortal'
+    type: Add
+  - message: Werewolf personal objective is now find and kill Priest.
+    type: Tweak
+  id: 1109
+  time: '2026-10-09T23:09:45.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/516
+- author: TheShuEd
+  changes:
+  - message: Fixed indestructable chests
+    type: Fix
+  - message: Fixed water drawing from puddle
+    type: Fix
+  id: 1110
+  time: '2026-10-10T11:36:40.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/518
+- author: TheShuEd
+  changes:
+  - message: Ghosts now have an innate sense of time to make it easier to watch the
+      round.
+    type: Add
+  - message: "Books of Knowledge for scientists can now be found in the Shadow Traders\u2019\
+      \ caravan."
+    type: Add
+  - message: Birch trees and dead trees have been removed due to licensing issues.
+    type: Remove
+  - message: The number of Brotherhood roles per round has been halved.
+    type: Tweak
+  - message: "Numerous balance adjustments to the merchants\u2019 inventory."
+    type: Tweak
+  - message: Fixed an issue where the radio station could not be destroyed.
+    type: Fix
+  - message: Fixed an issue where logs could not be cut into planks with any sharp
+      weapon.
+    type: Fix
+  id: 1111
+  time: '2026-10-10T17:48:50.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/519
+- author: TheShuEd
+  changes:
+  - message: "The Priest gains a new skill, \u201CResurrection,\u201D which allows\
+      \ them to revive the dead."
+    type: Add
+  - message: The Priest's skill that casts a protective sphere has been removed
+    type: Remove
+  - message: "Ghosts who can still return to their bodies can no longer see other\
+      \ players\u2019 hidden roles. A button has been added allowing them to permanently\
+      \ leave their bodies to view all hidden information about the round."
+    type: Tweak
+  - message: "Fixed an issue where the Guard\u2019s mace attacks did not consume energy."
+    type: Fix
+  id: 1112
+  time: '2026-10-11T14:14:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/521
+- author: TheShuEd
+  changes:
+  - message: Added 20 new wallpaper types.
+    type: Add
+  - message: Fixed bugs with wallpaper rendering
+    type: Fix
+  - message: Improved placing wallpaper workflow
+    type: Tweak
+  id: 1113
+  time: '2026-10-13T09:29:13.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/526
+- author: TheShuEd
+  changes:
+  - message: Added 28 new types of carpets
+    type: Add
+  - message: Large procedurally generated areas shrouded in murk now appear around
+      the game map.
+    type: Add
+  - message: Added the Adventurer and Guildmaster roles.
+    type: Add
+  - message: Added a wristwatch that shows the time remaining until sunset and sunrise.
+    type: Add
+  - message: "Added a new machine, the \u201CMurk Shield Generator.\u201D It creates\
+      \ a portable sphere that protects against murk every dawn. The sphere lasts\
+      \ until sunset."
+    type: Add
+  - message: "The \u201CCreate Light\u201D spell has been removed from academy research."
+    type: Remove
+  - message: Hoverboards has been removed from the academy research. They can now
+      be freely crafted at the engineering table but require diamonds.
+    type: Tweak
+  - message: The duration of the day-night cycle has been increased from 8 to 15 minutes.
+    type: Tweak
+  - message: Fixed a bug that caused flying creatures to sometimes get stuck and be
+      unable to ascend to higher levels.
+    type: Fix
+  id: 1114
+  time: '2026-10-13T10:07:09.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/525
+- author: TheShuEd
+  changes:
+  - message: Engineers' Insulator Armor no longer slows down the wearer.
+    type: Tweak
+  - message: Fixed bugs with cooking where dishes would get stuck food state after
+      spilling the solution.
+    type: Fix
+  - message: Fixed a bug where text written on paper was not visible.
+    type: Fix
+  - message: Fixed a bug that prevented tables from being destroyed.
+    type: Fix
+  - message: Imperial laws have been removed from the game. Anarchy!
+    type: Remove
+  id: 1115
+  time: '2026-10-13T15:38:15.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/527
+- author: TheShuEd
+  changes:
+  - message: Around Shaar, you can now find the Snowy Mountain, Bone Graveyard, and
+      Mushroom Glade subbiomes.
+    type: Add
+  - message: Fly agaric mushrooms have appeared in the murk. They are extremely poisonous.
+      But someone might want to add them to a meal to poison an enemy.
+    type: Add
+  - message: Wall ladders have been added; they can be crafted from planks and nails.
+      They allow you to climb up and down vertically.
+    type: Add
+  id: 1116
+  time: '2026-10-14T17:52:04.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/529
+- author: TheShuEd
+  changes:
+  - message: Shadow Eaters now roam the wilderness around the city.
+    type: Add
+  - message: You can now find ruins containing brass scraps and useful resources in
+      the wilderness around the city.
+    type: Add
+  id: 1117
+  time: '2026-10-14T19:54:43.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/531
+- author: TheShuEd
+  changes:
+  - message: Gold ore and gold ore coreshave been added; these can only be found in
+      the murk.
+    type: Add
+  - message: A merchant quest for 10 gold bars has been added.
+    type: Add
+  id: 1118
+  time: '2026-10-14T21:55:09.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/532
+- author: TheShuEd
+  changes:
+  - message: The Mana Glove has been removed from the Academy's research tree; it
+      can now be selected in the loadout, found in crates, and crafted by Engineers
+      at the start of the round.
+    type: Tweak
+  - message: The Miner Module for the Manipulator Arm has been removed from the Academy's
+      research tree and added to the Brigadier chest as a unique item (one copy only).
+    type: Tweak
+  id: 1119
+  time: '2026-10-15T10:34:23.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/533
+- author: TheShuEd
+  changes:
+  - message: Removed thaumaturgy academy (Rest in peace), and all related content.
+    type: Remove
+  - message: Removed Spell magic trace system.
+    type: Remove
+  id: 1120
+  time: '2026-10-16T16:39:37.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/536
+- author: TheShuEd
+  changes:
+  - message: Added mana gift & mana steal as innate elf abilities.
+    type: Add
+  - message: Voice distortion amulet was added into shop
+    type: Add
+  - message: Removed guard salary.
+    type: Remove
+  id: 1121
+  time: '2026-10-17T09:53:40.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/537
+- author: TheShuEd
+  changes:
+  - message: Added 2 new achievements
+    type: Add
+  - message: Fixed insta death when werewolf fall into chasm.
+    type: Fix
+  - message: Fixed werewolf damage transfering between forms
+    type: Fix
+  id: 1122
+  time: '2026-10-17T12:07:03.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/538
+- author: TheShuEd
+  changes:
+  - message: Removed Tormentor secret role, because too boring
+    type: Remove
+  - message: Shadow traders are now opening their shops at night instead of during
+      the day
+    type: Tweak
+  - message: When you buy items in a store, the purchased items will now attempt to
+      be placed in your inventory, or will visibly scatter on the ground if there
+      is no space in your inventory, instead of appearing unnoticed at your feet.
+    type: Fix
+  - message: The Brotherhood can no longer receive the objective of helping the werewolf
+      achieve his goals.
+    type: Tweak
+  id: 1123
+  time: '2026-10-20T14:47:22.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/544
+- author: TheShuEd
+  changes:
+  - message: Added new "Pharus" map for 0-20 players count.
+    type: Add
+  - message: Shaar map player count is now 20-40.
+    type: Tweak
+  id: 1124
+  time: '2026-10-19T20:54:52.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/542
+- author: TheShuEd
+  changes:
+  - message: Any light source, including wall lamps or lanterns, is now sufficient
+      for plant growth. The rate of plant growth is proportional to the light intensity.
+    type: Tweak
+  - message: Fixed bugs where weather effects could be visible on tiles under roofs
+    type: Fix
+  id: 1125
+  time: '2026-10-21T11:59:04.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/547
+- author: TheShuEd, D1nazewwr, Omsoyk
+  changes:
+  - message: 'Added 2 new dishes from carrot: Carrot garlic salad and carrot petties
+      with cheese! carrot petties is new main quest variation.'
+    type: Add
+  - message: 'D1nazewwr added a set of in-hand sprites for items that are most commonly
+      stolen: wallets, keys, passports, and the like.'
+    type: Add
+  - message: Omsoyk added a 21 clothing items for the tavern roles, full tavern resprite.
+    type: Add
+  - message: Fixed pipe breakage event can break pipes in random generation around
+      city.
+    type: Fix
+  id: 1126
+  time: '2026-10-22T16:05:50.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/549
+- author: TheShuEd
+  changes:
+  - message: The Guard (Army) deparment has been removed from the game
+    type: Remove
+  - message: "A new hidden role, the Sheriff, has been added. It\u2019s not really\
+      \ that \u201Chidden,\u201D though, since the new single Sheriff job is guaranteed\
+      \ to have it. The Sheriff has been tasked with destroying the Nightmare faction."
+    type: Add
+  - message: Sheriff get salary back! 2 gold coin per day.
+    type: Add
+  - message: All ore cores except gold was removed from procedural generation around
+      the city.
+    type: Tweak
+  id: 1127
+  time: '2026-10-22T20:04:21.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/548
+- author: TheShuEd
+  changes:
+  - message: A character's profile now stores their original role if they change it
+      for any reason.
+    type: Add
+  - message: Fixed a bug where recruiting a priest into the Brotherhood caused the
+      game to treat him as dead to the werewolf and indicate that he had completed
+      his objective.
+    type: Fix
+  - message: Bounty hunter now have military training active skill
+    type: Tweak
+  id: 1128
+  time: '2026-10-22T21:48:54.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/550
+- author: TheShuEd
+  changes:
+  - message: Removed vandal secret role!
+    type: Remove
+  - message: Remove radio & loudspeaker system!
+    type: Remove
+  - message: Grid collapsing was enabled on Pharus map!
+    type: Tweak
+  id: 1129
+  time: '2026-10-23T11:55:22.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/553
+- author: TheShuEd
+  changes:
+  - message: Murkwalker role was redesigned into Dark vessel role.
+    type: Tweak
+  id: 1130
+  time: '2026-10-23T15:13:40.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/554
+- author: TheShuEd, D1nazewwr, Vojner
+  changes:
+  - message: Added bunch of new inhands sprites for various items!
+    type: Add
+  - message: Added new alcohol content in shadow traders shop!
+    type: Add
+  id: 1131
+  time: '2026-10-23T16:11:42.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/555
+- author: TheShuEd
+  changes:
+  - message: 'Added new adventurers quest: lumishroom collection.'
+    type: Add
+  - message: Lumishrooms added into game.
+    type: Add
+  - message: 3 new shrooms soup recipe was added.
+    type: Add
+  id: 1132
+  time: '2026-10-23T19:13:36.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/556
+- author: TheShuEd
+  changes:
+  - message: Added "Brotherhood" achievements, brotherhood now locked by default.
+    type: Add
+  - message: Humands now have 30% murk restistance.
+    type: Add
+  - message: Bloodpack price was decreased.
+    type: Tweak
+  id: 1133
+  time: '2026-10-24T12:18:25.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/557
+- author: TheShuEd
+  changes:
+  - message: The Priest now has targets to protect 2 random other players (excluding
+      werewolves and empty vessels)
+    type: Tweak
+  - message: "Shadow Merchants\u2019 pedestals containing quest items are now stocked\
+      \ at the start of the round"
+    type: Tweak
+  - message: "The number of lumishrooms required for the Adventurers\u2019 quest has\
+      \ been reduced from 30 to 15."
+    type: Tweak
+  - message: Fixed bugs where mushrooms would not grow
+    type: Fix
+  - message: Fixed a bug where a target affected by Murk Dissolving was not counted
+      as killed for role objectives
+    type: Fix
+  - message: Fixed a bug where enabling combat mode would disable direction markers
+      for mining glasses
+    type: Fix
+  id: 1134
+  time: '2026-10-24T22:58:19.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/558
+- author: TheShuEd
+  changes:
+  - message: All secret role icons are now visible after round end
+    type: Add
+  - message: Refactored critical mob state, players can now crawl and talk in critical
+      state, but slowly dies from bloodloss.
+    type: Add
+  id: 1135
+  time: '2026-10-25T10:59:15.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/560

@@ -226,9 +226,6 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-internmed
-  - type: GuideHelp
-    guides:
-    - MedicalDoctor
 
 - type: entity
   parent: BaseSecurityPDA
@@ -324,120 +321,15 @@
   - type: Icon
     state: pda-hydro
 
-- type: entity
-  parent: BasePDA
-  id: ClownPDA
-  name: clown PDA
-  description: Looks can be deceiving.
-  components:
-  - type: Pda
-    id: ClownIDCard
-    penSlot:
-      startingItem: CrayonOrange # no pink crayon?!?
-      # ^ Still unacceptable.
-      # ^ I would have to concur.
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-clown
-  - type: PdaBorderColor
-    borderColor: "#C18199"
-  - type: Icon
-    state: pda-clown
-  - type: Slippery # secretly made of bananium
-  - type: StepTrigger
-  - type: CollisionWake
-    enabled: false
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-      slips:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-        hard: false
-        layer:
-          - SlipLayer
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-        density: 5
-        mask:
-        - ItemMask
-
-- type: entity
-  parent: ClownPDA
-  id: VisitorClownPDA
-  suffix: Visitor
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
-
-- type: entity
-  parent: BasePDA
-  id: MimePDA
-  name: mime PDA
-  description: Suprisingly not on mute.
-  components:
-  - type: Pda
-    id: MimeIDCard
-    paiSlot:
-      priority: -2
-      ejectSound: null
-      insertSound: null
-      whitelist:
-        components:
-        - PAI
-    idSlot:
-      name: access-id-card-component-default
-      ejectSound: null # mime is silent
-      insertSound: null
-      whitelist:
-        components:
-        - IdCard
-    penSlot:
-      startingItem: Pen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-      ejectSound: null
-      insertSound: null
-  - type: CartridgeLoader
-    cartridgeSlot:
-      ejectSound: null
-      insertSound: null
-      whitelist:
-        components:
-        - Cartridge
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-mime
-  - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentHColor: "#333333"
-  - type: Icon
-    state: pda-mime
-  - type: Muted # for random sentience event
   - type: EntityTableContainerFill
     containers:
       preinstalled-program-container: !type:AllSelector
         children:
         - id: CrewManifestCartridge
         - id: NewsReaderCartridge
+  - type: PermanentStatusEffects # for random sentience event
+    statusEffects:
+    - TraitStatusEffectMuted
 
 - type: entity
   name: chaplain PDA
@@ -456,17 +348,6 @@
     borderColor: "#333333"
   - type: Icon
     state: pda-chaplain
-
-- type: entity
-  parent: ChaplainPDA
-  id: VisitorChaplainPDA
-  suffix: Visitor
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
 
 - type: entity
   name: quartermaster PDA
@@ -585,17 +466,6 @@
     state: pda-library
 
 - type: entity
-  parent: LibrarianPDA
-  id: VisitorLibrarianPDA
-  suffix: Visitor
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
-
-- type: entity
   parent: BaseSecurityPDA
   id: LawyerPDA
   name: lawyer PDA
@@ -618,17 +488,6 @@
     borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
-
-- type: entity
-  parent: LawyerPDA
-  id: VisitorLawyerPDA
-  suffix: Visitor
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
 
 - type: entity
   parent: BasePDA
@@ -773,20 +632,6 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-medical
-  - type: GuideHelp
-    guides:
-    - MedicalDoctor
-
-- type: entity
-  parent: MedicalPDA
-  id: VisitorMedicalPDA
-  suffix: Visitor
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1033,17 +878,6 @@
     bank: 100 # Defined in space-station-14.sf2
 
 - type: entity
-  parent: MusicianPDA
-  id: VisitorMusicianPDA
-  suffix: Visitor
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
-
-- type: entity
   parent: BasePDA
   id: AtmosPDA
   name: atmos PDA
@@ -1061,34 +895,6 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-atmos
-
-- type: entity
-  parent: BasePDA
-  id: ClearPDA
-  name: clear PDA
-  description: 99 and 44/100ths percent pure plastic.
-  components:
-  - type: Pda
-    id: PassengerIDCard
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-clear
-  - type: PdaBorderColor
-    borderColor: "#288e4d"
-  - type: Icon
-    state: pda-clear
-
-- type: entity
-  parent: ClearPDA
-  id: VisitorPDA
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener
 
 - type: entity
   parent: [ BasePDA, BaseSyndicateContraband ]
@@ -1286,6 +1092,25 @@
 
 - type: entity
   parent: BasePDA
+  id: TramDriverPDA
+  name: tram driver PDA
+  description: A serious driver will always arrive on time.
+  components:
+  - type: Pda
+    id: TramDriverIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-tramdriver
+  - type: PdaBorderColor
+    borderColor: "#454a50"
+    accentVColor: "#ffc500"
+  - type: Icon
+    state: pda-tramdriver
+
+- type: entity
+  parent: BasePDA
   id: ReporterPDA
   name: reporter PDA
   description: Smells like freshly printed press.
@@ -1307,43 +1132,6 @@
     borderColor: "#3f3f74"
   - type: Icon
     state: pda-reporter
-
-- type: entity
-  parent: BasePDA
-  id: ZookeeperPDA
-  name: zookeeper PDA
-  description: Made with genuine synthetic leather. Crikey!
-  components:
-  - type: Pda
-    id: ZookeeperIDCard
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-zookeeper
-  - type: PdaBorderColor
-    borderColor: "#ffe685"
-  - type: Icon
-    state: pda-zookeeper
-
-- type: entity
-  parent: BasePDA
-  id: BoxerPDA
-  name: boxer PDA
-  description: Float like a butterfly, ringtone like a bee.
-  components:
-  - type: Pda
-    id: BoxerIDCard
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-boxer
-  - type: PdaBorderColor
-    borderColor: "#333333"
-    accentVColor: "#390504"
-  - type: Icon
-    state: pda-boxer
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1372,63 +1160,6 @@
         - id: NewsReaderCartridge
         - id: WantedListCartridge
         - id: LogProbeCartridge
-
-- type: entity
-  parent: BaseMedicalPDA
-  id: BrigmedicPDA
-  name: brigmedic PDA
-  description: I wonder whose pulse is on the screen? I hope it doesn't stop...
-  components:
-  - type: Pda
-    id: BrigmedicIDCard
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-brigmedic
-  - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#d7d7d0"
-    accentVColor: "#d7d7d0"
-  - type: Icon
-    state: pda-brigmedic
-  - type: EntityTableContainerFill
-    containers:
-      preinstalled-program-container: !type:AllSelector
-        children:
-        - id: CrewManifestCartridge
-        - id: NotekeeperCartridge
-        - id: NanoTaskCartridge
-        - id: NewsReaderCartridge
-        - id: WantedListCartridge
-        - id: MedTekCartridge
-
-- type: entity
-  parent: ClownPDA
-  id: CluwnePDA
-  name: cluwne PDA
-  suffix: Unremoveable
-  description: Cursed cluwne PDA.
-  components:
-  - type: Pda
-    id: CluwneIDCard
-    penSlot:
-      startingItem: CrayonGreen
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-cluwne
-  - type: PdaBorderColor
-    borderColor: "#1c8f4d"
-  - type: Icon
-    state: pda-cluwne
-  - type: Unremoveable
 
 - type: entity
   parent: BasePDA
@@ -1621,14 +1352,3 @@
     borderColor: "#7F3300"
   - type: Icon
     state: pda-wizard
-
-- type: entity
-  parent: ClearPDA
-  id: ScurretPDA
-  description: A temporary PDA granted to scurret temps. Doesn't do much. Wawa!
-  components:
-  - type: Pda
-    id: VisitorIDCard
-  - type: Tag #  Ignore Chameleon tags
-    tags:
-    - DoorBumpOpener

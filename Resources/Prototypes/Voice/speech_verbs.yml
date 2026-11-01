@@ -103,27 +103,12 @@
   - chat-speech-verb-plant-3
 
 - type: speechVerb
-  id: Canine
-  name: chat-speech-verb-name-canine
-  speechVerbStrings:
-  - chat-speech-verb-canine-1
-  - chat-speech-verb-canine-2
-  - chat-speech-verb-canine-3
-
-- type: speechVerb
   id: Goat
   name: chat-speech-verb-name-goat
   speechVerbStrings:
   - chat-speech-verb-goat-1
   - chat-speech-verb-goat-2
   - chat-speech-verb-goat-3
-
-- type: speechVerb
-  id: Sheep
-  name: chat-speech-verb-name-sheep
-  speechVerbStrings:
-  - chat-speech-verb-sheep-1
-  - chat-speech-verb-sheep-2
 
 - type: speechVerb
   id: LargeMob
@@ -147,22 +132,6 @@
   - chat-speech-verb-monkey-2
 
 - type: speechVerb
-  id: Parrot
-  name: chat-speech-verb-name-parrot
-  speechVerbStrings:
-  - chat-speech-verb-parrot-1
-  - chat-speech-verb-parrot-2
-  - chat-speech-verb-parrot-3
-
-- type: speechVerb
-  id: Cluwne
-  name: chat-speech-verb-name-cluwne
-  speechVerbStrings:
-  - chat-speech-verb-cluwne-1
-  - chat-speech-verb-cluwne-2
-  - chat-speech-verb-cluwne-3
-
-- type: speechVerb
   id: Ghost
   name: chat-speech-verb-name-ghost
   speechVerbStrings:
@@ -171,14 +140,6 @@
   - chat-speech-verb-ghost-3
   - chat-speech-verb-ghost-4
   - chat-speech-verb-mumble
-
-- type: speechVerb
-  id: Electricity
-  name: chat-speech-verb-name-electricity
-  speechVerbStrings:
-  - chat-speech-verb-electricity-1
-  - chat-speech-verb-electricity-2
-  - chat-speech-verb-electricity-3
 
 - type: speechVerb
   id: Vulpkanin

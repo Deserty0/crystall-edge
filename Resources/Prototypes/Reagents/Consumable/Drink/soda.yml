@@ -16,41 +16,13 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
         time: 1
         type: Remove
-
-- type: reagent
-  id: RoyRogers
-  name: reagent-name-roy-rogers
-  parent: BaseSoda
-  desc: reagent-desc-roy-rogers
-  physicalDesc: reagent-physical-desc-sweet
-  flavor: cola
-  color: "#262019"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/royrogers.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 4
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  metabolisms:
-    Digestion:
-      effects:
-      - !type:SatiateThirst
-        factor: 4
-
-- type: reagent
-  id: ChangelingSting
-  name: reagent-name-changeling-sting
-  parent: BaseSoda
-  desc: reagent-desc-changeling-sting
-  physicalDesc: reagent-physical-desc-fizzy
-  flavor: soda
-  color: "#2E6671"
 
 - type: reagent
   id: DrGibb
@@ -80,7 +52,8 @@
       metabolites:
         Theobromine: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
@@ -158,22 +131,6 @@
   metamorphicChangeColor: false
 
 - type: reagent
-  id: RootBeerFloat
-  name: reagent-name-root-beer-float
-  parent: BaseSoda
-  desc: reagent-desc-root-beer-float
-  physicalDesc: reagent-physical-desc-fizzy-and-creamy
-  flavor: rootbeerfloat
-  color: "#4f361f"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 7
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  fizziness: 0.4
-
-- type: reagent
   id: SolDry
   name: reagent-name-sol-dry
   parent: BaseSoda
@@ -187,26 +144,6 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
-
-- type: reagent
-  id: ShirleyTemple
-  name: reagent-name-shirley-temple
-  parent: BaseSoda
-  desc: reagent-desc-shirley-temple
-  physicalDesc: reagent-physical-desc-fizzy
-  flavor: sweet
-  color: "#af2221"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/shirleytemple.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 4
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  metabolisms:
-    Digestion:
-      effects:
-      - !type:SatiateThirst
-        factor: 4
 
 - type: reagent
   id: SpaceMountainWind
@@ -266,7 +203,8 @@
       metabolites:
         Theobromine: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
       - !type:HealthChange
         conditions:

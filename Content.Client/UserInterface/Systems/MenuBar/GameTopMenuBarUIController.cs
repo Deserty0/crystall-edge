@@ -1,8 +1,7 @@
-using Content.Client._CE.Skill.Ui;
+using Content.Client._CE.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Admin;
 using Content.Client.UserInterface.Systems.Bwoink;
-using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Crafting;
 using Content.Client.UserInterface.Systems.Emotes;
 using Content.Client.UserInterface.Systems.EscapeMenu;
@@ -18,14 +17,13 @@ public sealed partial class GameTopMenuBarUIController : UIController
 {
     [Dependency] private EscapeUIController _escape = default!;
     [Dependency] private AdminUIController _admin = default!;
-    [Dependency] private CharacterUIController _character = default!;
+    [Dependency] private CECharacterUIController _character = default!; //CrystallEdge: standard character menu replaced with our own
     [Dependency] private CraftingUIController _crafting = default!;
     [Dependency] private AHelpUIController _ahelp = default!;
     [Dependency] private ActionUIController _action = default!;
     [Dependency] private SandboxUIController _sandbox = default!;
     [Dependency] private GuidebookUIController _guidebook = default!;
     [Dependency] private EmotesUIController _emotes = default!;
-    [Dependency] private CESkillUIController _skill = default!; //CrystallEdge
 
     private GameTopMenuBar? GameTopMenuBar => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>();
 
@@ -49,7 +47,6 @@ public sealed partial class GameTopMenuBarUIController : UIController
         _action.UnloadButton();
         _sandbox.UnloadButton();
         _emotes.UnloadButton();
-        _skill.UnloadButton(); //CrystallEdge
     }
 
     public void LoadButtons()
@@ -63,6 +60,5 @@ public sealed partial class GameTopMenuBarUIController : UIController
         _action.LoadButton();
         _sandbox.LoadButton();
         _emotes.LoadButton();
-        _skill.LoadButton(); //CrystallEdge
     }
 }

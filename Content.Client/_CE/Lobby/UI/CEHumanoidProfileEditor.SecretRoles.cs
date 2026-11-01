@@ -1,0 +1,167 @@
+using System.Linq;
+using System.Numerics;
+using Content.Client._CE.Lobby.UI.Roles;
+using Content.Shared._CE.Roles;
+using Content.Shared.Preferences;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+
+namespace Content.Client._CE.Lobby.UI;
+
+public sealed partial class CEHumanoidProfileEditor
+{
+    private List<(string, CERequirementsSelector)> _secretRolePriorities = new();
+
+    /// <summary>
+    /// Updates selected secret role priorities to the profile's.
+    /// </summary>
+    private void UpdateSecretRolePriorities()
+    {
+        foreach (var (roleId, prioritySelector) in _secretRolePriorities)
+        {
+            var priority = Profile?.SecretRolePriorities.GetValueOrDefault(roleId, JobPriority.Low) ?? JobPriority.Low;
+            prioritySelector.Select((int)priority);
+        }
+    }
+
+    /// <summary>
+    /// Refreshes all secret role selectors.
+    /// </summary>
+    public void RefreshSecretRoles()
+    {
+        SecretRoleList.RemoveAllChildren();
+        _secretRolePriorities.Clear();
+        var firstCategory = true;
+
+        var departments = _prototypeManager.EnumeratePrototypes<CESecretDepartmentPrototype>().ToList();
+        departments.Sort((a, b) =>
+        {
+            var cmp = -a.Weight.CompareTo(b.Weight);
+            return cmp != 0 ? cmp : string.Compare(a.ID, b.ID, StringComparison.Ordinal);
+        });
+
+        var items = new[]
+        {
+            ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
+            ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
+            ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
+        };
+
+        foreach (var department in departments)
+        {
+            var roles = department.Roles
+                .Select(roleId => _prototypeManager.TryIndex(roleId, out var role) ? role : null)
+                .Where(role => role is { SetPreference: true })
+                .Select(role => role!)
+                .ToArray();
+
+            // No header for a department without any selectable role
+            if (roles.Length == 0)
+                continue;
+
+            var departmentName = Loc.GetString(department.Name);
+
+            var category = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Name = department.ID,
+            };
+
+            if (firstCategory)
+            {
+                firstCategory = false;
+            }
+            else
+            {
+                category.AddChild(new Control
+                {
+                    MinSize = new Vector2(0, 23),
+                });
+            }
+
+            // The header itself has to catch the hover - the category container ignores the mouse.
+            category.AddChild(new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#464966") },
+                MouseFilter = MouseFilterMode.Stop,
+                ToolTip = Loc.GetString(department.Description),
+                Children =
+                {
+                    new Label
+                    {
+                        Text = departmentName,
+                        HorizontalAlignment = HAlignment.Center,
+                        HorizontalExpand = true,
+                    }
+                }
+            });
+
+            SecretRoleList.AddChild(category);
+
+            foreach (var role in roles)
+            {
+                var roleContainer = new BoxContainer()
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    HorizontalExpand = true,
+                };
+
+                var selector = new CERequirementsSelector()
+                {
+                    Margin = new Thickness(3f, 3f, 3f, 0f),
+                    HorizontalExpand = true,
+                };
+
+                var icon = new TextureRect
+                {
+                    TextureScale = new Vector2(2, 2),
+                    VerticalAlignment = VAlignment.Center
+                };
+                var roleIcon = _prototypeManager.Index(role.Icon);
+                icon.Texture = _sprite.Frame0(roleIcon.Icon);
+                selector.Setup(items, role.LocalizedName, 90, role.LocalizedDescription, icon);
+
+                if (!_requirements.IsAllowed(role, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                {
+                    selector.LockRequirements(reason);
+                }
+                else
+                {
+                    selector.UnlockRequirements();
+                }
+
+                selector.OnSelected += selectedPrio =>
+                {
+                    var selectedRolePrio = (JobPriority)selectedPrio;
+                    Profile = Profile?.WithSecretRolePriority(role.ID, selectedRolePrio);
+
+                    foreach (var (otherId, other) in _secretRolePriorities)
+                    {
+                        if (otherId == role.ID)
+                        {
+                            other.Select(selectedPrio);
+                            continue;
+                        }
+
+                        if (selectedRolePrio != JobPriority.High || (JobPriority)other.Selected != JobPriority.High)
+                            continue;
+
+                        // Lower any other high priorities to medium.
+                        other.Select((int)JobPriority.Medium);
+                        Profile = Profile?.WithSecretRolePriority(otherId, JobPriority.Medium);
+                    }
+
+                    UpdateSecretRolePriorities();
+                    SetDirty();
+                };
+
+                _secretRolePriorities.Add((role.ID, selector));
+                roleContainer.AddChild(selector);
+                category.AddChild(roleContainer);
+            }
+        }
+
+        UpdateSecretRolePriorities();
+    }
+}

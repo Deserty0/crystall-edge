@@ -1,0 +1,130 @@
+using Content.Client.Graphics;
+using Content.Shared._CE.Murk.Components;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Player;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+
+namespace Content.Client._CE.Murk;
+
+public sealed partial class CEMurkDissolvingSystem : EntitySystem
+{
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
+
+    private static readonly ProtoId<ShaderPrototype> Shader = "CEMurkDissolving";
+
+    // Below this Dissolved level the visual effect is fully off; at or above the second value it's at full strength.
+    private const float EffectStart = 0.2f;
+    private const float EffectEnd = 0.8f;
+
+    private CEMurkDissolvingOverlay? _overlay;
+
+    [SubscribeLocalEvent]
+    private void OnStartup(Entity<CEMurkDissolvingStatusComponent> ent, ref ComponentStartup args)
+    {
+        UpdateShader(ent);
+
+        if (ent.Owner == _player.LocalEntity)
+            AddOverlay();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<CEMurkDissolvingStatusComponent> ent, ref ComponentShutdown args)
+    {
+        if (!Terminating(ent))
+            SetShader(ent.Owner, false);
+
+        if (ent.Owner == _player.LocalEntity)
+            RemoveOverlay();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlayerAttached(LocalPlayerAttachedEvent args)
+    {
+        if (HasComp<CEMurkDissolvingStatusComponent>(args.Entity))
+            AddOverlay();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlayerDetached(LocalPlayerDetachedEvent args)
+    {
+        RemoveOverlay();
+    }
+
+    private void AddOverlay()
+    {
+        if (_overlay != null)
+            return;
+
+        _overlay = new CEMurkDissolvingOverlay();
+        _overlayMan.AddOverlay(_overlay);
+    }
+
+    private void RemoveOverlay()
+    {
+        if (_overlay == null)
+            return;
+
+        _overlayMan.RemoveOverlay(_overlay);
+        _overlay = null;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHandleState(Entity<CEMurkDissolvingStatusComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        // The initial state arrives before the sprite is initialized; OnStartup sets the shader then.
+        if (ent.Comp.LifeStage < ComponentLifeStage.Running)
+            return;
+
+        UpdateShader(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBeforeShaderPost(Entity<CEMurkDissolvingStatusComponent> ent, ref BeforePostShaderRenderEvent args)
+    {
+        if (args.Id != ContentPostShaderIds.CEMurkDissolving)
+            return;
+
+        args.Shader.SetParameter("dissolve", GetEffectStrength(ent.Comp.Dissolved));
+    }
+
+    private static float GetEffectStrength(float dissolved)
+    {
+        return Math.Clamp((dissolved - EffectStart) / (EffectEnd - EffectStart), 0f, 1f);
+    }
+
+    private void UpdateShader(Entity<CEMurkDissolvingStatusComponent> ent)
+    {
+        SetShader(ent.Owner, ent.Comp.ShaderEnabled && GetEffectStrength(ent.Comp.Dissolved) > 0f);
+    }
+
+    private void SetShader(Entity<SpriteComponent?> entity, bool enabled)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        var hasShader = _sprite.TryGetPostShader(entity.Comp, ContentPostShaderIds.CEMurkDissolving, out var existing);
+
+        if (enabled)
+        {
+            if (hasShader)
+                return;
+
+            // Per-entity instance: sprite draws are queued and read params at flush time, so a shared instance would leak one entity's "dissolve" onto others.
+            var shader = ProtoMan.Index(Shader).InstanceUnique();
+            _sprite.SetPostShader(entity.Comp, new SpriteComponent.PostShaderArgs(ContentPostShaderIds.CEMurkDissolving, shader)
+            {
+                RaiseShaderEvent = true,
+                After = ContentPostShaderIds.AfterBaseEffects,
+            });
+        }
+        else if (hasShader)
+        {
+            _sprite.RemovePostShader(entity.Comp, ContentPostShaderIds.CEMurkDissolving);
+            existing.Shader.Dispose();
+        }
+    }
+}

@@ -54,6 +54,11 @@
         Quantity: 1.25
   - type: Item
     size: Tiny
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+      right:
+      - state: paper-inhand-right
   - type: PhysicalComposition
 
 - type: entity
@@ -87,22 +92,6 @@
   - type: StationAiWhitelist
 
 - type: entity
-  name: paper scrap
-  parent: BasePaper
-  id: PaperScrap
-  description: 'A crumpled up piece of white paper.'
-  components:
-  - type: Tag
-    tags:
-    - Document
-    - Trash
-    - Paper
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: scrap
-
-- type: entity
   name: office paper
   parent: Paper
   id: PaperOffice
@@ -113,59 +102,6 @@
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
-
-- type: entity
-  name: artifact analyzer printout
-  parent: Paper
-  id: PaperArtifactAnalyzer
-  description: The readout of a device forgotten to time.
-  components:
-  - type: Sprite
-    layers:
-    - state: paper_dotmatrix
-    - state: paper_dotmatrix_words
-      map: ["enum.PaperVisualLayers.Writing"]
-      visible: false
-    - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
-      visible: false
-  - type: PaperVisuals
-    headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 16.0
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
-    backgroundImageTile: true
-    backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
-    contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
-    contentImageNumLines: 2
-    contentMargin: 16.0, 16.0, 16.0, 0.0
-    # Make this a wide dot-matrix printer
-    maxWritableArea: 400.0, 0.0
-
-- type: entity
-  name: captain's thoughts
-  parent: Paper
-  id: PaperCaptainsThoughts
-  description: "A page of the captain's journal. In luxurious lavender."
-  components:
-  - type: Sprite
-    layers:
-    - state: paper
-      color: "#e6e6fa"
-    - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
-      color: "#e6e6fa"
-      visible: false
-    - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
-      visible: false
-  - type: PaperLabelType
-    paperType: CaptainsPaper
-  - type: PaperVisuals
-    headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundModulate: "#e6e6fa"
-    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
-    contentMargin: 32.0, 16.0, 32.0, 0.0
 
 - type: entity
   name: cargo invoice
@@ -199,7 +135,15 @@
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
-    headerMargin: 0.0, 12.0, 0.0, 0.0
+    headerMargin: 0.0, 0.0, 0.0, 12.0
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#9ef5ff"
+      right:
+      - state: paper-inhand-right
+        color: "#9ef5ff"
 
 - type: entity
   id: PaperNanoTaskItem
@@ -228,7 +172,7 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_nanotask.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 6.0
+    headerMargin: 0.0, 6.0, 0.0, 0.0
     backgroundImageTile: true
     backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
     contentMargin: 12.0, 0.0, 12.0, 0.0
@@ -267,14 +211,18 @@
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
-    headerMargin: 0.0, 12.0, 0.0, 0.0
+    headerMargin: 0.0, 0.0, 0.0, 12.0
   - type: CargoBountyLabel
   - type: StaticPrice
     price: 0
-  - type: GuideHelp
-    guides:
-    - CargoBounties
-    - Cargo
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#f7e574"
+      right:
+      - state: paper-inhand-right
+        color: "#f7e574"
 
 - type: entity
   id: PaperSalvageJobLabel
@@ -310,60 +258,14 @@
   - type: JobBoardLabel
   - type: StaticPrice #infinitely printable
     price: 0
-
-- type: entity
-  name: character sheet
-  parent: Paper
-  id: PaperCNCSheet # legally gray zone of using "D&D" and "DND"
-  description: 'A sheet for your Carps and Crypts characters.'
-  components:
-  - type: Paper
-    contentSize: 10000
-    content: book-cnc-sheet
-  - type: Sprite
-    layers:
-      - state: paper
-        color: "#cccccc"
-      - state: paper_words
-        map: ["enum.PaperVisualLayers.Writing"]
-        color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
-        visible: false
-      - state: paper_stamp-generic
-        map: ["enum.PaperVisualLayers.Stamp"]
-        visible: false
-  - type: PaperVisuals
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#cccccc"
-    contentImageModulate: "#cccccc"
-    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
-    contentMargin: 16.0, 16.0, 16.0, 16.0
-
-- type: entity
-  parent: Paper
-  id: PaperWritten
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    layers:
-    # Changing it here is fine - if the PaperStatus key is actually added,
-    #  something happened, so that ought to override this either way.
-    - state: paper_words
-
-- type: entity
-  parent: Paper
-  id: NukeCodePaper
-  name: nuclear authentication codes
-  components:
-  - type: NukeCodePaper
-    allNukesAvailable: true
-
-- type: entity
-  parent: NukeCodePaper
-  id: NukeCodePaperStation
-  suffix: Station Only
-  components:
-  - type: NukeCodePaper
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#f7e574"
+      right:
+      - state: paper-inhand-right
+        color: "#f7e574"
 
 - type: entity
   parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
@@ -373,17 +275,6 @@
   categories: [ DoNotMap ]
   components:
   - type: TraitorCodePaper
-
-- type: entity
-  parent: [Paper, BaseSyndicateContraband]
-  id: AllTraitorCodesPaper
-  name: syndicate codewords registry
-  description: A registry of all active Syndicate codewords.
-  suffix: Admeme
-  components:
-  - type: TraitorCodePaper
-    fakeCodewords: false
-    codewordShowAll: true
 
 - type: entity
   name: envelope
@@ -436,6 +327,11 @@
         type: PaperBoundUserInterface
   - type: Item
     size: Tiny
+    inhandVisuals:
+      left:
+      - state: envelope-inhand-left
+      right:
+      - state: envelope-inhand-right
   - type: Tag
     tags:
     - Trash

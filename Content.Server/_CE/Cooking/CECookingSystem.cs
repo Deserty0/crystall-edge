@@ -7,22 +7,14 @@ using System.Linq;
 using Content.Server.Temperature.Systems;
 using Content.Shared._CE.Cooking;
 using Content.Shared._CE.Cooking.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Temperature;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server._CE.Cooking;
 
 public sealed partial class CECookingSystem : CESharedCookingSystem
 {
     [Dependency] private TemperatureSystem _temperature = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CEFoodCookerComponent, OnTemperatureChangeEvent>(OnCookerTemperatureChange);
-        SubscribeLocalEvent<CETemperatureTransformationComponent, OnTemperatureChangeEvent>(OnTemperatureChanged);
-    }
 
     public override void Update(float frameTime)
     {
@@ -37,7 +29,8 @@ public sealed partial class CECookingSystem : CESharedCookingSystem
         }
     }
 
-    private void OnCookerTemperatureChange(Entity<CEFoodCookerComponent> ent, ref OnTemperatureChangeEvent args)
+    [SubscribeLocalEvent]
+    private void OnCookerTemperatureChange(Entity<CEFoodCookerComponent> ent, ref TemperatureChangedEvent args)
     {
         if (args.TemperatureDelta <= 0)
             return;
@@ -67,8 +60,9 @@ public sealed partial class CECookingSystem : CESharedCookingSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnTemperatureChanged(Entity<CETemperatureTransformationComponent> start,
-        ref OnTemperatureChangeEvent args)
+        ref TemperatureChangedEvent args)
     {
         foreach (var entry in start.Comp.Entries)
         {
@@ -84,17 +78,6 @@ public sealed partial class CECookingSystem : CESharedCookingSystem
 
             break;
         }
-    }
-
-    protected override void OnCookBurned(Entity<CEFoodCookerComponent> ent, ref CEBurningDoAfter args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        base.OnCookBurned(ent, ref args);
-
-        //if (_random.Prob(ent.Comp.BurntAdditionalSpawnProb))
-        //    Spawn(ent.Comp.BurntAdditionalSpawn, Transform(ent).Coordinates);
     }
 
     protected override void OnCookFinished(Entity<CEFoodCookerComponent> ent, ref CECookingDoAfter args)
@@ -128,8 +111,12 @@ public sealed partial class CECookingSystem : CESharedCookingSystem
 
             var entry = transformable.Entries[0];
 
+            if (!TryComp<TemperatureComponent>(contained, out var tempComp))
+                continue;
+
             var newTemp = (entry.TemperatureRange.X + entry.TemperatureRange.Y) / 2;
-            _temperature.ForceChangeTemperature(contained, newTemp);
+            var heatAmount = (newTemp - tempComp.Temperature) * tempComp.HeatCapacity;
+            _temperature.ChangeHeat(contained, heatAmount, ignoreHeatResistance: true);
         }
     }
 }

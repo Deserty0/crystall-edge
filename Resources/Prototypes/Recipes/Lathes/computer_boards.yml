@@ -9,13 +9,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseMedicalComputerRecipeCategory
-  categories:
-  - Computers
-  - Medical
-
-- type: latheRecipe
-  abstract: true
   id: BaseResearchComputerRecipeCategory
   categories:
   - Computers
@@ -59,16 +52,15 @@
 
 # Medical
 
-# Science
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
-  id: AnalysisComputerCircuitboard
-  result: AnalysisComputerCircuitboard
-
 - type: latheRecipe
   parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
   id: TechDiskComputerCircuitboard
   result: TechDiskComputerCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
+  id: StationTeleportersControlCircuitboard
+  result: StationTeleportersControlCircuitboard
 
 # Cameras
 - type: latheRecipe

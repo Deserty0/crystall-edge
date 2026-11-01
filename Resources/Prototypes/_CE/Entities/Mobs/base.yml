@@ -4,11 +4,11 @@
   parent:
   - BaseMob
   - CEMobDamageable
-  - CEMobTemperature
   id: CEMobSimple
   save: false
   abstract: true
   components:
+  - type: Climbing
   - type: CanMoveInAir
   - type: CEAnimationController
   - type: CEIdleAnimation
@@ -56,6 +56,7 @@
   - type: Damageable
   - type: Injurable
     damageContainer: CEBiological
+  - type: DamageOverlay
   - type: Destructible
     thresholds:
     - trigger:
@@ -111,19 +112,62 @@
       path: /Audio/Effects/hit_kick.ogg
   - type: Pullable
 
-# Used for mobs that need to breathe
 - type: entity
   save: false
-  id: CEMobRespirator
+  id: CEMobMurkDissolving
+  categories: [ ForkFiltered ]
   abstract: true
   components:
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
+  - type: CEMurkDissolvingSlowdown
+  - type: CEMurkDissolvingAccent
+  - type: CEMurkDissolving
+    conversionRemoveComponents:
+    - type: Damageable
+    - type: SSDIndicator
+    - type: MobCollision
+    - type: CEMurkDissolvingAccent
+    conversionComponents:
+    - type: CEGOAP
+      behaviors:
+      - MurkSoulChatter
+      - Explorer
+    - type: CEGOAPEyesPerceptor
+      visionRadius: 8
+      components:
+      - type: NpcFactionMember
+      - type: CEMurkedSoulSpeech
+    - type: ActiveListener
+      range: 12
+    - type: CEMurkedSoulSpeech
+    - type: CEMurkedSoulSpeechAccent
+
+- type: entity
+  id: CEMobCombat
+  abstract: true
+  categories: [ ForkFiltered ]
+  components:
+  - type: CombatMode
+  - type: CEWeapon
+    range: 0.4
+    effectSlots:
+      OnHit:
+      - !type:WeaponArcAttack
+        arcWidth: 40
+        effects:
+        - !type:Damage
+          damage:
+            types:
+              Blunt: 4
+    animations:
+      Primary:
+      - anim: Punch1
+      - anim: Punch2
+      Secondary:
+      - anim: Kick
+  - type: CEWeaponStaminaCost
+    costs:
+      Primary: 10
+      Secondary: 20
 
 - type: entity
   id: CEMobMagical
@@ -137,34 +181,3 @@
   - type: CEEnergyRadiationRegeneration
   - type: CEEnergyOverchargeDamage
   - type: CEEnergyDeficitDamage
-
-- type: entity
-  id: CEMobTemperature
-  abstract: true
-  categories: [ ForkFiltered ]
-  components:
-  - type: ThermalRegulator
-    metabolismHeat: 800
-    radiatedHeat: 100
-    implicitHeatRegulation: 250
-    sweatHeatRegulation: 500
-    shiveringHeatRegulation: 500
-    normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 2
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
-  - type: TemperatureDamage
-    heatDamageThreshold: 325
-    coldDamageThreshold: 260
-    coldDamage:
-      types:
-        Cold: 1 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat: 1.5 #per second, scales with temperature & other constants
-  - type: TemperatureSpeed
-    thresholds:
-      293: 0.8
-      280: 0.6
-      260: 0.4

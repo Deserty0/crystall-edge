@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
+using Robust.Shared.Analyzers;
 using Content.Shared._CE.Animation.Core;
 using Content.Shared._CE.Animation.Item.Components;
 using Content.Shared._CE.EntityEffect;
@@ -9,10 +11,12 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -32,22 +36,11 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
     [Dependency] protected IPrototypeManager _proto = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedStealthSystem _stealth = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     [Dependency] private EntityQuery<StealthComponent> _stealthQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        InitializeCosts();
-
-        SubscribeAllEvent<CEWeaponUseEvent>(OnClientAttackRequest);
-        SubscribeAllEvent<CEStopWeaponUseEvent>(OnClientStopRequest);
-        SubscribeAllEvent<CEWeaponArcHitEvent>(OnArcHitEvent);
-
-        SubscribeLocalEvent<CEWieldedWeaponComponent, CEGetWeaponAnimationsEvent>(OnGetWeaponAnimation);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetWeaponAnimation(Entity<CEWieldedWeaponComponent> ent, ref CEGetWeaponAnimationsEvent args)
     {
         if (args.Handled)
@@ -66,6 +59,25 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Overrides attack animations while the weapon's <see cref="ItemToggleComponent"/> is activated.
+    /// Deliberately ignores <see cref="CEGetWeaponAnimationsEvent.Handled"/> (and doesn't set it early-return
+    /// friendly) so it always wins over <see cref="OnGetWeaponAnimation"/> regardless of subscription order.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnGetToggledWeaponAnimation(Entity<CEToggledWeaponAnimationComponent> ent, ref CEGetWeaponAnimationsEvent args)
+    {
+        if (!TryComp<ItemToggleComponent>(ent, out var toggle) || !toggle.Activated)
+            return;
+
+        if (!ent.Comp.Animations.TryGetValue(args.UseType, out var animations))
+            return;
+
+        args.Animations = animations;
+        args.Handled = true;
+    }
+
+    [EventSubscription]
     private void OnClientAttackRequest(CEWeaponUseEvent ev, EntitySessionEventArgs args)
     {
         if (Timing.ApplyingState)
@@ -78,9 +90,14 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
             weapon.Value.Owner != GetEntity(ev.Weapon))
             return;
 
-        TryUse(user, weapon.Value, ev.UseType, ev.Angle);
+        EntityUid? cursorTarget = null;
+        if (ev.CursorTarget is { } netTarget && TryGetEntity(netTarget, out var target))
+            cursorTarget = target;
+
+        TryUse(user, weapon.Value, ev.UseType, ev.Angle, cursorTarget);
     }
 
+    [EventSubscription]
     private void OnClientStopRequest(CEStopWeaponUseEvent ev, EntitySessionEventArgs args)
     {
         var user = args.SenderSession.AttachedEntity;
@@ -99,6 +116,7 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
         DirtyField(weapon.Value.Owner, weapon.Value.Comp, nameof(CEWeaponComponent.Using));
     }
 
+    [EventSubscription]
     private void OnArcHitEvent(CEWeaponArcHitEvent ev, EntitySessionEventArgs args)
     {
         if (Timing.ApplyingState)
@@ -174,7 +192,8 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
         EntityUid user,
         Entity<CEWeaponComponent> used,
         CEUseType useType,
-        Angle angle)
+        Angle angle,
+        EntityUid? cursorTarget = null)
     {
         var curTime = Timing.CurTime;
 
@@ -217,6 +236,10 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
 
         var animationProtoId = entry.Anim;
 
+        // Set before the animation starts, its arc effects read them.
+        used.Comp.CursorTarget = cursorTarget;
+        used.Comp.AttackAngle = angle;
+
         var animationSpeed = GetAnimationSpeed(user, used) * entry.Speed;
         if (!_animationAction.TryPlayAnimationToAngle(user, animationProtoId, angle, used.Owner, animationSpeed))
             return false;
@@ -237,6 +260,43 @@ public abstract partial class CESharedWeaponSystem : EntitySystem
         Dirty(used);
 
         return true;
+    }
+
+    /// <summary>
+    /// Whether a target at <paramref name="targetPos"/> lies inside an arc fanned around <paramref name="direction"/>.
+    /// The target is a body, not a point, so the arc is widened by the angle half a tile subtends at its distance.
+    /// </summary>
+    public static bool IsInArc(Vector2 origin, Vector2 targetPos, Angle direction, float arcWidthDeg)
+    {
+        var delta = targetPos - origin;
+        var distance = delta.Length();
+        if (distance <= 0.5f)
+            return true;
+
+        var halfArc = arcWidthDeg * MathF.PI / 360f + MathF.Atan(0.5f / distance);
+        var diff = Angle.ShortestDistance(new Angle(delta), direction);
+        return Math.Abs(diff.Theta) <= halfArc;
+    }
+
+    /// <summary>
+    /// The outermost container holding <paramref name="user"/> - the only thing it can hit from inside.
+    /// </summary>
+    public bool TryGetAttackerContainer(EntityUid user, out EntityUid container)
+    {
+        container = default;
+        if (!_container.TryGetOuterContainer(user, Transform(user), out var outer))
+            return false;
+
+        container = outer.Owner;
+        return true;
+    }
+
+    /// <summary>
+    /// Per-target attack check: containers, pacifism, hidden subfloor entities etc.
+    /// </summary>
+    public bool CanAttackTarget(EntityUid user, EntityUid target)
+    {
+        return Blocker.CanAttack(user, target);
     }
 
     public bool TryGetWeapon(EntityUid entity, [NotNullWhen(true)] out Entity<CEWeaponComponent>? used)

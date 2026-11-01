@@ -25,28 +25,16 @@
     drawdepth: WallMountedItems
 
 - type: entity
-  parent: BaseWallmount
-  id: BaseWallmountGlass
   abstract: true
+  parent: BaseWallmount
+  id: BaseWallmountMetallic
   components:
   - type: MeleeSound
     soundGroups:
       Brute:
-        collection: GlassSmash
+        collection: MetalThud
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
-
-- type: entity
-  parent: BaseWallmount
-  id: BaseWallmountMetallic
-  abstract: true
-  components:
-  - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
 
 - type: entity
   parent: BaseWallmountMetallic

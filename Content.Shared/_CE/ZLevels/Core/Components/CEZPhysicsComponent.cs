@@ -25,7 +25,7 @@ public sealed partial class CEZPhysicsComponent : Component
     /// The current height of the entity within the current Z-level.
     /// Takes values from 0 to 1. If the value rises above 1, the entity moves up to the next level and the value is normalized.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public float LocalPosition;
 
     /// Optimization Caches
@@ -63,6 +63,13 @@ public sealed partial class CEZPhysicsComponent : Component
     public Vector2 SpriteOffsetDefault = Vector2.Zero;
 
     /// <summary>
+    /// Client-only: true while a non-zero Z height is applied to this entity's sprite offset / draw depth.
+    /// Lets the client skip entities resting at Z = 0 instead of rewriting their sprite every frame.
+    /// </summary>
+    [ViewVariables]
+    public bool VisualZApplied;
+
+    /// <summary>
     /// automatically rises if the current localPosition is lower than the height. Enabled by default, but for ghosts, for example, there is no point in climbing stairs
     /// </summary>
     [DataField]
@@ -76,8 +83,9 @@ public sealed partial class CEZPhysicsComponent : Component
     /// <summary>
     /// If true, CEGetZVelocityEvent is raised every physics tick so systems (e.g. flight) can adjust Velocity.
     /// Off by default to avoid the event overhead for entities that never need custom vertical control.
+    /// Don't set it directly - call CESharedZLevelsSystem.RefreshVelocityRaiseEvent and answer CERefreshVelocityRaiseEvent.
     /// </summary>
-    [DataField]
+    [ViewVariables, AutoNetworkedField]
     public bool VelocityRaiseEvent;
 
     #endregion
@@ -94,7 +102,7 @@ public sealed partial class CEZPhysicsComponent : Component
     public float CachedGroundHeight;
 
     /// <summary>
-    /// Cached value of whether the entity is currently on sticky ground (ladders).
+    /// Cached value of whether the entity is currently on sticky ground (stairs).
     /// </summary>
     [ViewVariables]
     public bool CachedStickyGround;

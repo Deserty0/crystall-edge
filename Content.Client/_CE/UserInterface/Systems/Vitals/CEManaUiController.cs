@@ -1,7 +1,9 @@
+using Content.Client._CE.UserInterface.Screens;
 using Content.Client._CE.UserInterface.Systems.Vitals.Widgets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
@@ -15,6 +17,7 @@ public sealed partial class CEManaUiController : UIController
 {
     [Dependency] private IPlayerManager _player = default!;
 
+    private SharedBatterySystem? _battery;
     private CEManaUI? _manaBar;
 
     public override void Initialize()
@@ -66,6 +69,9 @@ public sealed partial class CEManaUiController : UIController
         if (UIManager.ActiveScreen is SeparatedChatGameScreen separated)
             return separated.ManaBar;
 
+        if (UIManager.ActiveScreen is CEMinimalismGameScreen minimalism)
+            return minimalism.ManaBar;
+
         return null;
     }
 
@@ -83,6 +89,8 @@ public sealed partial class CEManaUiController : UIController
 
     private void UpdateMana(EntityUid uid, BatteryComponent? container = null)
     {
+        _battery ??= EntityManager.System<SharedBatterySystem>();
+
         if (_manaBar == null)
             return;
 
@@ -98,15 +106,14 @@ public sealed partial class CEManaUiController : UIController
             return;
         }
 
-        var maxEnergy = container.MaxCharge;
-
-        if (maxEnergy <= 0f)
+        if (container.MaxCharge <= 0f)
         {
             _manaBar.Visible = false;
             return;
         }
 
-        var ratio = Math.Clamp(container.LastCharge / maxEnergy, 0f, 1f);
+
+        var ratio = _battery.GetChargeLevel((uid, container));
 
         _manaBar.Visible = true;
         _manaBar.SetMana(ratio);

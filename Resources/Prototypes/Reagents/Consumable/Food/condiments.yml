@@ -1,33 +1,4 @@
 - type: reagent
-  id: Astrotame
-  name: reagent-name-astrotame
-  group: Foods
-  desc: reagent-desc-astrotame
-  physicalDesc: reagent-physical-desc-sugary
-  flavor: sweet
-  color: aquamarine
-  recognizable: true
-
-- type: reagent
-  id: BbqSauce
-  name: reagent-name-bbq-sauce
-  group: Foods
-  desc: reagent-desc-bbq-sauce
-  physicalDesc: reagent-physical-desc-gloopy
-  flavor: sweet
-  color: darkred
-  recognizable: true
-
-- type: reagent
-  id: Coldsauce
-  name: reagent-name-coldsauce
-  group: Foods
-  desc: reagent-desc-coldsauce
-  physicalDesc: reagent-physical-desc-cold
-  flavor: cold
-  color: skyblue
-
-- type: reagent
   id: Cornoil
   name: reagent-name-cornoil
   group: Foods
@@ -48,16 +19,6 @@
   recognizable: true
 
 - type: reagent
-  id: Hotsauce
-  name: reagent-name-hotsauce
-  group: Foods
-  desc: reagent-desc-hotsauce
-  physicalDesc: reagent-physical-desc-spicy
-  flavor: spicy
-  color: red
-  recognizable: true
-
-- type: reagent
   id: Ketchup
   name: reagent-name-ketchup
   group: Foods
@@ -65,16 +26,6 @@
   physicalDesc: reagent-physical-desc-tangy
   flavor: tomato
   color: red
-  recognizable: true
-
-- type: reagent
-  id: Ketchunaise
-  name: reagent-name-ketchunaise
-  group: Foods
-  desc: reagent-desc-ketchunaise
-  physicalDesc: reagent-physical-desc-saucey
-  flavor: ketchunaise
-  color: "#fba399"
   recognizable: true
 
 - type: reagent
@@ -88,16 +39,6 @@
   recognizable: true
 
 - type: reagent
-  id: Mayo
-  name: reagent-name-mayo
-  group: Foods
-  desc: reagent-desc-mayo
-  physicalDesc: reagent-physical-desc-thick
-  flavor: mayonnaise
-  color: "#f9f5e5"
-  recognizable: true
-
-- type: reagent
   id: Mustard
   name: reagent-name-mustard
   group: Foods
@@ -105,16 +46,6 @@
   physicalDesc: reagent-physical-desc-thick
   flavor: mustard
   color: "#ffdb58"
-  recognizable: true
-
-- type: reagent
-  id: Vinaigrette
-  name: reagent-name-vinaigrette
-  group: Foods
-  desc: reagent-desc-vinaigrette
-  physicalDesc: reagent-physical-desc-sour
-  flavor: sour
-  color: "#efdaae"
   recognizable: true
 
 - type: reagent
@@ -129,13 +60,11 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
-        conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ CEVampire ]
-          inverted: true
+      - !type:Satiate
+        satiationType: Hunger
         factor: 0.5
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.5 # high salt content
 
 - type: reagent
@@ -166,32 +95,6 @@
     Digestion:
       effects:
       # eating salt on its own kinda sucks, kids
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.5
-
-- type: reagent
-  id: Syrup
-  name: reagent-name-syrup
-  group: Foods
-  desc: reagent-desc-syrup
-  flavor: sweet
-  color: "#fb7125"
-  recognizable: true
-  physicalDesc: reagent-physical-desc-sticky
-  viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
-  tileReactions:
-    - !type:SpillTileReaction
-  metabolisms:
-    Digestion:
-      # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
-      effects:
-      - !type:SatiateHunger
-        conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ CEVampire ]
-          inverted: true
-        factor: 6.0 #Stronger than cookedramen
-  footstepSound:
-    collection: FootstepSlime
-    params:
-      volume: 6

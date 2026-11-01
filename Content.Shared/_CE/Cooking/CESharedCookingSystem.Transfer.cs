@@ -5,6 +5,7 @@
 
 using Content.Shared._CE.Cooking.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using Content.Shared.StatusEffectNew;
@@ -16,16 +17,7 @@ public abstract partial class CESharedCookingSystem
 {
     [Dependency] private StatusEffectsSystem _statusEffect = default!;
 
-    private void InitTransfer()
-    {
-        SubscribeLocalEvent<CEFoodHolderComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<CEFoodHolderComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<CEFoodHolderComponent, SolutionChangedEvent>(OnHolderSolutionChanged);
-        SubscribeLocalEvent<CEFoodHolderComponent, IngestedEvent>(OnEat);
-
-        SubscribeLocalEvent<CEFoodCookerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnEat(Entity<CEFoodHolderComponent> ent, ref IngestedEvent args)
     {
         if (ent.Comp.FoodData is null)
@@ -40,42 +32,67 @@ public abstract partial class CESharedCookingSystem
         }
     }
 
-    private void OnInteractUsing(Entity<CEFoodHolderComponent> target, ref InteractUsingEvent args)
+    [SubscribeLocalEvent]
+    private void OnInteractUsing(Entity<CEFoodHolderComponent> ent, ref InteractUsingEvent args)
     {
-        if (!TryComp<CEFoodHolderComponent>(args.Used, out var used))
+        if (args.Handled)
             return;
 
-        TryTransferFood(target, (args.Used, used));
-    }
-
-    private void OnAfterInteract(Entity<CEFoodHolderComponent> ent, ref AfterInteractEvent args)
-    {
-        if (!TryComp<CEFoodHolderComponent>(args.Target, out var target))
+        if (!TryComp<CEFoodHolderComponent>(args.Used, out var usedComp))
             return;
 
-        TryTransferFood(ent, (args.Target.Value, target));
+        Entity<CEFoodHolderComponent> used = (args.Used, usedComp);
+
+        // Food can be moved in both directions: cooker used on a plate, or plate used on a cooker
+        if (used.Comp.CanGiveFood && ent.Comp.CanAcceptFood)
+            TryTransferFood(ent, used);
+        else if (ent.Comp.CanGiveFood && used.Comp.CanAcceptFood)
+            TryTransferFood(used, ent);
+        else
+            return;
+
+        args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnHolderSolutionChanged(Entity<CEFoodHolderComponent> ent, ref SolutionChangedEvent args)
     {
-        // Check if this is the solution we care about
-        if (!Solution.TryGetSolution((ent.Owner, null), ent.Comp.SolutionId, out var solutionEnt, out var solution) ||
-            solutionEnt.Value.Owner != args.Solution.Owner)
+        if (ent.Comp.FoodData is null)
             return;
 
-        // Clear food data when solution is empty
-        if (solution.Volume == 0)
-        {
-            SetFoodData(ent, null);
-            UpdateFoodDataVisuals(ent);
-        }
+        if (args.Solution.Comp.Id != ent.Comp.SolutionId)
+            return;
+
+        if (args.Solution.Comp.Solution.Volume > 0)
+            return;
+
+        ClearFoodData(ent);
     }
 
-    private void OnInsertAttempt(Entity<CEFoodCookerComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+    /// <summary>
+    /// Finished food cannot be diluted or mixed with anything else.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnSolutionTransferAttempt(Entity<CEFoodHolderComponent> ent, ref SolutionTransferAttemptEvent args)
     {
-        if (!Timing.IsFirstTimePredicted)
+        if (args.To != ent.Owner || ent.Comp.FoodData is null)
             return;
 
+        args.Cancel(Loc.GetString("ce-cooking-popup-no-refill", ("name", MetaData(ent).EntityName)));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBeforeInject(Entity<CEFoodHolderComponent> ent, ref TargetBeforeInjectEvent args)
+    {
+        if (ent.Comp.FoodData is null)
+            return;
+
+        args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnInsertAttempt(Entity<CEFoodCookerComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+    {
         if (args.Cancelled)
             return;
 

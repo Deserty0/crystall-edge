@@ -96,10 +96,6 @@
 
 #nukie delivery
 
-- type: storeCategory
-  id: NukieDelivery
-  name: store-category-nukie-delivery
-
 #revenant
 - type: storeCategory
   id: RevenantAbilities
@@ -109,20 +105,6 @@
 - type: storeCategory
   id: PAIAbilities
   name: store-category-abilities
-
-#changeling
-#todo: add actual categories when changeling design/abilities are fleshed out
-- type: storeCategory
-  id: ChangelingStoreCombat
-  name: store-category-combat
-
-- type: storeCategory
-  id: ChangelingStoreUtility
-  name: store-category-utility
-
-- type: storeCategory
-  id: ChangelingStoreStealth
-  name: store-category-stealth
 
 - type: storeCategory
   id: DiscountedItems

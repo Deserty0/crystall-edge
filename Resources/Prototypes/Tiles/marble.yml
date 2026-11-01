@@ -1,0 +1,18 @@
+- type: tile
+  id: FloorWhiteMarble
+  parent: BaseStationTile
+  name: tiles-white-marble
+  sprite: /Textures/Tiles/Marble/white-marble.png
+  variants: 6
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.8
+  itemDrop: FloorTileItemWhiteMarble
+
+- type: tile
+  id: FloorDarkMarble
+  parent: FloorWhiteMarble
+  name: tiles-dark-marble
+  sprite: /Textures/Tiles/Marble/dark-marble.png
+  variants: 6
+  itemDrop: FloorTileItemDarkMarble

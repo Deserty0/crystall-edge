@@ -61,10 +61,6 @@
       matchSkin: true
     enum.HumanoidVisualLayers.HeadTop:
       matchSkin: true
-    enum.HumanoidVisualLayers.Head:
-      matchSkin: true
-    enum.HumanoidVisualLayers.Chest:
-      matchSkin: true
 
 - type: entity
   parent: CEBaseSpeciesAppearance
@@ -74,6 +70,7 @@
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Special" ]
     - map: [ "enum.HumanoidVisualLayers.Head" ]
     - map: [ "enum.HumanoidVisualLayers.Snout" ]
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
@@ -213,10 +210,6 @@
   id: CEMobGoblin
   name: Mr. Goblin
   components:
-  - type: FireVisuals
-    sprite: _CE/Mobs/Effects/onfire.rsi
-    normalState: Small_burning
-    alternateState: Goblin_burning
   - type: Icon
     sprite: _CE/Mobs/Species/Goblin/parts.rsi
     state: full
@@ -268,18 +261,16 @@
   - type: VisualOrganMarkings
     markingData:
       group: CEGoblin
-  - type: CEMagicEssenceStructure
-    essences:
-      Beast: { min: 1, max: 3 }
-      Life: { min: 0, max: 2 }
 
 - type: entity
   parent: [ CEOrganBaseTorsoSexed, OrganBaseTorso, CEOrganGoblinExternal ]
   id: CEOrganGoblinTorso
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseHeadSexed, OrganBaseHead, CEOrganGoblinExternal ]
   id: CEOrganGoblinHead
+  categories: [ HideSpawnMenu ]
   components:
   - type: VisualOrganMarkings
     hideableLayers:
@@ -298,38 +289,47 @@
 - type: entity
   parent: [ CEOrganBaseArmLeftNonSexed, OrganBaseArmLeft, CEOrganGoblinExternal ]
   id: CEOrganGoblinArmLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseArmRightNonSexed, OrganBaseArmRight, CEOrganGoblinExternal ]
   id: CEOrganGoblinArmRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseHandLeftNonSexed, OrganBaseHandLeft, CEOrganGoblinExternal ]
   id: CEOrganGoblinHandLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseHandRightNonSexed, OrganBaseHandRight, CEOrganGoblinExternal ]
   id: CEOrganGoblinHandRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseLegLeftNonSexed, OrganBaseLegLeft, CEOrganGoblinExternal ]
   id: CEOrganGoblinLegLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseLegRightNonSexed, OrganBaseLegRight, CEOrganGoblinExternal ]
   id: CEOrganGoblinLegRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseFootLeftNonSexed, OrganBaseFootLeft, CEOrganGoblinExternal ]
   id: CEOrganGoblinFootLeft
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ CEOrganBaseFootRightNonSexed, OrganBaseFootRight, CEOrganGoblinExternal ]
   id: CEOrganGoblinFootRight
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ OrganBaseEyes, OrganHumanInternal, CEOrganGoblinExternal ]
   id: CEOrganGoblinEyes
+  categories: [ HideSpawnMenu ]
   components:
   - type: VisualOrgan
     data:

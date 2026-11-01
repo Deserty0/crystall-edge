@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Airtight;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Station.Systems;
@@ -269,7 +270,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         else
             tileData &= FloorMask;
 
-        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, mapGrid, tile);
+        var enumerator = _mapSystem.GetAnchoredEntities(uid, mapGrid, tile);
         while (enumerator.MoveNext(out var ent))
         {
             if (!_airtightQuery.TryComp(ent, out var airtight))

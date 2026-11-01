@@ -1,2 +1,19 @@
 humanoid-profile-editor-bark-voice-label = Voice:
 humanoid-profile-editor-bark-pitch-label = Tone:
+ce-humanoid-profile-editor-emote-voice-label = Emote Voice:
+ce-humanoid-profile-editor-voice-header = Voice
+ce-humanoid-profile-editor-roles-tab = Roles
+ce-humanoid-profile-editor-jobs-header-title = Job
+ce-humanoid-profile-editor-jobs-header-description = An official, commonly known job in the city. Determines which areas of the map and which equipment will be more accessible to your character.
+ce-humanoid-profile-editor-secret-roles-header-title = Hidden Role
+ce-humanoid-profile-editor-secret-roles-header-description = Your character's secret role. Determines your character's goals and capabilities.
+ce-humanoid-profile-editor-preference-unavailable-label = If preference unavailable:
+ce-humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Be {INDEFINITE($overflowJob)} {$overflowJob}
+ce-humanoid-profile-editor-preference-unavailable-stay-in-lobby-button = Stay in lobby
+
+ce-humanoid-profile-editor-personality-tab = Personality
+ce-humanoid-profile-editor-basic-header = Basics
+ce-species-picker-hover-hint = Hover over a species to learn more about it
+ce-species-picker-skills = Skills
+ce-species-locked-wait-in-lobby = The { $species } species is not unlocked for you yet, so you stay in the lobby. { $reason }
+ce-humanoid-profile-editor-species-locked-save = The picked species is not unlocked yet - the character can not be saved.

@@ -142,8 +142,6 @@
   components:
   - type: Damageable
     damageModifierSet: Moth
-  - type: ZombieAccentOverride
-    accent: zombieMoth
   - type: Speech
     speechVerb: Moth
     allowedEmotes: ['Chitter', 'Squeak', 'Flap']
@@ -178,11 +176,8 @@
     damage:
       types:
         Heat: 2.5 # moths burn more easily
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 46
   - type: TemperatureDamage # Moths hate the heat and thrive in the cold.
-    heatDamageThreshold: 320
+    heatDamageThreshold: 314.15
     coldDamageThreshold: 230
     coldDamage:
       types:

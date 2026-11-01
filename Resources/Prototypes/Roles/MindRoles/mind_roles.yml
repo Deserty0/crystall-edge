@@ -72,16 +72,6 @@
 
 - type: entity
   parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
-  id: MindRoleGhostRoleSiliconAntagonist
-  name: Ghost Role (Silicon Antagonist)
-  components:
-  - type: MindRole
-    roleType: SiliconAntagonist
-    antagPrototype: GenericSiliconAntagonist
-    sortWeight: 30
-
-- type: entity
-  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleSoloAntagonist
   name: Ghost Role (Solo Antagonist)
 
@@ -205,28 +195,6 @@
   - type: MindRole
     roleType: SoloAntagonist
 
-# Revolutionaries
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleHeadRevolutionary
-  name: Head Revolutionary Role
-  components:
-  - type: MindRole
-    antagPrototype: HeadRev
-    exclusiveAntag: true
-    roleType: TeamAntagonist
-    subtype: role-subtype-head-revolutionary
-  - type: RevolutionaryRole
-
-- type: entity
-  parent: MindRoleHeadRevolutionary
-  id: MindRoleRevolutionary
-  name: Revolutionary Role
-  components:
-  - type: MindRole
-    antagPrototype: Rev
-    subtype: role-subtype-revolutionary
-
 # Survivors (Wizard)
 - type: entity
   parent: BaseMindRoleAntag
@@ -270,16 +238,6 @@
   - type: MindRole
     antagPrototype: TraitorSleeper
 
-- type: entity
-  parent: MindRoleTraitor
-  id: MindRoleTraitorReinforcement
-  name: Syndicate Reinforcement Role
-  components:
-  - type: MindRole
-    roleType: TeamAntagonist
-    subtype: role-subtype-traitor-reinforcement
-    antagPrototype: GenericTeamAntagonist
-
 # Wizards
 - type: entity
   parent: BaseMindRoleAntag
@@ -291,67 +249,3 @@
     exclusiveAntag: true
     subtype: role-subtype-wizard
   - type: WizardRole
-
-# Xenoborgs
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleMothershipCore
-  name: Mothership Core Role
-  components:
-  - type: MindRole
-    antagPrototype: MothershipCore
-    exclusiveAntag: true
-    roleType: Silicon
-    subtype: role-subtype-xenoborg-core
-  - type: XenoborgRole
-
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleXenoborg
-  name: Xenoborg Role
-  components:
-  - type: MindRole
-    antagPrototype: Xenoborg
-    exclusiveAntag: true
-    roleType: Silicon
-    subtype: role-subtype-xenoborg
-  - type: XenoborgRole
-
-# Zombie Squad
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleInitialInfected
-  name: Initial Infected Role
-  components:
-  - type: MindRole
-    antagPrototype: InitialInfected
-    exclusiveAntag: true
-    roleType: TeamAntagonist
-    subtype: role-subtype-initial-infected
-  - type: InitialInfectedRole
-
-- type: entity
-  parent: MindRoleGhostRoleTeamAntagonistFlock
-  id: MindRoleZombie
-  name: Zombie Role
-  components:
-  - type: MindRole
-    antagPrototype: Zombie
-    exclusiveAntag: true
-    subtype: role-subtype-zombie
-  - type: ZombieRole
-
-# Changeling
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleChangeling
-  name: Changeling Role
-  components:
-  - type: MindRole
-    antagPrototype: Changeling
-    exclusiveAntag: true
-    roleType: SoloAntagonist
-    subtype: role-subtype-changeling
-  - type: ChangelingRole
-  - type: RoleBriefing
-    briefing: changeling-briefing

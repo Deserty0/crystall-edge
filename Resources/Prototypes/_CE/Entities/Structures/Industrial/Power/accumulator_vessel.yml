@@ -5,6 +5,7 @@
   parent:
   - CEBaseMachineBigPipeConnectable
   - CEConstructibleMachine
+  - CEBaseMachineEnergized
   - BaseMachine
   name: accumulator vessel
   description: A structure that collects magical energy and stores it for later use.
@@ -68,13 +69,13 @@
   - type: BatteryCharger
     voltage: High
     node: input
-  - type: PowerMonitoringDevice
+  - type: CEPowerMonitoringDevice
     group: SMES
     sourceNode: input
     loadNode: output
     collectionName: smes
-    sprite: Structures/Power/smes.rsi
-    state: static
+    sprite: _CE/Structures/Industrial/Power/accumulator.rsi
+    state: base
   - type: PowerNetworkBattery
     maxSupply: 10
     maxChargeRate: 10
