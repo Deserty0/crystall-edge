@@ -180,7 +180,7 @@ ent-CEClothingGlovesGirdles = железные наручи
 ent-CEClothingGlovesJagermeister = перчатки егеря
     .desc = Кожаные перчатки, любимые местными егерями.
 
-ent-CEClothingGlovesBlacksmith = перчатки кузнеца
+ent-CEClothingGlovesLeather = кожаные перчатки
     .desc = Говорят, в них можно держать свежеотлитый слиток, но проверять всё же не стоит.
 
 ent-CEClothingWristwatch = латунные наручные часы
@@ -188,6 +188,9 @@ ent-CEClothingWristwatch = латунные наручные часы
 
 ent-CEClothingWristwatchGold = золотые наручные часы
     .desc = Дорогие позолоченные часы, которые носят на запястье. Показывают, сколько времени осталось до рассвета или заката.
+
+ent-CECompassLucson = компас Люксона
+    .desc = Латунный компас, стрелка которого всегда указывает на Сферу Люксона, как бы глубоко под землёй или высоко над ней вы ни находились.
 
 ent-CEClothingHeadBandanaAlchemist = платок алхимика
     .desc = Скрывает ваши волосы от химических паров
@@ -239,9 +242,6 @@ ent-CEClothingHeadHelmetSheriff = шлем шерифа
 
 ent-CEClothingHeadHelmetSheriffCorinthian = коринфский шлем шерифа
     .desc = Изукрашенный коринфский шлем, который носит шериф. Его классический дизайн вызывает уважение и авторитет.
-
-ent-CEClothingHeadMetalHeadband = металлический обруч
-    .desc = Простой, но эффективный металлический обруч, обеспечивающий минимальную защиту и порядок волос.
 
 ent-CEClothingHeadHelmetBrassInsulator = латунный изолятор
     .desc = Простой, но эффективный изолятор магической энергии для головы. Не самая прочная защита, зато отлично защищает от избытка магической энергии.
@@ -4995,7 +4995,7 @@ ent-CEClothingCloakMantleAlchemist = мантия алхимика
 ent-CEClothingCloakMantleThaumaturge = мантия тауматурга
     .desc = Парадная мантия, которую носят тауматурги Академии, с пристёгивающимся церемониальным капюшоном.
 
-ent-CEClothingCloakBlacksmithApron = фартук кузнеца
+ent-CEClothingCloakLeatherApron = кожаный фартук
     .desc = Тяжёлый фартук, используемый кузнецами для защиты от искр и жара.
 
 ent-CEClothingCloakCheetahSkin = плащ из кожи гепарда

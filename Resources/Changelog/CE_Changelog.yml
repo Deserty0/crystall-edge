@@ -1591,3 +1591,110 @@
   id: 1135
   time: '2026-10-25T10:59:15.0000000+00:00'
   url: https://github.com/crystallpunk-14/crystall-edge/pull/560
+- author: TheShuEd
+  changes:
+  - message: Added key keeper job
+    type: Add
+  - message: Added key forge & lock forge - for convenient keyworking
+    type: Add
+  id: 1136
+  time: '2026-10-27T21:14:56.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/565
+- author: TheShuEd
+  changes:
+  - message: Key keeper job now have 1gp salary per day
+    type: Add
+  - message: "Added the hidden \u201CBodyguard\u201D role. Its objective is to protect\
+      \ one other player; it always knows where that player is."
+    type: Add
+  - message: "Added the hidden role of \u201CHelper.\u201D Their objective is to ensure\
+      \ that another player completes all of their objectives. They always know where\
+      \ that player is."
+    type: Add
+  - message: "Removed the hidden role of \u201CLover\u201D"
+    type: Remove
+  - message: Lockpicks no longer break
+    type: Tweak
+  - message: Lockpicking speed has been doubled
+    type: Tweak
+  id: 1137
+  time: '2026-10-28T14:01:56.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/567
+- author: TheShuEd
+  changes:
+  - message: The weather is now always clear at the start of a round.
+    type: Tweak
+  - message: The number of lumishrooms around the city has been doubled, and several
+      are now guaranteed to spawn inside the city.
+    type: Tweak
+  - message: Diamond ore core resprited
+    type: Tweak
+  - message: The system where plants die from lack of watering has been removed.
+    type: Remove
+  - message: At the end of the round (city failure case), murk gradually engulfs the
+      city and no longer blocks the view for all players.
+    type: Fix
+  id: 1138
+  time: '2026-10-29T10:27:32.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/569
+- author: TheShuEd
+  changes:
+  - message: A portal for latejoining and leaving early has been added.
+    type: Add
+  id: 1139
+  time: '2026-10-29T18:24:47.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/570
+- author: TheShuEd
+  changes:
+  - message: Tieflings horns update!
+    type: Add
+  - message: Tieflings renamed to Infernals
+    type: Tweak
+  id: 1140
+  time: '2026-10-30T12:14:51.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/576
+- author: TheShuEd
+  changes:
+  - message: Added Carrin emotes
+    type: Add
+  - message: Species selection design was improved
+    type: Add
+  id: 1141
+  time: '2026-10-30T16:27:15.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/577
+- author: TheShuEd
+  changes:
+  - message: Added the ability to cut clothing into fabric
+    type: Add
+  - message: Wristwatches now display the time from pockets and even the belt, and
+      can now be worn on the belt.
+    type: Fix
+  - message: Fixed a bug where a small pool of blood prevented players from growing
+      plants
+    type: Fix
+  - message: Fixed the overlapping of murk and weather overlays
+    type: Fix
+  - message: Fixed a bug with broken mob collision
+    type: Fix
+  id: 1142
+  time: '2026-11-01T11:36:27.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/583
+- author: TheShuEd
+  changes:
+  - message: Added orecrabs and orespiders into caves!
+    type: Add
+  - message: Added adventurers compass
+    type: Add
+  - message: New adventurers main quest - stone hearts, they are falling from ore
+      spiders
+    type: Add
+  id: 1143
+  time: '2026-11-01T14:32:14.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/584
+- author: stoat18_95972, Deserty
+  changes:
+  - message: New pair of ears for goblins! Praise Gob!
+    type: Add
+  id: 1144
+  time: '2026-11-02T09:18:10.0000000+00:00'
+  url: https://github.com/crystallpunk-14/crystall-edge/pull/582
